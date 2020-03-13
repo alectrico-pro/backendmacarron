@@ -1,0 +1,2 @@
+curl -H "Content-Type: application/json" -X GET -d '{"rid":"amprid","clientId":"clientId","return":"http://192.168.137.190/authenticate"}' http://192.168.137.190:3000/create_token
+curl -H "{Origin: http://192.168.137.190, Content-Type: application/json}" -X GET -d '{"rid":"amprid", ":__amp_source_origin":"http://192.168.137.190"}' http://192.168.137.190:3000/authenticate

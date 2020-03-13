@@ -1,0 +1,2 @@
+curl -H "Content-Type: application/json" -X POST -d '{"email":"example@mail.com","password":"123123123", "password_confirmation":"123123123"}' http://192.168.137.190:3000/authenticate
+curl -H "Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE0NjA2NTgxODZ9.xsSwcPC22IR71OBv6bU_OGCSyfE89DvEzWfDU0iybMA" http://192.168.137.190:3000/items 

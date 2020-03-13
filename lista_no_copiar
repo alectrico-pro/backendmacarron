@@ -1,0 +1,16 @@
+~
+*.rb.sw*
+*.pdf
+.git
+/*.pdf
+/tmp/*
+/features/*
+/features_resource/*
+/log/*
+/test/
+/spec/
+/db/
+/lib/
+/curl/
+/doc/
+/log/
