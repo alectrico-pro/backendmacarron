@@ -28,10 +28,10 @@ class ApplicationController < ActionController::API
 
 
   
-#  unless params[:macarron_de_autorizacion]
- #     raise MacarronAusente
-  #    return
-  #  end
+    unless params[:macarron_de_autorizacion]
+      raise MacarronAusente
+      return
+    end
 
     unless params[:auth_token]  
       raise NotAuthTokenPresent
