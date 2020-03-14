@@ -27,10 +27,11 @@ class ApplicationController < ActionController::API
     linea.info "Authenticate Request"
 
 
-    unless params[:macarron_de_autorizacion]
-      raise MacarronAusente
-      return
-    end
+  
+#  unless params[:macarron_de_autorizacion]
+ #     raise MacarronAusente
+  #    return
+  #  end
 
     unless params[:auth_token]  
       raise NotAuthTokenPresent
