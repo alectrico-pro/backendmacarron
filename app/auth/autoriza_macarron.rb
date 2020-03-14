@@ -13,7 +13,7 @@ class AutorizaMacarron
     #Encripta circuito y reader, dentro de reader (a user) ) 
     #Un user puede tener varios readers (uno por cada device))
     macarron = Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ) if reader
-    macarron.add_first_party_caveat('LoggedIn = false')
+    macarron.add_first_party_caveat('LoggedIn = true')
     macarron.serialize if reader
 #    token = JsonWebToken.encode(circuito: circuito.as_json, reader: reader.as_json(:include => :user )) if reader
   #  decoded_token = JsonWebToken.decode(token)
