@@ -31,7 +31,7 @@ module Api
           if @img
             @img
           else
-            "/img/led.png"
+            "/img/sintomas/fiebre_02.png"
           end
         end
 
