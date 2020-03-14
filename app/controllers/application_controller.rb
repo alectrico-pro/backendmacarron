@@ -15,7 +15,7 @@ class ApplicationController < ActionController::API
   include Linea
 
   before_action :authenticate_request
-  #before_action :cors
+  before_action :cors
 
   attr_reader :current_user
 
