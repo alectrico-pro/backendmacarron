@@ -6,11 +6,15 @@ RSpec.describe 'Todos API', type: :request do
   let(:user)          {  create(:user)   }
   let(:reader)        {  create(:reader,:user => user )  }
   let(:coded_token)   { JsonWebToken.encode(reader: reader.as_json(:include => :user)) }
+  let(:valid_macarron)           { macarron =Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); macarron.add_first_party_caveat('LoggedIn = true') ; ms= macarron.serialize; return ms }
 
-  let(:headers)       {{ "Origin" => "https://frontend.alectrico.cl"  }}
+
+  let(:headers)       {{ "Origin" => "https://help.coronavid.cl"  }}
   
-  let(:valid_params)  {{ :__amp_source_origin => 'https://frontend.alectrico.cl',\
-                         :auth_token => coded_token                   }}
+  let(:valid_params)  {{ :__amp_source_origin => 'https://help.coronavid.cl',\
+                         :auth_token => coded_token,\
+                         :macarron_de_autorizacion => valid_macarron
+                   }}
 
    
   #Test suit for GET /todos

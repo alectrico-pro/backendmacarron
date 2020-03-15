@@ -4,7 +4,8 @@ require 'rspec_api_documentation/dsl'
 resource "To Do" do
   explanation "La lista de tareas por hacer, usa items que se egregan a una lista to do"
   header "Origin", :__amp_source_origin
-
+ 
+  parameter :macarron_de_autorizacion, "Macarrón de Autorización", :required => true
   parameter :auth_token, "Token de autorización", :required => true
   parameter :__amp_source_origin, "Origen de Amp Publisher", :required => true
 
@@ -17,6 +18,13 @@ resource "To Do" do
     let! (:reader)      {  create(:reader,:user => user )  }
     let (:auth_token) { JsonWebToken.encode(reader: reader.as_json(:include => :user)) }
     let (:__amp_source_origin) { "http://192.168.137.190" }
+        
+    let(:headers)       {{ "Origin" => "https://help.coronavid.cl"  }}
+
+    let(:macarron_de_autorizacion)    { macarron =Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); macarron.add_first_party_caveat('LoggedIn = true') ; ms= macarron.serialize; return ms }
+
+
+
 
     example "Devuelve una lista de las tareas", :document => false do
       explanation "Lista de tareas por hacer, To Do" 
@@ -31,11 +39,11 @@ resource "Circuitos" do
   explanation "Preguntas de diseño sobre circuitos"
   header "Origin", :__amp_source_origin
 
-  parameter :auth_token, "Token de autorización", :required => true
+  parameter :macarron_de_autorizacion, "Macarrón de Autorización", :required => true
+  parameter :auth_token, "Token de Autenticación", :required => true
   parameter :__amp_source_origin, "Origen de Amp Publisher", :required => true
   parameter :carga_id, "Identificación de la carga en Cargas Tree", :required => true
   parameter :circuito, "Identificación del tipo de Circuito en Cargas Tree", :required => true
-
 
   let! (:user)        {  create(:user)   }
   let! (:reader)      {  create(:reader, :user => user )  }
@@ -43,6 +51,11 @@ resource "Circuitos" do
   #let! (:auth_token)  { JsonWebToken.encode( instalacion: instalacion.to_json , reader: reader.as_json(:include => :user)) }
  
   let  (:__amp_source_origin) { "http://192.168.137.190" }
+
+  let(:macarron_de_autorizacion)    { macarron =Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); macarron.add_first_party_caveat('LoggedIn = true') ; ms= macarron.serialize; return ms }
+    
+
+  let(:headers)       {{ "Origin" => "https://help.coronavid.cl"  }}
 
 
   post '/api/v1/electrico/circuitos/addToCircuito.json'   do
@@ -59,9 +72,7 @@ resource "Circuitos" do
 
   get '/api/v1/electrico/circuitos/get.json' do
 
-
     let! (:auth_token)  { JsonWebToken.encode( instalacion: instalacion.to_json , reader: reader.as_json(:include => :user)) }
-
 
     example "Devuelve una lista de cargas ", :document => :public do
       explanation "Devuelve todas las cargas de una instalación eléctrica ordenadas en circuitos"

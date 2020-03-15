@@ -1,4 +1,5 @@
 class AuthorizeApiRequestByParams
+  include Estructura
   include Linea
 
   prepend SimpleCommand

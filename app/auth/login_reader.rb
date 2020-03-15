@@ -1,4 +1,5 @@
 class LoginReader
+  include Estructura
  # include InvalidCredentials
   prepend SimpleCommand
 

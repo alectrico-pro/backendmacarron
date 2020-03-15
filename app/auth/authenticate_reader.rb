@@ -1,4 +1,5 @@
 class AuthenticateReader #No lo estoy usando, uso loginreader
+  include ::Estructura #Estructuras que reemplazan a ActiveRecord por ahora en este proyecto de transición
   include ::Linea
 
   include InvalidCredentials

@@ -4,18 +4,18 @@ RSpec.describe 'Token encode y decode, olnly reader beacon', :type => 'request' 
 
   #Test suite integrando
   context "Funcionanmiento del token" do
-    let(:return_params)  {{:rid => "amprid", :return => "https::/backend.alectrico.cl/authenticate" } }
-    let(:retorno)        {"https::/backend.alectrico.cl/authenticate"              }    
-    let(:success_return) {"https::/backend.alectrico.cl/authenticate#success=true"      }
-    let(:headers)       {{ "Origin" => "https://frontend.alectrico.cl"  }}
+    let(:return_params)  {{:rid => "amprid", :return => "https::/backend.coronavid.cl/authenticate" } }
+    let(:retorno)        {"https::/backend.coronavid.cl/authenticate"              }    
+    let(:success_return) {"https::/backend.coronavid.cl/authenticate#success=true"      }
+    let(:headers)       {{ "Origin" => "https://help.coronavid.cl"  }}
 
     describe 'GET /create_token' do
 
       before {
-	get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/backend.alectrico.cl/authenticate"}
+	get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/backend.coronavid.cl/authenticate"}
       }
       it "to be redirect to retorno" do
-        expect(response.body).to redirect_to("https::/backend.alectrico.cl/authenticate#success=true")
+        expect(response.body).to redirect_to("https::/backend.coronavid.cl/authenticate#success=true")
       end
       it "create Reader" do
         expect(Reader.count).to eq(1)
@@ -27,8 +27,8 @@ RSpec.describe 'Token encode y decode, olnly reader beacon', :type => 'request' 
 
     describe 'GET /authenticate after get_token' do
       before {
-        get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/backend.alectrico.cl/authenticate"}
-	get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => "https://frontend.alectrico.cl" }, headers: {'Origin' => "https://frontend.alectrico.cl"}
+        get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/backend.coronavid.cl/authenticate"}
+	get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => "https://help.coronavid.cl" }, headers: {'Origin' => "https://help.coronavid.cl"}
       }
       it 'return' do 
         expect(json['auth_token']).to match(/ey/)
