@@ -26,7 +26,7 @@ class ContactosController < ApplicationController
   # POST /contactos.json
   def create
     #Garantiza que se tenga un usuario con el clientId recibido.
-    #Este principio se basa en que el propietario actual del dispositio (móbil o deskotp) con el clientId especificado tiene prioridad sobre cualqueir otro propietario anterior 
+    #Este principio se basa en que el propietario actual del dispositio (móvil o deskotp) con el clientId especificado tiene prioridad sobre cualqueir otro propietario anterior 
     #
     #Se usa un cliente y muchos readers: un reader por dispositivo, dominio, y brower
     #Se crea o se autoriza un cliente existente
@@ -43,7 +43,7 @@ class ContactosController < ApplicationController
     #.merge!(:password => params[:clientId], :password_confirmation => params[:clientId])
 
 
-    cliente   = Client.find_by(:clientId => contacto_params[:clientId])
+    cliente   = Client.find_or_create_by(:clientId => contacto_params[:clientId])
     reader    = cliente.reader if cliente 
     atributos = contacto_params.except(:__amp_source_origin,:clientId,:rid)\
       #.merge!( :password_confirmation => params[:clientId])
@@ -52,7 +52,7 @@ class ContactosController < ApplicationController
 
     if contacto.valid?
       contacto.save
-      cliente.reader.update_attributes(:user_id => contacto.id) if cliente.reader
+      cliente.reader.update(:user_id => contacto.id) if cliente.reader
       render json: {"resultado" => cliente.reader.user.name }, status: :ok 
     else
       render json: {"objeto" => "Contacto.create en contactos_controller #{contacto.email}","verifyErrors" => contacto.errors.messages.map{|e| {:name =>e[0], :message => e[1].pop}}}, status: :not_found
