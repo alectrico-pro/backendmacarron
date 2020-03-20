@@ -20,7 +20,7 @@ module Estructura
         if @img
           @img
         else
-          "/img/sintomas/fiebre_04.png"
+          "/img/sintomas/fiebre_04.jpg"
         end
       end
       def p
