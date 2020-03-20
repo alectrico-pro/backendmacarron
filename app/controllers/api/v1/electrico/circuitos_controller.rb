@@ -36,14 +36,14 @@ module Api
 
           ids      = [ 1,\
                        2 ]
-          titulo   = [ 'Fiebre',\
+          titulo   = [ 'Tos',\
                        'Dolores de Garganta']
-          imagenes = [ '/img/sintomas/fiebre_04.jpg',\
-                       '/img/sintomas/dolores_de_garganta_01.jpg'] 
-          
+
+          imagenes = %w( tos_03.jpg dolores_de_garganta_01.jpg )
+
           ids.each_with_index do |id, idx|
             tipo_equipo     = TipoEquipo.new( titulo[ idx ] )
-            tipo_equipo.img = imagenes[ idx ]
+            tipo_equipo.img = '/img/sintomas/' + imagenes[ idx ]
             carga           = ::Carga.new( id[ idx ], tipo_equipo, circuito )
             circuito.agrega_carga( carga )
           end
