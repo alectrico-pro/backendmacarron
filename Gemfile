@@ -9,7 +9,7 @@ gem 'rspec_api_documentation'
 gem 'logging-email'
 gem 'logging-rails'
 
-ruby '2.6.5'
+ruby '2.6.3'
 
 gem 'i18n'
 gem 'jwt'
