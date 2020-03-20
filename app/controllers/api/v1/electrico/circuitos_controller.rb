@@ -33,6 +33,7 @@ module Api
           tipo_circuito = TipoCircuito.new( "I" )
           circuito      = ::Circuito.new( "Nombre", tipo_circuito  )
           tipo_equipo   = TipoEquipo.new( "Foco Embutido LED 20W" )
+          tipo_equipo.img = '/img/sintomas/fiebre_02.png'
           #la imgen está en tipo_equipo tipo_equipo.img
     
           id            = 1
