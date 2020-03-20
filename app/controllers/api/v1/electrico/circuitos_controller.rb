@@ -34,21 +34,37 @@ module Api
           tipo_circuito = TipoCircuito.new( "I" )
           circuito      = ::Circuito.new( "Nombre", tipo_circuito  )
 
-          ids      = {  1,\
-                        2 }
-          titulo   = { 'Fiebre',\
-                       'Dolores de Garganta'}
-          imagenes = { '/img/sintomas/fiebre_04.jpg',\
-                       '/img/sintomas/dolores_de_garganta_01.jpg'}  
+          ids      = [ 1,  2 ]
+          titulo   = [ 'Fiebre', 'Dolores de Garganta']
+          imagenes = [ '/img/sintomas/fiebre_04.jpg', '/img/sintomas/dolores_de_garganta_01.jpg'] 
           
           ids.each do |id|
 
-            tipo_equipo     = TipoEquipo.new( titulo[id] )
-            tipo_equipo.img = imagenes[id]
+            tipo_equipo     = TipoEquipo.new( titulo(id))
+            tipo_equipo.img = imagenes(id)
             carga           = ::Carga.new( id, tipo_equipo, circuito )
             circuito.agrega_carga( carga )
 
           end
+
+          tipo_equipo_1  = TipoEquipo.new( "Fiebre" )
+          tipo_equipo_1.img = '/img/sintomas/fiebre_04.jpg'
+
+          tipo_equipo_2 = TipoEquipo.new( "Dolores de Garganta" )
+          tipo_equipo_2.img = '/img/sintomas/dolores_de_garganta_01.jpg'
+
+
+          #la imgen está en tipo_equipo tipo_equipo.img
+    
+          id            = 1
+          carga_1       = ::Carga.new( id, tipo_equipo_1, circuito )
+          circuito.agrega_carga( carga_1 )
+
+          id            = 2
+          carga_2       = ::Carga.new( id, tipo_equipo_2, circuito )
+          circuito.agrega_carga( carga_2 )
+
+
 
           @circuito = JSON.parse(circuito.to_json)
           @cargas   = circuito.cargas
