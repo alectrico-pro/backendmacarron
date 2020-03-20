@@ -35,9 +35,18 @@ module Api
           circuito      = ::Circuito.new( "Nombre", tipo_circuito  )
 
           ids    = [ 1, 2 ]
-          titulo = %w( Tos Dolores_de_Garganta )
+          titulo = %w( Tos 
+                       Dolores_de_Garganta 
+                       Tos 
+                       Tos 
+                       Fiebre
+                     )
           imagen = %w( secreciones_nasales_01.jpg
-                       dolores_de_garganta_01.jpg )
+                       dolores_de_garganta_01.jpg
+                       tos_03.jpg
+                       tos_02.png
+                       fiebre_04.jpg
+                     )
 
           ids.each_with_index do |id, idx|
             tipo_equipo     = TipoEquipo.new( titulo[ idx ] )
