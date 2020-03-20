@@ -30,15 +30,29 @@ module Api
           linea.info "Analizaré el macarron"
 
           #Se simulan el circuito para probar el nuevo desarrollo y generar la api.
+          
           tipo_circuito = TipoCircuito.new( "I" )
           circuito      = ::Circuito.new( "Nombre", tipo_circuito  )
-          tipo_equipo   = TipoEquipo.new( "Foco Embutido LED 20W" )
-          tipo_equipo.img = '/img/sintomas/fiebre_02.png'
+
+
+          tipo_equipo_1  = TipoEquipo.new( "Foco Embutido LED 20W" )
+          tipo_equipo_1.img = '/img/sintomas/fiebre_04.png'
+
+          tipo_equipo_2 = TipoEquipo.new( "Foco Embutido LED 20W" )
+          tipo_equipo_2.img = '/img/sintomas/fiebre_02.png'
+
+
           #la imgen está en tipo_equipo tipo_equipo.img
     
           id            = 1
-          carga         = ::Carga.new( id, tipo_equipo, circuito )
-          circuito.agrega_carga( carga )
+          carga_1       = ::Carga.new( id, tipo_equipo_1, circuito )
+          circuito.agrega_carga( carga_1 )
+
+          id            = 2
+          carga_2       = ::Carga.new( id, tipo_equipo_2, circuito )
+          circuito.agrega_carga( carga_2 )
+
+
 
           @circuito = JSON.parse(circuito.to_json)
           @cargas   = circuito.cargas
