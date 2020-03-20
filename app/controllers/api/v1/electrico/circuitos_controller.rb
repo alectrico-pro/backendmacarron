@@ -33,6 +33,8 @@ module Api
           tipo_circuito = TipoCircuito.new( "I" )
           circuito      = ::Circuito.new( "Nombre", tipo_circuito  )
           tipo_equipo   = TipoEquipo.new( "Foco Embutido LED 20W" )
+          #la imgen está en tipo_equipo tipo_equipo.img
+    
           id            = 1
           carga         = ::Carga.new( id, tipo_equipo, circuito )
           circuito.agrega_carga( carga )

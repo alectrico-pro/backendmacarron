@@ -1,3 +1,4 @@
+#Este un controlador de tareas por hacer To Do
 class TodosController < ApplicationController
 
   before_action :set_todo, only: [:show, :update, :destroy]
