@@ -34,7 +34,7 @@ module Api
           tipo_circuito = TipoCircuito.new( "I" )
           circuito      = ::Circuito.new( "Nombre", tipo_circuito  )
 
-          ids    = [ 1, 2 ]
+          ids    = [ 1, 2 ,3, 4, 5 ]
           titulo = %w( Tos 
                        Dolores_de_Garganta 
                        Tos 
