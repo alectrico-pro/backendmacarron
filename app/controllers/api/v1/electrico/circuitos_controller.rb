@@ -34,17 +34,16 @@ module Api
           tipo_circuito = TipoCircuito.new( "I" )
           circuito      = ::Circuito.new( "Nombre", tipo_circuito  )
 
+
           ids      = [ 1,  2 ]
           titulo   = [ 'Fiebre', 'Dolores de Garganta']
           imagenes = [ '/img/sintomas/fiebre_04.jpg', '/img/sintomas/dolores_de_garganta_01.jpg'] 
           
           ids.each_with_index do |id, idx|
-
-            tipo_equipo     = TipoEquipo.new( titulo(idx) )
-            tipo_equipo.img = imagenes( idx )
-            carga           = ::Carga.new( id(idx), tipo_equipo, circuito )
+            tipo_equipo     = TipoEquipo.new( titulo[ idx ] )
+            tipo_equipo.img = imagenes[ idx ]
+            carga           = ::Carga.new( id[ idx ], tipo_equipo, circuito )
             circuito.agrega_carga( carga )
-
           end
 
           tipo_equipo_1  = TipoEquipo.new( "Fiebre" )
