@@ -36,7 +36,7 @@ module Api
 
 
           tipo_equipo_1  = TipoEquipo.new( "Foco Embutido LED 20W" )
-          tipo_equipo_1.img = '/img/sintomas/fiebre_04.png'
+          tipo_equipo_1.img = '/img/sintomas/fiebre_04.jpg'
 
           tipo_equipo_2 = TipoEquipo.new( "Foco Embutido LED 20W" )
           tipo_equipo_2.img = '/img/sintomas/fiebre_02.png'
