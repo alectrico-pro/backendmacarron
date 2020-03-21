@@ -26,7 +26,7 @@ class AuthorizeApiRequestByParams
 
     if circuito_decoded
       circuito = Circuito.new
-      circuito.from_json( circuito_decoded[ 'circuito' ].to_json)
+     # circuito.from_json( circuito_decoded[ 'circuito' ].to_json)
     end
 
     @circuito || circuito if circuito
