@@ -16,7 +16,7 @@
   IMAGEN_SINTOMAS = %w(secreciones_nasales_01.jpg
                dolores_de_garganta_01.jpg
                sin_olfato_ni_sabor.jpeg
-               dolores_de_garganta_01.jpg
+               problemas_digestivos.jpg
                tos_03.jpg
                tos_02.png
                fiebre_04.jpg
