@@ -1,9 +1,8 @@
-  ID_SINTOMAS    = [ 101, 102 , 102, 103, 201, 202, 300, 400, 501, 502, 503, 504]
+  ID_SINTOMAS    = [ 101, 102 , 103, 104, 201, 202, 300, 400, 501, 502, 503, 504]
   
-  NOMBRE_SINTOMAS = %w( 
-               Pérdida_de_Olfato_y_de_Sabor
+  NOMBRE_SINTOMAS = %w(Pérdida_de_Olfato_y_de_Sabor
                Problemas_Digestivos
-               Tos 
+               Secreciones_Nasales
                Dolores_de_Garganta 
                Tos 
                Tos 
@@ -12,10 +11,8 @@
                Hipertensión_Arterial
                Diabetes
                Asma
-               Cardiopatía
-             )
-  IMAGEN_SINTOMAS = %w( 
-               sin_olfato_ni_sabor.jpeg
+               Cardiopatía   )
+  IMAGEN_SINTOMAS = %w(sin_olfato_ni_sabor.jpeg
                problemas_digestivos.jpg
                secreciones_nasales_01.jpg
                dolores_de_garganta_01.jpg
@@ -26,6 +23,5 @@
                hipertension_01.jpeg
                diabetes_01.jpg
                asma_01.jpg
-               cardiopatia_01.jpg
-             )
+               cardiopatia_01.jpg  )
 
