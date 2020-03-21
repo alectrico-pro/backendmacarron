@@ -245,7 +245,7 @@ RSpec.describe 'Items API', :type => 'request' do
 
     describe 'GET /authenticate after get_token' do
       before {
-        get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/back    end.alectrico.cl/authenticate"}
+        get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/backend.alectrico.cl/authenticate"}
 	get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => "https://help.coronavid.cl" }, headers: {'Origin' => "https://help.coronavid.alectrico.cl"}
       }
       it 'return' do 
@@ -255,7 +255,7 @@ RSpec.describe 'Items API', :type => 'request' do
 
     describe 'GET /contactos/create' do
       before {
-        get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/back        end.alectrico.cl/authenticate"}
+        get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/backend.alectrico.cl/authenticate"}
         get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => "https://help.coronavid.cl" }, headers: {'Origin' => "https://help.coronavid.alectrico.cl"}
 	post "/contactos/create", params: {:rid => "amprid", :clientId => "clientId",:name => "Nombre", :email => "email@example.com", :fono => '987654321', :password => "123456",:password_confirmation => "123456", :__amp_source_origin => "https://help.coronavid.cl"}, headers: {'Origin' => "https://help.coronavid.cl"}
       } 
@@ -269,7 +269,7 @@ RSpec.describe 'Items API', :type => 'request' do
 
     describe 'GET /sign_in' do
       before {
-        get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/back        end.alectrico.cl/authenticate"}
+        get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/backend.alectrico.cl/authenticate"}
         get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => "https://help.coronavid.cl" }, headers: {'Origin' => "https://help.coronavid.cl"}
         post "/contactos/create", params: {:rid => "amprid", :clientId => "clientId",:name => "Nombre", :email => "email@example.com", :fono => '987654321', :password => "123456",:__amp_source_origin => "https://help.coronavid.cl"}, headers: {'Origin' => "https://help.coronavid.cl"}
         get  "/sign_in", params: {:rid => "amprid" , :return => retorno}

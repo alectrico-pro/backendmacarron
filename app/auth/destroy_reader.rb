@@ -1,3 +1,4 @@
+#Destruye un reader, equivale a cerrar la cuenta en un dispositivo
 class DestroyReader
   prepend SimpleCommand
 

@@ -1,3 +1,4 @@
+#Crea un token para cada reader, lo uso para guardar la primera versión de los circuitos. Pero luego deberé usar macarrones nuevos o frescos para ir presentando el avance del diseño
 class LoginReader
   include Estructura
  # include InvalidCredentials

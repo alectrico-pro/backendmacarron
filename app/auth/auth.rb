@@ -1,3 +1,4 @@
+#Encuentra el user que corresponde al reader
 class Auth
   prepend SimpleCommand
   include NotAuthTokenPresent
@@ -17,11 +18,8 @@ class Auth
 
   def user
     reader = Reader.find_by( :rid => params[ :rid ] )    
-  # cliente = Client.find_by(:clientID => @params[:clientId])
-   #@user = cliente.reader.user
     @user ||= reader.user if reader
     @user || errors.add(:token, 'Token Inválido') && nil
-
   end
 
 

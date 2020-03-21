@@ -1,4 +1,5 @@
-class AuthenticateReader #No lo estoy usando, uso loginreader
+#Crea un token para cada reader de amp-pages. Los readers pueden tener un usuario común que se denominana user. También está codificado en el token
+class AuthenticateReader #Lo uso como before action en el controlador authentication
   include ::Estructura #Estructuras que reemplazan a ActiveRecord por ahora en este proyecto de transición
   include ::Linea
 
@@ -10,13 +11,8 @@ class AuthenticateReader #No lo estoy usando, uso loginreader
   end
 
   def call 
-    #Encripta circuito y reader, dentro de reader (a user) ) 
-    #Un user puede tener varios readers (uno por cada device))
     token = JsonWebToken.encode(circuito: circuito.as_json, reader: reader.as_json(:include => :user )) if reader
-  #  decoded_token = JsonWebToken.decode(token)
-
   end
-
 
   public 
   attr_accessor :email
@@ -29,15 +25,9 @@ class AuthenticateReader #No lo estoy usando, uso loginreader
   end
 
   def reader
-    
     reader = Reader.find_by(:rid => @rid) 
     return reader if reader
-    #ser = reader.user if reader
-    #email = user.email if user and  user.valid?
-    #eturn user if user #and user.valid?#&& user.authenticate(password)
     raise InvalidCredentials
-    #rrors.add :reader_authentication, 'invalid credentials'
-    #il
   end
 
 end

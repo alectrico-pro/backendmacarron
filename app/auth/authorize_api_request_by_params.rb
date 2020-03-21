@@ -1,3 +1,5 @@
+#usa el token jwt que viene en el header y el macarron que viene en un param para autorizar el request. El macarron tiene un caveats de LoggedIn al menos que debe coincidir con el sitema de autorización de amp-params. El que usa un backend en google que setea el logged
+
 class AuthorizeApiRequestByParams
   include Estructura
   include Linea
@@ -16,9 +18,7 @@ class AuthorizeApiRequestByParams
     user
   end
 
-  private
-
-  attr_reader :user, :circuito, :params
+  attr_reader :circuito
 
   def circuito
     circuito = Circuito.new
@@ -35,6 +35,11 @@ class AuthorizeApiRequestByParams
 
   end
 
+
+  private
+
+  attr_reader :user, :params
+
   def user
     v = Macarron::Verifier.new()
 
@@ -46,7 +51,8 @@ class AuthorizeApiRequestByParams
 
     macarron = Macarron.deserialize(macarron_serializado)
     linea.info "Deserializando el Macarron"
-    verified = v.verify(macaroon: macarron, key: ENV['SECRET_KEY_BASE'])
+    verified = v.verify( macaroon: macarron, key: ENV['SECRET_KEY_BASE'] )
+
     linea.info "Macarrón Verificado" if verified
     linea.error "Macarrón Inválido" unless verified
 

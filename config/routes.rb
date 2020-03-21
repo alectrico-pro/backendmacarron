@@ -45,6 +45,12 @@ Rails.application.routes.draw do
     end
   end
 
+  #Flujo es
+  #1. Se crea una cuenta con create_token
+  #1.5 Se ingresan los datos de a poco con contactos verify
+  #1.7 Se crea el contacto con contactos create
+  #2. Se hace login con login_reader
+  #3. se refrescan los datos, los token y los macarrones con authenticate en cada requeste excepto addToCircuito
   get 'get_items',      to: 'api/v1/electrico/circuitos#addToCircuito'
   get 'create_token',   to: 'authentication#create_token'
   get 'destroy_reader', to: 'authentication#destroy_reader'

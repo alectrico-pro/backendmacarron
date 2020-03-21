@@ -44,6 +44,8 @@ class ApplicationController < ActionController::API
     end
     #current_user = AuthorizeApiRequest.call(request.headers).result
     @current_user = AuthorizeApiRequestByParams.call(params).result
+    @current_circuito = AuthorizeApiRequestByParams.new(params).circuito
+
 
     unless @current_user
       raise InvalidToken 

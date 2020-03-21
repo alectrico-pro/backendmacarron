@@ -5,8 +5,8 @@ RSpec.describe 'Todos API', type: :request do
   let(:todo_id)       {  todos.first.id }
   let(:user)          {  create(:user)   }
   let(:reader)        {  create(:reader,:user => user )  }
-  let(:coded_token)   { JsonWebToken.encode(reader: reader.as_json(:include => :user)) }
-  let(:valid_macarron)           { macarron =Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); macarron.add_first_party_caveat('LoggedIn = true') ; ms= macarron.serialize; return ms }
+  let(:coded_token)   {  JsonWebToken.encode(reader: reader.as_json(:include => :user)) }
+  let(:valid_macarron) { macarron =Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); macarron.add_first_party_caveat('LoggedIn = true') ; ms= macarron.serialize; return ms }
 
 
   let(:headers)       {{ "Origin" => "https://help.coronavid.cl"  }}
