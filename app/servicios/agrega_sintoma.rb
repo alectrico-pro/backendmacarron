@@ -7,7 +7,7 @@ class AgregaSintoma < AgregaCarga
     nombre = NOMBRE_SINTOMAS
     imagen = IMAGEN_SINTOMAS
 
-    index = ID_SINTOMAS.find_index(un_id)
+    index = ID_SINTOMAS.find_index(un_id.to_i)
     if index > 0
       equipo = Mock::TipoEquipo.new( un_id, NOMBRE_SINTOMAS[index], IMAGEN_SINTOMAS[index] )
       
