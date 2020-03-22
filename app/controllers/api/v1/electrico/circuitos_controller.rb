@@ -278,6 +278,9 @@ module Api
           cargas        = circuito.cargas
           servicio      = ::AgregaCarga.new( :CargasTree , self, params )
           servicio.agrega_carga
+
+          @cargas = cargas
+
         end
 
         def addToInstalacion
