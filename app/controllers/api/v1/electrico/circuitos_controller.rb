@@ -280,6 +280,7 @@ module Api
           servicio.agrega_carga
 
           @cargas = cargas
+          @circuito = circuito
 
         end
 
