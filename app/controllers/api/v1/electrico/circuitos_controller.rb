@@ -279,8 +279,9 @@ module Api
           servicio      = ::AgregaCarga.new( :CargasTree , self, params )
           servicio.agrega_carga
 
-          @cargas = cargas
-          @circuito = circuito
+          raise "No se supone que deba volver a este lugar en addToCircuito"
+#          @cargas = cargas
+ #         @circuito = circuito
 
         end
 
