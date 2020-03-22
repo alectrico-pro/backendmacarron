@@ -402,7 +402,6 @@ module Api
 
         def carga_exitosamente_agregada servicio
           @circuito = servicio.circuito
-          raise @circuito.inspect
           @cargas    = @circuito.cargas.each
           linea.info "Carga exitosamente Agregada"
         end

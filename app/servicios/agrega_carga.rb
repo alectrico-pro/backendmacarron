@@ -22,9 +22,7 @@ class ::AgregaCarga
       equipo = Mock::TipoEquipo.new( id, full_image_url[index], full_image_url[index] )
       return equipo
     end
-
   end
-
 
   def find_tipo_circuito_by_letras letras
     tipo_circuitos = { "1" => ['D', 'Dormitorio',            16, true],
@@ -68,7 +66,9 @@ class ::AgregaCarga
           if nombre 
             #img = @repositorio.get_tree[color]["imgs"].select{|orden,id| orden.include? orden.first}.first
             #repositorio.get_nombre_de_tipo_equipo
+       
             tipo_equipo = TipoEquipo.new(nombre.last)
+            raise tipo_equipo
             img = @repositorio.get_img_de_tipo_equipos[tipo_equipo.id.to_s]
             tipo_equipo.id = id.to_i
             tipo_equipo.img = img
