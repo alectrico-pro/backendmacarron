@@ -111,7 +111,7 @@ class ::AgregaCarga
                            :i                         => 10.7,\
                            :curva                     => 'C')          
 =end
-      carga   = Mock::Carga.new( @params[:carga_id], tipo_equipo, @params[:carga_qty], @circuito )
+      carga   = Mock::Carga.new( 1, tipo_equipo, 1, @circuito )
 
       @circuito.cargas << carga
       linea.info "Se agregó carga al circuito"

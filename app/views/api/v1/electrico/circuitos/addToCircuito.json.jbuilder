@@ -1,4 +1,4 @@
-hash= { "cargas_count": @cargas.count}
+hash= {"action": "addToCircuito.json.jbuilder", "cargas_count": @cargas.count}
 json.merge! hash
 
 unless @circuito.errors.nil?
