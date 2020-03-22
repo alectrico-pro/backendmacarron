@@ -62,8 +62,10 @@ class ::AgregaCarga
     ["green","blue","red","gold","coral"].each{ |color|
       orden  = @repositorio.get_tree[color]["ids"].select{|orden, id| id.include? id.to_s}.first
       if orden
+        linea.info "orden del tipo de equipo es #{orden}"
         nombre = @repositorio.get_tree[color]["nombres"].select{|orden,id| orden.include? orden.first}.first
           if nombre 
+            linea.info "Tipo de equipo se llama #{nombre}"
             #img = @repositorio.get_tree[color]["imgs"].select{|orden,id| orden.include? orden.first}.first
             #repositorio.get_nombre_de_tipo_equipo
        
