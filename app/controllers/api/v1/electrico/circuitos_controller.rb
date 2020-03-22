@@ -270,13 +270,13 @@ module Api
 
           linea.info "En AddToCircuito"
 
-          tipo_equipo   = TipoEquipo.new("Foco Embutido LED 20W")
-          tipo_circuito = TipoCircuito.new("I")
-          circuito      = ::Circuito.new("Nombre", tipo_circuito )
-          carga         = Mock::Carga.new(1,tipo_equipo, 1,circuito)
-          circuito.agrega_carga(carga)
-          cargas        = circuito.cargas
-          servicio      = ::AgregaCarga.new( :CargasTree , self, params )
+#         tipo_equipo   = TipoEquipo.new("Foco Embutido LED 20W")
+ #        tipo_circuito = TipoCircuito.new("I")
+  #       circuito      = ::Circuito.new("Nombre", tipo_circuito )
+   #      carga         = Mock::Carga.new(1,tipo_equipo, 1,circuito)
+    #     circuito.agrega_carga(carga)
+     #    cargas        = circuito.cargas
+          servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
           servicio.agrega_carga
 
 #          raise "No se supone que deba volver a este lugar en addToCircuito"
