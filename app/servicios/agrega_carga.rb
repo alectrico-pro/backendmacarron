@@ -56,6 +56,7 @@ class ::AgregaCarga
   end
 
   def find_tipo_equipo_by_id id 
+    linea.info "Estoy en find_tipo_equipo_by_id id es #{id}"
     linea.error "No id de carga en los parámetros" unless id
     return false unless id
 
