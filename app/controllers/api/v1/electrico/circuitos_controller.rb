@@ -14,7 +14,7 @@ module Api
       class CircuitosController < ElectricoController
 
         #skip_before_action :authenticate_request, only: [:addToCircuito]
-        #efore_action :allow_credentials, only: [:addToCircuito]
+        before_action :allow_credentials, only: [:addToCircuito]
  
         include ::Linea
 
