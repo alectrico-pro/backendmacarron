@@ -1,7 +1,7 @@
 class AgregaSintoma < AgregaCarga
 
   #Esta calse redefine get_equipo_con_image_url para agregar síntomas en lugar de cargas
-  def  def get_equipo_con_image_url un_id
+  def get_equipo_con_image_url un_id
      linea.info "Encontrando equipo"
 
      id   = [ 101, 102 , 103, 104, 201, 202, 300, 400, 501, 502, 503, 504]
