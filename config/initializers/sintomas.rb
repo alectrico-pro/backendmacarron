@@ -1,11 +1,11 @@
-  ID_SINTOMAS    = [ 101, 102 , 103, 104, 201, 202, 300, 400, 501, 502, 503, 504]
+  ID_SINTOMAS    = [ 100, 101 , 102, 103, 200, 201, 300, 400, 500, 501, 502, 503]
   
   NOMBRE_SINTOMAS = %w(Secreciones_Nasales
                Dolores_de_Garganta 
                Pérdida_de_Olfato_y_de_Sabor
                Problemas_Digestivos
-               Tos 
-               Tos 
+               Tos_Seca
+               Tos_Seca
                Fiebre
                Falta_de_Aire
                Hipertensión_Arterial

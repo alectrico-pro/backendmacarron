@@ -7,7 +7,6 @@ class AgregaSintoma < AgregaCarga
     nombre = NOMBRE_SINTOMAS
     imagen = IMAGEN_SINTOMAS
 
-    raise ID_SINTOMAS.inspect
 
     index = ID_SINTOMAS.find_index(un_id.to_i)
     if index > 0
