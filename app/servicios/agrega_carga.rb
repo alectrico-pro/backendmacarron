@@ -68,12 +68,15 @@ class ::AgregaCarga
             #repositorio.get_nombre_de_tipo_equipo
        
             tipo_equipo = TipoEquipo.new(nombre.last)
-            raise tipo_equipo
             img = @repositorio.get_img_de_tipo_equipos[tipo_equipo.id.to_s]
             tipo_equipo.id = id.to_i
             tipo_equipo.img = img
             return tipo_equipo
+          else
+            linea.error "No se econtró nombre para el tipo de equipo requerido"
           end
+      else
+        linea.error "No se encontró el tipo de equipo para el id #{id}"
       end
     }
   end
