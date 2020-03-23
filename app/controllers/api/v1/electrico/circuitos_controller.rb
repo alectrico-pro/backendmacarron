@@ -14,7 +14,7 @@ module Api
       class CircuitosController < ElectricoController
 
         #skip_before_action :authenticate_request, only: [:addToCircuito]
-        before_action :allow_credentials, only: [:addToCircuito]
+        before_action :allow_credentials, only: [:addToCircuito,:get]
         #Si no se hace allow_credentials, amp-pages alega porque se están intentando accesar a otro dominion sin la regla CORS
 
         include ::Linea
