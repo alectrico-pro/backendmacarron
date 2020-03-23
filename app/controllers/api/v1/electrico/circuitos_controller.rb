@@ -13,7 +13,7 @@ module Api
 	#Será un menú de selector que aparecerá cuando un usuario se logge y no tenga un prespuesto en el dispositivo. Luego de efectuada la sección deberá desaparecer. No aparecerá más, porque desde ese momento habrá un prespuesto asociado al dispositivo, a no ser que se borre el dispositivo.
       class CircuitosController < ElectricoController
 
-        skip_before_action :authenticate_request, only: [:addToCircuito]
+        #skip_before_action :authenticate_request, only: [:addToCircuito]
         before_action :allow_credentials, only: [:addToCircuito]
  
         include ::Linea
