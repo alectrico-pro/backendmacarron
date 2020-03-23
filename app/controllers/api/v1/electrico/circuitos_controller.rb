@@ -56,7 +56,7 @@ module Api
           @empalme_aereo_sugerido = nil
           @empalme_soterrado_sugerido = nil
 
-          @macarron = AutorizaMacarron.call(params[:rid]).result
+          @macarron = AutorizaMacarron.call(current_user.readers.first).result
 
           #GetCargas es un servicio hexagonal
         #  servicio = ::GetCargas.new( ::CargasTree , self )
