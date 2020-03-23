@@ -56,7 +56,9 @@ module Api
           @empalme_aereo_sugerido = nil
           @empalme_soterrado_sugerido = nil
 
-          @macarron = AutorizaMacarron.call(current_user.readers.first).result
+   @macarron = Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ) 
+   @macarron.add_first_party_caveat('LoggedIn = true')
+   @macarron.serialize r
 
           linea.info "Nuevo macarrón es: #{@macarron}"
           #GetCargas es un servicio hexagonal
