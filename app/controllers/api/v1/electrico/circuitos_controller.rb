@@ -59,10 +59,6 @@ module Api
     macarron.add_first_party_caveat('LoggedIn = true')
     @macarron_de_circuito= macarron.serialize 
 
-
-          @macarron_de_circuito = AutorizaMacarron.call(current_user.readers.first).result
-
-          linea.info "Nuevo macarrón es: #{@macarron}"
           #GetCargas es un servicio hexagonal
         #  servicio = ::GetCargas.new( ::CargasTree , self )
          # servicio.get( circuito )
