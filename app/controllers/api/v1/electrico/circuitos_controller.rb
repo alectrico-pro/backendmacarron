@@ -14,7 +14,10 @@ module Api
       class CircuitosController < ElectricoController
 
         #skip_before_action :authenticate_request, only: [:addToCircuito]
+
+        #Esto asegura la conexión con el esquema cors.
         before_action :allow_credentials, only: [:addToCircuito,:get]
+
         #Si no se hace allow_credentials, amp-pages alega porque se están intentando accesar a otro dominion sin la regla CORS
 
         include ::Linea
@@ -28,7 +31,6 @@ module Api
         def get #Este es el get que estoy probando a la vez que lo diseño. Usa arquitectura hexagonal y single sign on. 
           expires_in 0.seconds, :public => false
           linea.info "En get"
-          linea.info "Analizaré el macarron"
 
           #Se simulan el circuito para probar el nuevo desarrollo y generar la api.
           
@@ -58,6 +60,7 @@ module Api
     macarron = Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'Macarron de Circuito', key: ENV['SECRET_KEY_BASE'] ) 
     macarron.add_first_party_caveat('LoggedIn = true')
     @macarron_de_circuito= macarron.serialize 
+    cookies[:circuito] = { value: @macarron_de_circuito, domain: '.coronavid.cl'}
 
           #GetCargas es un servicio hexagonal
         #  servicio = ::GetCargas.new( ::CargasTree , self )
@@ -432,13 +435,16 @@ module Api
        #Estrategia recomendada para igualar el identificador de usuario que usa google analytics y el que usa google para las páginas amp.
        #Se toma el id que viene en el requeste en el parámetros ref_id, y se setea la cookie uid que se usó antes para extraer el parámetro clienteId, por lo tanto, se obtiene que params[:clientId] tendrá el mismo valor que params[:ref_id] = amp_cid
        def cid
-
+          #Ref id es un valor que pongo en el link, cuando el usuario clica para acceder a una página desde otra página que está en una mtime que no sea el servidor. Lo que quiero es que la pagina deseada no se carga en el runtime del publiccista (runtime en google resultados de búsqueda) sino en el servidor real.
+          #Así que uso mi propía variable ref_id para almacenar el reader_id que asingna google para su sistema amp-page. Todo esto se hace en el runtime del publicista.
           ref_id    = params[:ref_id].gsub!("'",'') if params[:ref_id]
+          
+          #Client_id es el cliente id que se extrae de la cookie del servidor real que está en el broweser de cliente pero que se envía al servdior.
           client_id = params[:clientId] if params[:clientId]
 
 	  if ref_id
              cid = ref_id
-	     cookies[:uid] = { value: ref_id, domain: '.alectrico.cl'} 
+	     cookies[:uid] = { value: ref_id, domain: '.coronavid.cl'} 
           end
 
           if client_id
