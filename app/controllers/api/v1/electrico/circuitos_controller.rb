@@ -267,7 +267,6 @@ module Api
 	end
 
         def addToCircuito
-
           linea.info "En AddToCircuito"
 
 #         tipo_equipo   = TipoEquipo.new("Foco Embutido LED 20W")

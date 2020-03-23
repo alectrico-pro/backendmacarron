@@ -23,9 +23,6 @@ resource "To Do" do
 
     let(:macarron_de_autorizacion)    { macarron =Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); macarron.add_first_party_caveat('LoggedIn = true') ; ms= macarron.serialize; return ms }
 
-
-
-
     example "Devuelve una lista de las tareas", :document => false do
       explanation "Lista de tareas por hacer, To Do" 
       do_request
@@ -44,6 +41,7 @@ resource "Circuitos" do
   parameter :__amp_source_origin, "Origen de Amp Publisher", :required => true
   parameter :carga_id, "Identificación de la carga en Cargas Tree", :required => true
   parameter :circuito, "Identificación del tipo de Circuito en Cargas Tree", :required => true
+  parameter :carga_qty, "Cantidad de Cargas"
 
   let! (:user)        {  create(:user)   }
   let! (:reader)      {  create(:reader, :user => user )  }
@@ -59,8 +57,10 @@ resource "Circuitos" do
 
 
   post '/api/v1/electrico/circuitos/addToCircuito.json'   do
-    let (:carga_id) { "844" }
+    let! (:auth_token)  { JsonWebToken.encode( instalacion: instalacion.to_json , reader: reader.as_json(:include => :user)) }
+    let (:carga_id) { "100" }
     let (:circuito) { "I" }
+    let (:carga_qty) { "5" }
 
     example "Agrega una carga a un circuito", :document => [:public]  do
       explanation "Busca el circuito y le agrega la carga seleccionada por el Usuario"
