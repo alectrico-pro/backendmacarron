@@ -58,6 +58,7 @@ module Api
 
           @macarron = AutorizaMacarron.call(current_user.readers.first).result
 
+          linea.info "Nuevo macarrón es: #{@macarron}"
           #GetCargas es un servicio hexagonal
         #  servicio = ::GetCargas.new( ::CargasTree , self )
          # servicio.get( circuito )
