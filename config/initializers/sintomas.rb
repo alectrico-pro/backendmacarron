@@ -1,5 +1,9 @@
   ID_SINTOMAS    = [ 100, 101 , 102, 103, 200, 201, 300, 400, 500, 501, 502, 503]
-  
+ 
+
+# ID_SINTOMAS    = [ 2, 3 , 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
+
+ 
   NOMBRE_SINTOMAS = %w(Secreciones_Nasales
                Dolores_de_Garganta 
                Pérdida_de_Olfato_y_de_Sabor
