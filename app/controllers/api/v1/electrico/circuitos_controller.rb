@@ -55,7 +55,7 @@ module Api
           @is_total = 0
           @empalme_aereo_sugerido = nil
           @empalme_soterrado_sugerido = nil
-    macarron = Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'Macarrón de Circuito', key: ENV['SECRET_KEY_BASE'] ) 
+    macarron = Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'Macarron de Circuito', key: ENV['SECRET_KEY_BASE'] ) 
     macarron.add_first_party_caveat('LoggedIn = true')
     @macarron_de_circuito= macarron.serialize 
 
