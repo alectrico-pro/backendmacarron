@@ -25,8 +25,6 @@ class ApplicationController < ActionController::API
 
   def authenticate_request
     linea.info "Authenticate Request"
-
-
   
     unless params[:macarron_de_autorizacion]
       raise MacarronAusente
@@ -44,7 +42,7 @@ class ApplicationController < ActionController::API
     end
     #current_user = AuthorizeApiRequest.call(request.headers).result
     @current_user = AuthorizeApiRequestByParams.call(params).result
-    @current_circuito = AuthorizeApiRequestByParams.new(params).circuito
+   # @current_circuito = AuthorizeApiRequestByParams.new(params).circuito
 
 
     unless @current_user
