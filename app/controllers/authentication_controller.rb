@@ -38,17 +38,17 @@ class AuthenticationController < ApplicationController
        #loggedIn y access son variables de AMP paga que permiten cosas
 	if current_user
 	  linea.info "LoggedIn true"
-          respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: command.result, 'loggedIn' => true, 'access' => true , 'current_user' => current_user.name }
+          respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: command.result, 'loggedIn' => true, 'access' => true , 'current_user' => current_user.name, 'subscriber' => true }
 	else
 	  linea.info "LoggedIn false"
-          respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: command.result, 'loggedIn' => false, 'access' => false }
+          respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: command.result, 'loggedIn' => false, 'access' => false, 'subscriber' => false }
 	end
         render json: respuesta
       else
-        render json: { auth_token: command.result, 'loggedIn' => false, 'access' => false }
+        render json: { auth_token: command.result, 'loggedIn' => false, 'access' => false, 'subscriber' => false }
       end
     else
-      render json: { auth_token: command.result, 'loggedIn' => false, 'access' => false }
+      render json: { auth_token: command.result, 'loggedIn' => false, 'access' => false, 'subscriber' => false }
     end
   end
 
