@@ -1,4 +1,4 @@
-#Se crea un macarrón para indicar que el usuario está logado en el backend. Ya lo esa en la página amp-pages que usa el backend de google
+#Se crea un macarrón para restringir a un usuario está logado en el backend. Ya lo esa en la página amp-pages que usa el backend de google
 class AutorizaMacarron
 
   include ::Linea
@@ -11,9 +11,13 @@ class AutorizaMacarron
   end
 
   def call 
-    macarron = Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ) if reader
-    macarron.add_first_party_caveat('LoggedIn = true')
-    macarron.serialize if reader
+    if reader
+      macarron = Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ) 
+      macarron.add_first_party_caveat('LoggedIn = true')
+      macarron.serialize 
+    else
+     false
+    end
   end
 
 
@@ -28,9 +32,9 @@ class AutorizaMacarron
   end
 
   def reader
-    reader = Reader.find_by(:rid => @rid) 
-    return reader if reader
-    raise InvalidCredentials
+     Reader.find_by(:rid => @rid) 
+ #   return reader if reader
+#    raise InvalidCredentials
   end
 
 end

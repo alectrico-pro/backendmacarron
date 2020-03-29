@@ -28,7 +28,7 @@ class AuthenticationController < ApplicationController
     linea.info "En authenticate" 
     #Se genera un elemento de autenticación llamado token, el que se envía como auth_token en la respuesta de request
     command      = AuthenticateReader.call(params[:rid])
-    #autorizacion = AutorizaMacarron.call(params[:rid])
+    autorizacion = AutorizaMacarron.call(params[:rid])
 
     linea.info "Intentando autenticar al reader"
     if command.success?
