@@ -43,7 +43,7 @@ class ContactosController < ApplicationController
     contacto = User.new(atributos)
     if contacto.valid? and contacto_params[:clientId]
       contacto.save
-      render json: {"resultado" => { "contacto" => contacto.name }, status: :ok 
+      render json: {"resultado" => { "contacto" => contacto.name} }, status: :ok 
     else
       render json: {"objeto" => "Contacto.create en contactos_controller #{contacto.email}","verifyErrors" => contacto.errors.messages.map{|e| {:name =>e[0], :message => e[1].pop}}}, status: :not_found
     end
