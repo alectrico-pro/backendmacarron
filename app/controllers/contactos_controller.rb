@@ -39,29 +39,14 @@ class ContactosController < ApplicationController
     #Cuando el usuario borrar un reader, dejará de tener acceso a todos los micros servicios desde el dispositivo, browser y dominio. 
     #Es posible que alguien use un email de un cliente existente, eso generará un acceso a un microservicio que no corresponde, por eso es necesario enviar un token o url con token para autorizar que se genere un nuevo reader. Mientras eso no esté desarrollado se pedierá un login y con el login se crearé el reader.
     #Si no existe el cliente, no hay ese problema, pues se generará un cliente con la password ingresad y además de generará un nuevo reader  
-    atributos = contacto_params.except(:__amp_source_origin,:clientId,:rid)
+    atributos = contacto_params.except(:__amp_source_origin,:clientId,:rid)\
     contacto = User.new(atributos)
-
-    if contacto.valid? \
-      and contacto_params[:rid] \
-      and contacto_params[:clientId]
-
-      cliente = Client.find_or_create_by(\
-        :clientId => contacto_params[:clientId])
-      reader  = Reader.find_or_create_by(\
-        :rid => contacto_params[:rid])
+    if contacto.valid? and contacto_params[:clientId]
       contacto.save
-      cliente.update(\
-        :reader_id => reader.id,\
-        :clientId => contacto_params[:clientId])
-      cliente.reader.update(\
-        :user_id => contacto.id) 
-      render json: {"resultado" => cliente.reader.user.name }, status: :ok 
-
+      cliente = Client.find_or_create_by(:clientId => contacto_params[:clientId])
+      render json: {"resultado" => cliente.name }, status: :ok 
     else
-
       render json: {"objeto" => "Contacto.create en contactos_controller #{contacto.email}","verifyErrors" => contacto.errors.messages.map{|e| {:name =>e[0], :message => e[1].pop}}}, status: :not_found
-
     end
 
   end
