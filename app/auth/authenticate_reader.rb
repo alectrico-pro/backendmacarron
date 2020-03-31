@@ -12,26 +12,17 @@ class AuthenticateReader #Lo uso como before action en el controlador authentica
 
   def call 
    if reader
-     JsonWebToken.encode(circuito: circuito.as_json, reader: reader.as_json(:include => :user )) 
+     JsonWebToken.encode( reader: reader.as_json(:include => :user )) 
    else
      false
    end
   end
 
-  public 
-  attr_accessor :email
-
   private
-  attr_accessor :rid, :reader, :circuito
-
-  def circuito
-   circuito = ::Circuito.new
-  end
+  attr_accessor :rid, :reader
 
   def reader
     Reader.find_by(:rid => @rid) 
-    #eturn reader if reader
-#    raise InvalidCredentials
   end
 
 end
