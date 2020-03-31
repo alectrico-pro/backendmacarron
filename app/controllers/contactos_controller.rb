@@ -44,7 +44,7 @@ class ContactosController < ApplicationController
 
 
     cliente   = Client.find_or_create_by(:clientId => contacto_params[:clientId])
-    reader    = cliente.create_reader unless cliente&.reader
+    reader    = find_or_create_by(:rid => contacto_params[:rid])
     atributos = contacto_params.except(:__amp_source_origin,:clientId,:rid)\
       #.merge!( :password_confirmation => params[:clientId])
 
@@ -52,6 +52,7 @@ class ContactosController < ApplicationController
 
     if contacto.valid?
       contacto.save
+      cliente.update(:reader_id => reader.id, :clientId => contacto_params[:clientId])
       cliente.reader.update(:user_id => contacto.id) if cliente.reader
       render json: {"resultado" => cliente.reader.user.name }, status: :ok 
     else
