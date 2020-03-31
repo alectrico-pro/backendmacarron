@@ -53,12 +53,12 @@ Rails.application.routes.draw do
   #3. se refrescan los datos, los token y los macarrones con authenticate en cada requeste excepto addToCircuito
   get 'get_items',      to: 'api/v1/electrico/circuitos#addToCircuito'
   get 'create_token',   to: 'authentication#create_token'
+  get 'create_reader',  to: 'authentication#create_reader'
   get 'destroy_reader', to: 'authentication#destroy_reader'
   get 'authenticate',   to: 'authentication#authenticate'
   get 'sign_in',        to: 'authentication#login_reader'
-#  get 'destroy_user',   to: 'authentication#destroy_user'
-  #
-# get 'sign_up',      to: 'authentication#create_user'
+  get 'destroy_user',   to: 'authentication#destroy_user'
+  get 'sign_up',      to: 'authentication#create_user'
   get 'logout',       to: 'authentication#logout_user'
 
 end
