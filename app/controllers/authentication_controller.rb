@@ -3,6 +3,7 @@ class AuthenticationController < ApplicationController
   attr_reader        :current_user
   skip_before_action :authenticate_request
   skip_before_action :cors, :only => [:create_token,\
+                                      :create_reader,\
 				      :destroy_reader,\
 				      :login_reader,\
                                       :logout_user]
