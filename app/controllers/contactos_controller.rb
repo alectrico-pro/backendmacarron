@@ -50,7 +50,7 @@ class ContactosController < ApplicationController
 
     contacto = User.new(atributos)
 
-    if contacto.valid?
+    if contacto.valid? and contacto_params[:rid] and contacto_params[:clientId]
       contacto.save
       cliente.update(:reader_id => reader.id, :clientId => contacto_params[:clientId])
       cliente.reader.update(:user_id => contacto.id) 
