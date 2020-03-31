@@ -44,7 +44,7 @@ class ContactosController < ApplicationController
 
 
     cliente   = Client.find_or_create_by(:clientId => contacto_params[:clientId])
-    reader    = find_or_create_by(:rid => contacto_params[:rid])
+    reader    = Reader.find_or_create_by(:rid => contacto_params[:rid])
     atributos = contacto_params.except(:__amp_source_origin,:clientId,:rid)\
       #.merge!( :password_confirmation => params[:clientId])
 
