@@ -53,7 +53,7 @@ class ContactosController < ApplicationController
     if contacto.valid?
       contacto.save
       cliente.update(:reader_id => reader.id, :clientId => contacto_params[:clientId])
-      cliente.reader.update(:user_id => contacto.id) if cliente.reader
+      cliente.reader.update(:user_id => contacto.id) 
       render json: {"resultado" => cliente.reader.user.name }, status: :ok 
     else
       render json: {"objeto" => "Contacto.create en contactos_controller #{contacto.email}","verifyErrors" => contacto.errors.messages.map{|e| {:name =>e[0], :message => e[1].pop}}}, status: :not_found
