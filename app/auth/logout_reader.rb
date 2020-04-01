@@ -15,6 +15,7 @@ class LogoutReader
   attr_accessor :rid, :reader
 
   def reader
-    Reader.find_by_rid(rid).try(:logout)
+    @reader = Reader.find_by_rid(rid)
+    @reader.logout
   end
 end
