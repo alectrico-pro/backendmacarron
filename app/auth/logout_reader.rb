@@ -16,6 +16,7 @@ class LogoutReader
 
   def reader
     @reader = Reader.find_by_rid(rid)
-    @reader.logout
+    @reader.try :logout
+    @reader
   end
 end

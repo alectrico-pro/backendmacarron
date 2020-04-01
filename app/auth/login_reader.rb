@@ -16,6 +16,8 @@ class LoginReader
   attr_accessor :rid, :reader
 
   def reader
-    Reader.find_by_rid(rid).try(:login)
+    @reader = Reader.find_by_rid(rid)
+    @reader.try(:login)
+    @reader
   end
 end
