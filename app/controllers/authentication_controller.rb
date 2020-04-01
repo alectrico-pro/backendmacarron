@@ -154,9 +154,6 @@ class AuthenticationController < ApplicationController
 
   end
 
-
-  end
-
   def logout_user
 
     command = LogoutUser.call(params[:email], params[:password], params[:rid])
