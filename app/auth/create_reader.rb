@@ -1,5 +1,5 @@
 #Destruye un reader, equivale a cerrar la cuenta en un dispositivo
-class DestroyReader
+class CreateReader
   prepend SimpleCommand
 
   def initialize( rid)
