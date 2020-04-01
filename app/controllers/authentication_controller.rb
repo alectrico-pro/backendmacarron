@@ -35,7 +35,7 @@ class AuthenticationController < ApplicationController
     if command.success?
       linea.info "AuthenticateReader No dio Error"
       if command.result
-       linea.info "AuthenticateReader Tiene un Resultado"	
+       linea.info "AuthenticateReader Tiene un Resultado Positivo"
        #loggedIn y access son variables de AMP paga que permiten cosas
 	if current_reader
 	  linea.info "LoggedIn true"
@@ -46,9 +46,11 @@ class AuthenticationController < ApplicationController
 	end
         render json: respuesta
       else
+        linea.error "AuthenticateReader tiene un Resultado Negativo"
         render json: { auth_token: command.result, 'loggedIn' => false, 'access' => false, 'subscriber' => false }
       end
     else
+      linea.error "AuthentcateReader no tuvo éxito, seguro fue un raise"
       render json: { auth_token: command.result, 'loggedIn' => false, 'access' => false, 'subscriber' => false }
     end
   end
