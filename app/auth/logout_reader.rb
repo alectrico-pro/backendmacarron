@@ -12,7 +12,7 @@ class LogoutReader
 
   private
 
-  attr_accessor :rid
+  attr_accessor :rid, :reader
 
   def reader
     Reader.find_by_rid(rid).try(:logout)
