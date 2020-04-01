@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181113063417) do
+ActiveRecord::Schema.define(version: 20200401061404) do
 
   create_table "clients", force: :cascade do |t|
     t.string "clientId"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20181113063417) do
   create_table "readers", force: :cascade do |t|
     t.string "rid"
     t.integer "user_id"
+    t.boolean "logged_in"
     t.index ["user_id"], name: "index_readers_on_user_id"
   end
 

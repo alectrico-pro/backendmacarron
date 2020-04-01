@@ -7,7 +7,8 @@ class LoginReader
   end
 
   def call
-    JsonWebToken.encode( reader: reader.as_json(:include => :user)) if reader
+#+ JsonWebToken.encode( reader: reader.as_json(:include => :user)) if reader
+    reader
   end
 
   private
@@ -15,6 +16,6 @@ class LoginReader
   attr_accessor :rid
 
   def reader
-    Reader.find_by_rid(rid)
+    Reader.find_by_rid(rid).try(:login)
   end
 end

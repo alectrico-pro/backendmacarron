@@ -6,6 +6,7 @@ class AuthenticationController < ApplicationController
                                       :create_reader,\
 				      :destroy_reader,\
 				      :login_reader,\
+                                      :logout_reader,\
                                       :logout_user]
   before_action      :allow_credentials, :only => [:authenticate]
 
@@ -140,7 +141,23 @@ class AuthenticationController < ApplicationController
     end
   end
 
-  def logout_user #es el sign_up de amp pages
+  def logout_reader
+
+    command = LogoutReader.call( params[:rid])
+
+    if command.success?
+      @url = params[:return] + "#success=true"
+      redirect_to @url
+    else
+      redirect_to params[:return]
+    end
+
+  end
+
+
+  end
+
+  def logout_user
 
     command = LogoutUser.call(params[:email], params[:password], params[:rid])
 
