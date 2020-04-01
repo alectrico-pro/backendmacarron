@@ -38,7 +38,7 @@ class AuthenticationController < ApplicationController
       if command.result
        linea.info "AuthenticateReader Tiene un Resultado Positivo"
        #loggedIn y access son variables de AMP paga que permiten cosas
-	if current_reader
+	if current_reader.logged_in
 	  linea.info "LoggedIn true"
           respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: command.result, 'loggedIn' => true, 'access' => true , 'current_reader' => current_reader.id, 'subscriber' => true }
 	else
