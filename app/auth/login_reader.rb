@@ -7,7 +7,7 @@ class LoginReader
   end
 
   def call
-    JsonWebToken.encode(circuito: circuito.as_json, reader: reader.as_json(:include => :user)) if reader
+    JsonWebToken.encode( reader: reader.as_json(:include => :user)) if reader
   end
 
   private
