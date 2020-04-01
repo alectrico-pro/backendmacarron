@@ -1,7 +1,5 @@
 #Crea un token para cada reader, lo uso para guardar la primera versión de los circuitos. Pero luego deberé usar macarrones nuevos o frescos para ir presentando el avance del diseño
 class LoginReader
-  include Estructura
- # include InvalidCredentials
   prepend SimpleCommand
 
   def initialize(rid)
@@ -14,19 +12,9 @@ class LoginReader
 
   private
 
-  attr_accessor :rid, :circuito
-
-  def circuito
-   circuito = ::Circuito.new
-  end
-
-
+  attr_accessor :rid
 
   def reader
-    reader = Reader.find_by_rid(rid)
-    return reader if reader#&& user.authenticate(password)
-#   raise InvalidCredentials
-    errors.add :user_authentication, 'invalid credentials'
-    nil
+    Reader.find_by_rid(rid)
   end
 end
