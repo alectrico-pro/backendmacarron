@@ -57,10 +57,10 @@ Rails.application.routes.draw do
   get 'destroy_reader', to: 'authentication#destroy_reader'
   get 'authenticate',   to: 'authentication#authenticate'
   get 'sign_in',        to: 'authentication#login_reader'
-  get 'logout_user',    to: 'authentication#logout_reader'
+  get 'logout_reader',  to: 'authentication#logout_reader'
   get 'destroy_user',   to: 'authentication#destroy_user'
-  get 'sign_up',      to: 'authentication#create_user'
-  get 'logout',       to: 'authentication#logout_user'
+  get 'sign_up',        to: 'authentication#create_user'
+  get 'logout',         to: 'authentication#logout_user'
 
 
 end
