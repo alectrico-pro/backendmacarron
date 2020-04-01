@@ -99,7 +99,7 @@ class AuthenticationController < ApplicationController
 
   def create_reader #es el sign_up de amp pages
 
-    command = CreateReader.call(params[:email], params[:rid], params[:clientId])
+    command = CreateReader.call( params[:rid])
 
     if command.success?
       response.headers['AMP-Access-Control-Allow-Source-Origin'] = request.headers['Origin']
