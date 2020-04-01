@@ -1,6 +1,6 @@
 class AuthenticationController < ApplicationController
 
-  attr_reader        :current_user
+  attr_reader        :current_reader
   skip_before_action :authenticate_request
   skip_before_action :cors, :only => [:create_token,\
                                       :create_reader,\
@@ -177,15 +177,8 @@ class AuthenticationController < ApplicationController
 
   private
 
-  def current_user
-    linea.info "En current_user"
-    @current_user = Auth.call(params).result
-    if @current_user
-      linea.info @current_user.inspect
-    else
-      linea.info "No hay usuario inscrito"
-    end
-    @current_user
+  def current_reader
+    Auth.call(params).result
   end   
 
 end

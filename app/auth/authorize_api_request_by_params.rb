@@ -15,32 +15,14 @@ class AuthorizeApiRequestByParams
   end
 
   def call
-    user
+    reader
   end
-
-  attr_reader :circuito
-
-  def circuito
-    circuito = Circuito.new
-    circuito_decoded = decoded_auth_token['circuito']
-
-    if circuito_decoded
-      circuito = Circuito.new
-     # circuito.from_json( circuito_decoded[ 'circuito' ].to_json)
-    end
-
-    @circuito || circuito if circuito
-    return @circuito if circuito
-    raise ExceptionHandler::InvalidToken unless circuito
-
-  end
-
 
   private
 
-  attr_reader :user, :params
+  attr_reader :reader, :params
 
-  def user
+  def reader
     v = Macarron::Verifier.new()
 
     v.satisfy_exact('LoggedIn = true')
@@ -62,22 +44,26 @@ class AuthorizeApiRequestByParams
 
     reader = Reader.new
     reader_decoded = decoded_auth_token['reader']
+    reader.from_json( reader_decoded.except('user').to_json )
 
+=begin
     if reader_decoded and reader_decoded['user'].present?
       user = User.new
       user.from_json(reader_decoded['user'].to_json) 
       reader.from_json( reader_decoded.except('user').to_json )
     end
+=end
 #    reader.from_json(decoded_auth_token['reader'].to_json) if decoded_auth_token
   # cliente = Client.find_by(:clientID => @params[:clientId])
    #@user = cliente.reader.user
+=begin
     @user ||= user if user
     return @user if user
     raise ExceptionHandler::InvalidToken unless user
     unless user
       @user || errors.add(:token, 'Token Inválido') && nil 
     end
-
+=end
   end
 
   def decoded_auth_token

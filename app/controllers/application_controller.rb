@@ -17,9 +17,9 @@ class ApplicationController < ActionController::API
   before_action :authenticate_request
   before_action :cors
 
-  attr_reader :current_user
+  attr_reader :current_reader
 
-  helper_method :current_user, :user_signed_in? #Se usa en las vistas, json_builder
+  helper_method :current_reader, :reader_signed_in? #Se usa en las vistas, json_builder
 
   private
 
@@ -45,19 +45,19 @@ class ApplicationController < ActionController::API
    # @current_circuito = AuthorizeApiRequestByParams.new(params).circuito
 
 
-    unless @current_user
+    unless @current_reader
       raise InvalidToken 
       return
     end
 
-    unless @current_user
+    unless @current_reader
       raise RequestNotAuthorized
       return
     end
   end
 
-  def user_signed_in?
-    !!@current_user
+  def reader_signed_in?
+    !!@current_reader
   end
 
   def allow_credentials
