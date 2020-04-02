@@ -43,6 +43,7 @@ module Api
             tipo_equipo     = Mock::TipoEquipo.new( id, NOMBRE_SINTOMAS[idx], '/img/sintomas/' + IMAGEN_SINTOMAS[ idx ] )
 #           tipo_equipo.img = '/img/sintomas/' + IMAGEN_SINTOMAS[ idx ]
             carga           = ::Carga.new( id, tipo_equipo, circuito )
+            raise carga.inspect
             circuito.agrega_carga( carga )
           end
 
@@ -57,10 +58,12 @@ module Api
           @is_total = 0
           @empalme_aereo_sugerido = nil
           @empalme_soterrado_sugerido = nil
+
     macarron = Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'Macarron de Circuito', key: ENV['SECRET_KEY_BASE'] ) 
     macarron.add_first_party_caveat('LoggedIn = true')
     @macarron_de_circuito= macarron.serialize 
 
+        
           #GetCargas es un servicio hexagonal
         #  servicio = ::GetCargas.new( ::CargasTree , self )
          # servicio.get( circuito )
