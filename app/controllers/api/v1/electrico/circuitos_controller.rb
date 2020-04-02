@@ -45,8 +45,8 @@ module Api
             carga           = ::Carga.new( id, tipo_equipo, circuito )
             circuito.agrega_carga( carga )
           end
-          raise circuito.inspect
           @circuito = JSON.parse(circuito.to_json)
+          raise @circuito.inspect
           @cargas   = circuito.cargas
 
           @potencia_total_industrial = 0
