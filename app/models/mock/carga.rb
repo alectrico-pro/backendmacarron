@@ -7,5 +7,6 @@ module Mock
       @cantidad    = cantidad
       @circuito    = circuito
     end
+    
   end
 end

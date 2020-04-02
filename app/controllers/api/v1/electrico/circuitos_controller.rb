@@ -58,7 +58,7 @@ module Api
           @empalme_aereo_sugerido = nil
           @empalme_soterrado_sugerido = nil
 
-    macarron = Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'Macarron de Circuito', key: ENV['SECRET_KEY_BASE'] ) 
+    macarron = Macarron.new( location: 'http://autoriza.herokuapp.com', identifier: 'Macarron de Circuito', key: ENV['SECRET_KEY_BASE'] ) 
     macarron.add_first_party_caveat('LoggedIn = true')
     @macarron_de_circuito= macarron.serialize 
 
@@ -215,9 +215,11 @@ module Api
         end
 
 	def dropFromCircuito
+          #Hay que comprobar en el servidor autorizacioń, la validez del macarrón de autorización
 	  expires_in 0.seconds, :public => false
 
-	  @carga = ::Electrico::Carga.find_by(:id => params[:id])
+	  #@carga = ::Mock::Carga.find_by(:tipo_equipo => params[:id])
+
           response.headers['Access-Control-Allow-Origin'] = request.headers['Origin']
           response.headers['Access-Control-Allow-Credentials'] = true
           response.headers['Access-Control-Expose-Headers'] = 'AMP-Access-Control-Allow-Source-Origin'
@@ -226,7 +228,7 @@ module Api
 
 	  respond_to do |format|
 	    if @carga.delete
-              circuito.update_attributes(:corriente_servicio => circuito.cargas.sum(&:get_i))
+              circuito.update(:corriente_servicio => circuito.cargas.sum(&:get_i))
 	      @cargas = @carga.circuito.cargas
 	      format.json {}
 	    else	
