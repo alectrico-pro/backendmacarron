@@ -48,7 +48,6 @@ module Api
           @circuito = JSON.parse(circuito.to_json)
           @cargas   = circuito.cargas
 
-          raise @cargas.inspect
 
           @potencia_total_industrial = 0
           @potencia_total_domiciliaria = 0
