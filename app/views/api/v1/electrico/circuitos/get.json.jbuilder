@@ -32,7 +32,7 @@ json.merge! hash
 hash= { "cargas_count": @cargas.count}
 json.merge! hash
 
-hash = { "current_reader": current_reader.id }
+hash = { "current_reader": current_reader.try(:id) }
 json.merge! hash
 
 hash = { "time_stamp": Time.now }
