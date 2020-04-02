@@ -43,10 +43,9 @@ module Api
             tipo_equipo     = Mock::TipoEquipo.new( id, NOMBRE_SINTOMAS[idx], '/img/sintomas/' + IMAGEN_SINTOMAS[ idx ] )
 #           tipo_equipo.img = '/img/sintomas/' + IMAGEN_SINTOMAS[ idx ]
             carga           = ::Carga.new( id, tipo_equipo, circuito )
-            raise carga.inspect
             circuito.agrega_carga( carga )
           end
-
+          raise circuito.inspect
           @circuito = JSON.parse(circuito.to_json)
           @cargas   = circuito.cargas
 
