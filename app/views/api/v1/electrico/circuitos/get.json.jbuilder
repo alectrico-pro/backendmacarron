@@ -1,8 +1,5 @@
 json.merge! @circuito
 
-hash= { "macarron_de_circuito":  @macarron_de_circuito }
-json.merge! hash
-
 hash= { "potencia_total_industrial": number_with_delimiter(@potencia_total_industrial.round(0), :delimiter => '.',:unit => "W" )  }
 json.merge! hash
 

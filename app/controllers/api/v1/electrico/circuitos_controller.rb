@@ -59,18 +59,19 @@ module Api
           @empalme_soterrado_sugerido = nil
 
 
+   #Primero se huelen el culo los backends
           access_key = AccessKey.new.get
-          linea.info "Access Key es #{access_key}"
-
           decoded_token = JsonWebToken.decode( access_key )
-          linea.info "Decoded Token #{decoded_token}"
-
           origen = decoded_token["contenido"]["origen"]
-          linea.info "Origen es #{origen}"
+          unless origen.match("autoriza.herokuapp.com" )
+            throw "No Autorizado por AS"
+          end
+          #Si se obtiene un access key en AS, se pude decodificar en este backend, y si se puede verificar que el origen coincide con lo esperado, entonces los dos backends se reconocen entre śí
 
+    
+    #Ahora se crea un macarrón de autorización, que debe ser verificado remotamente en el AS.
     macarron = Macarron.new( location: 'http://autoriza.herokuapp.com', identifier: 'Macarron de Circuito', key: ENV['SECRET_KEY_BASE'] ) 
     macarron.add_first_party_caveat('LoggedIn = true')
-    @macarron_de_circuito= macarron.serialize 
 
 
           resultado = RemoteVerifyMacarron.new( macarron.serialize )
@@ -310,7 +311,7 @@ module Api
             servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
             servicio.agrega_carga
           else
-            raise "No Autorizado"
+            throw "No Autorizado por AS"
           end
 
         end
