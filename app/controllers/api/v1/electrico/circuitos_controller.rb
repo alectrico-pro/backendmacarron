@@ -278,6 +278,8 @@ module Api
 
         def addToCircuito
 
+          @access_key = AccessKey.new.get
+
           linea.info "En AddToCircuito"
           linea.info "Macarrón es #{params[:macarron_de_autorizacion]}"
           servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
@@ -404,9 +406,6 @@ module Api
           @circuito = servicio.circuito
           @cargas    = @circuito.cargas.each
           linea.info "Carga exitosamente Agregada"
-          @url = "#{request.host}/create_access_token?return=https://cliente.coronavid.cl}"
-          linea.info "Redireccionando a autoriza.herokuapp.com"
-          redirect_to @url
         end
       
         def carga_fallidamente_agregada servicio

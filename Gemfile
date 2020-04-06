@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'httparty'
 gem 'macaroons'
 gem 'dragonfly'
 gem 'state_machines', :require => 'state_machines/core'

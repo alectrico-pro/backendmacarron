@@ -76,6 +76,9 @@ GEM
     ffi (1.12.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    httparty (0.18.0)
+      mime-types (~> 3.0)
+      multi_xml (>= 0.5.2)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.4)
@@ -104,10 +107,14 @@ GEM
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     method_source (1.0.0)
+    mime-types (3.3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2019.1009)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.14.0)
     multi_json (1.14.1)
+    multi_xml (0.6.0)
     mustache (1.1.1)
     net-scp (2.0.0)
       net-ssh (>= 2.6.5, < 6.0.0)
@@ -242,6 +249,7 @@ DEPENDENCIES
   dragonfly
   factory_bot_rails (~> 4.0)
   faker
+  httparty
   i18n
   jbuilder (~> 2.5)
   jwt
