@@ -404,7 +404,7 @@ module Api
           @circuito = servicio.circuito
           @cargas    = @circuito.cargas.each
           linea.info "Carga exitosamente Agregada"
-          @url = "https://autoriza.herokuapp.com/create_access_token?return=https://cliente.coronavid.cl#success=true"
+          @url = "#{request.host}/create_access_token?return=https://cliente.coronavid.cl}"
           linea.info "Redireccionando a autoriza.herokuapp.com"
           redirect_to @url
         end
