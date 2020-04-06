@@ -65,7 +65,7 @@ module Api
           origen = decoded_token["contenido"]["origen"]
           expira = decoded_token["exp"]
           linea.info "expira #{expira}"
-          if expira < Time.now
+          if expira < Time.now.to_i
             throw "Token Expirado"
           end
           unless origen.match("autoriza.herokuapp.com" )
