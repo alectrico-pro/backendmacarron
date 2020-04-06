@@ -289,9 +289,13 @@ module Api
           origen = decoded_token["contenido"]["origen"]
           linea.info "Origen es #{origen}"
 
-          linea.info "Macarrón es #{params[:macarron_de_autorizacion]}"
-          servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
-          servicio.agrega_carga
+          if origen.match("autoriza.herokuapp.com" )
+            linea.info "Macarrón es #{params[:macarron_de_autorizacion]}"
+            servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
+            servicio.agrega_carga
+          else
+            raise "No Autorizado"
+          end
 
         end
 
