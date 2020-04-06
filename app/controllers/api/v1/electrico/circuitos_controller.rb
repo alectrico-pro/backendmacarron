@@ -74,8 +74,11 @@ module Api
 
 
           resultado = RemoteVerifyMacarron.new( macarron )
-
-          linea.info "Macarrón Verificado Ok Remotamente"
+          if resultado
+            linea.info "Macarrón Verificado Ok Remotamente"
+          else
+            linea.error "Macarrón Verificado Fail Remotamente"
+          end
           #GetCargas es un servicio hexagonal
         #  servicio = ::GetCargas.new( ::CargasTree , self )
          # servicio.get( circuito )
