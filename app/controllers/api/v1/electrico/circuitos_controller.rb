@@ -72,7 +72,10 @@ module Api
     macarron.add_first_party_caveat('LoggedIn = true')
     @macarron_de_circuito= macarron.serialize 
 
-        
+
+          resultado = RemoteVerifyMacarron.new( macarron )
+
+          linea.info "Macarrón Verificado Ok Remotamente"
           #GetCargas es un servicio hexagonal
         #  servicio = ::GetCargas.new( ::CargasTree , self )
          # servicio.get( circuito )
