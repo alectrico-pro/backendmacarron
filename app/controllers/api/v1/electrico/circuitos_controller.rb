@@ -280,9 +280,11 @@ module Api
 
           linea.info "En AddToCircuito"
 
-          @access_key = AccessKey.new.get
+          access_key = AccessKey.new.get
+          linea.info "Access Key es #{access_key}"
 
-          linea.info "Access Key es #{@access_key}"
+          decoded_token = JsonWebToken.decode( access_key )
+          linea.info "Decoded Token #{decoded_token}"
 
           linea.info "Macarrón es #{params[:macarron_de_autorizacion]}"
           servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
