@@ -64,7 +64,7 @@ module Api
           decoded_token = JsonWebToken.decode( access_key )
           origen = decoded_token["contenido"]["origen"]
           expira = decoded_token["exp"]
-          if expira > Time.now
+          if expira.to_i > Time.now
             throw "Token Expirado"
           end
           unless origen.match("autoriza.herokuapp.com" )
