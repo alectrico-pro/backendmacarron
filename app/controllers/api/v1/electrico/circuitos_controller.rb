@@ -278,9 +278,12 @@ module Api
 
         def addToCircuito
 
+          linea.info "En AddToCircuito"
+
           @access_key = AccessKey.new.get
 
-          linea.info "En AddToCircuito"
+          linea.info "Access Key es #{@access_key}"
+
           linea.info "Macarrón es #{params[:macarron_de_autorizacion]}"
           servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
           servicio.agrega_carga
