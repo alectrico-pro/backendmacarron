@@ -286,6 +286,9 @@ module Api
           decoded_token = JsonWebToken.decode( access_key )
           linea.info "Decoded Token #{decoded_token}"
 
+          origen = decoded_token["contenido"]["origen"]
+          linea.info "Origen es #{origen}"
+
           linea.info "Macarrón es #{params[:macarron_de_autorizacion]}"
           servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
           servicio.agrega_carga
