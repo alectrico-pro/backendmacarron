@@ -58,6 +58,16 @@ module Api
           @empalme_aereo_sugerido = nil
           @empalme_soterrado_sugerido = nil
 
+
+          access_key = AccessKey.new.get
+          linea.info "Access Key es #{access_key}"
+
+          decoded_token = JsonWebToken.decode( access_key )
+          linea.info "Decoded Token #{decoded_token}"
+
+          origen = decoded_token["contenido"]["origen"]
+          linea.info "Origen es #{origen}"
+
     macarron = Macarron.new( location: 'http://autoriza.herokuapp.com', identifier: 'Macarron de Circuito', key: ENV['SECRET_KEY_BASE'] ) 
     macarron.add_first_party_caveat('LoggedIn = true')
     @macarron_de_circuito= macarron.serialize 
