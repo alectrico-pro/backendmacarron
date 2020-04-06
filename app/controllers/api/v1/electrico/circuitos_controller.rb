@@ -73,7 +73,7 @@ module Api
     @macarron_de_circuito= macarron.serialize 
 
 
-          resultado = RemoteVerifyMacarron.new( macarron )
+          resultado = RemoteVerifyMacarron.new( macarron.serialize )
           if resultado.get
             linea.info "Macarrón Verificado Ok Remotamente"
           else
