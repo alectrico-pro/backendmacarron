@@ -74,7 +74,7 @@ module Api
 
 
           resultado = RemoteVerifyMacarron.new( macarron )
-          if resultado
+          if resultado.get
             linea.info "Macarrón Verificado Ok Remotamente"
           else
             linea.error "Macarrón Verificado Fail Remotamente"
