@@ -17,7 +17,7 @@ class RemoteVerifyMacarron
 
   def get_result
     @options = { query: {macarron: @macarron}}
-    response = self.class.get('/verify_macarron', @options} )
+    response = self.class.get('/verify_macarron', @options )
     if response.response.class == ::Net::HTTPOK and not response.parsed_response["resultado"].nil?
       @resultado = response.parsed_response["resultado"]
     else
