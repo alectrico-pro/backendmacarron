@@ -9,9 +9,10 @@ class AuthenticationController < ApplicationController
                                       :logout_reader,\
                                       :logout_user]
   before_action      :allow_credentials, :only => [:authenticate]
+  before_action      :authenticate_as
+  before_action      :verify_macarron
 
-
-    #La autenticacion de la request es la que ocupa, authenticate_request. Este método ofrece la autorización devolviendo loggedIn true al cliente AMP que usa el runtime AMP para permitir el acceso vía el componente amp-access a los readers de noticias
+    #La autenticacien de la request es la que ocupa, authenticate_request. Este método ofrece la autorización devolviendo loggedIn true al cliente AMP que usa el runtime AMP para permitir el acceso vía el componente amp-access a los readers de noticias
     #es el login de amp pages, pero se llama cuando la página se refresca. Eso significa que el token se regenera. El token anterior es almacenado como variable amp-access, y accesado por amp-list con cada request.
     #Para renovar el token se necesita ir a la base de datos.
     #Si lo que se quiere es evitar el acceso a la base de datos, el token no podrá guardarse tampoco.

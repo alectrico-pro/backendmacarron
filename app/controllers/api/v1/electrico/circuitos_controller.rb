@@ -58,17 +58,6 @@ module Api
           @empalme_aereo_sugerido = nil
           @empalme_soterrado_sugerido = nil
     
-    #Ahora se crea un macarrón de autorización, que debe ser verificado remotamente en el AS.
-    macarron = Macarron.new( location: 'http://autoriza.herokuapp.com', identifier: 'Macarron de Circuito', key: ENV['SECRET_KEY_BASE'] ) 
-    macarron.add_first_party_caveat('LoggedIn = true')
-
-
-          resultado = RemoteVerifyMacarron.new( macarron.serialize )
-          if resultado.get
-            linea.info "Macarrón Verificado Ok Remotamente"
-          else
-            linea.error "Macarrón Verificado Fail Remotamente"
-          end
           #GetCargas es un servicio hexagonal
         #  servicio = ::GetCargas.new( ::CargasTree , self )
          # servicio.get( circuito )
