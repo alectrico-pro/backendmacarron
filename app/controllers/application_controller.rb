@@ -14,14 +14,40 @@ class ApplicationController < ActionController::API
   include InvalidCredentials
   include Linea
 
+  before_action :authenticate_as
   before_action :authenticate_request
+
   before_action :cors
 
+ 
   attr_reader :current_reader
 
   helper_method :current_reader, :reader_signed_in? #Se usa en las vistas, json_builder
 
   private
+
+
+    def authenticate_as
+      access_key = AccessKey.new.get
+      linea.info "Access Key es #{access_key}"
+
+      decoded_token = JsonWebToken.decode( access_key )
+      linea.info "Decoded Token #{decoded_token}"
+
+      origen = decoded_token["contenido"]["origen"]
+      linea.info "Origen es #{origen}"
+
+#Primero se huelen el culo los backends
+      expira = decoded_token["exp"]
+      if expira.to_i > Time.now.to_i
+        throw "Token Expirado"
+      end
+      unless origen.match("autoriza.herokuapp.com" )
+        throw "No Autorizado por AS"
+      end
+    end
+
+
 
   def authenticate_request
     linea.info "Authenticate Request"

@@ -57,21 +57,6 @@ module Api
           @is_total = 0
           @empalme_aereo_sugerido = nil
           @empalme_soterrado_sugerido = nil
-
-
-   #Primero se huelen el culo los backends
-          access_key = AccessKey.new.get
-          decoded_token = JsonWebToken.decode( access_key )
-          origen = decoded_token["contenido"]["origen"]
-          expira = decoded_token["exp"]
-          if expira.to_i > Time.now.to_i
-            throw "Token Expirado"
-          end
-          unless origen.match("autoriza.herokuapp.com" )
-            throw "No Autorizado por AS"
-          end
-          #Si se obtiene un access key en AS, se pude decodificar en este backend, y si se puede verificar que el origen coincide con lo esperado, entonces los dos backends se reconocen entre śí
-
     
     #Ahora se crea un macarrón de autorización, que debe ser verificado remotamente en el AS.
     macarron = Macarron.new( location: 'http://autoriza.herokuapp.com', identifier: 'Macarron de Circuito', key: ENV['SECRET_KEY_BASE'] ) 
@@ -299,34 +284,9 @@ module Api
 
         def addToCircuito
 
-          linea.info "En AddToCircuito"
-
-          access_key = AccessKey.new.get
-          linea.info "Access Key es #{access_key}"
-
-          decoded_token = JsonWebToken.decode( access_key )
-          linea.info "Decoded Token #{decoded_token}"
-
-          origen = decoded_token["contenido"]["origen"]
-          linea.info "Origen es #{origen}"
-
-   #Primero se huelen el culo los backends
-          expira = decoded_token["exp"]
-          if expira.to_i > Time.now.to_i
-            throw "Token Expirado"
-          end
-          unless origen.match("autoriza.herokuapp.com" )
-            throw "No Autorizado por AS"
-          end
-
-
-          if origen.match("autoriza.herokuapp.com" )
-            linea.info "Macarrón es #{params[:macarron_de_autorizacion]}"
-            servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
-            servicio.agrega_carga
-          else
-            throw "No Autorizado por AS"
-          end
+          linea.info "Macarrón es #{params[:macarron_de_autorizacion]}"
+          servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
+          servicio.agrega_carga
 
         end
 
