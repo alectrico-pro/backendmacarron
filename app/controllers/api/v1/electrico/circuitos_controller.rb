@@ -310,6 +310,16 @@ module Api
           origen = decoded_token["contenido"]["origen"]
           linea.info "Origen es #{origen}"
 
+   #Primero se huelen el culo los backends
+          expira = decoded_token["exp"]
+          if expira.to_i > Time.now.to_i
+            throw "Token Expirado"
+          end
+          unless origen.match("autoriza.herokuapp.com" )
+            throw "No Autorizado por AS"
+          end
+
+
           if origen.match("autoriza.herokuapp.com" )
             linea.info "Macarrón es #{params[:macarron_de_autorizacion]}"
             servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
