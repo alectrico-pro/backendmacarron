@@ -12,7 +12,7 @@ class AccessKey #Autorization Server
   public
 
   def get_key
-    response = self.class.get('/create_access_token')
+    response = self.class.get("/create_access_token?reader=#{reader.as_json(:include => :user, :root => true)}")
     if response.response.class == ::Net::HTTPOK and not response.parsed_response["access_token"].nil?
       @key = response.parsed_response["access_token"]
     else

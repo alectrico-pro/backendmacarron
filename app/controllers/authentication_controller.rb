@@ -50,6 +50,11 @@ class AuthenticationController < ApplicationController
           linea.info "LoggedIn #{current_reader.logged_in}"
           respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: false, 'loggedIn' => current_reader.logged_in, 'access' => false, 'subscriber' => (not (current_reader.nil?)) }
         end
+
+      else
+        linea.info "LoggedIn false"
+        respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: false, 'loggedIn' => false, 'access' => false, 'subscriber' => (not (current_reader.nil?)) }
+
       end
       render json: respuesta
     else

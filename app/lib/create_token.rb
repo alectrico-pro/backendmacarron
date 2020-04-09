@@ -7,7 +7,8 @@ class CreateToken
   end
 
   def call
-    token = AccessKey.new.get
+    token = AccessKey.new.get if reader
+    byebug
 #    token = JsonWebToken.encode(reader: reader.as_json(:include => :user,:root => true)) if reader
   end
 

@@ -58,11 +58,13 @@ class AuthorizeApiRequestByParams
         linea.info "Macarrón Verificado Ok Remotamente"
       else
         linea.error "Macarrón Verificado Fail Remotamente"
-        throw MacarronFail
+        return false unless Rails.env.test?
+        #aise MacarronAusente
       end
     else        
       linea.error "Macarrón No pudo Ser Verificado En endpoint AS"
-      throw MacarronAusente
+      return false
+      #aise MacarronAusente
     end
 
     reader = Reader.new
