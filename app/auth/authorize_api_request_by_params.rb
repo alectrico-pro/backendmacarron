@@ -20,7 +20,7 @@ class AuthorizeApiRequestByParams
 
   private
 
-  attr_reader :reader, :params
+  attr_reader :reader, :params, :decoded_token
 
 
     def authenticate_as
@@ -63,8 +63,6 @@ class AuthorizeApiRequestByParams
       linea.error "Macarrón No pudo Ser Verificado En endpoint AS"
       throw MacarronAusente
     end
-
-    authenticate_as
 
     reader = Reader.new
     reader_decoded = decoded_auth_token['reader']
@@ -117,7 +115,23 @@ class AuthorizeApiRequestByParams
   end
 
   def decoded_auth_token
+
     @decoded_auth_token ||= JsonWebToken.decode( http_params )    
+    linea.info "Decoded Token #{decoded_token}"
+
+    origen = decoded_token["contenido"]["origen"]
+    linea.info "Origen es #{origen}"
+
+    expira = decoded_token["exp"]
+    if expira.to_i > Time.now.to_i
+      throw "Token Expirado"
+    end
+    unless origen.match("autoriza.herokuapp.com" )
+      throw "No Autorizado por AS"
+    end
+
+    @decoded_auth_token
+
   end
 
   def http_params
