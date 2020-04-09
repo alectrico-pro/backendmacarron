@@ -38,9 +38,8 @@ class AuthenticationController < ApplicationController
     #end
     autorizacion = AutorizaMacarron.call(params[:rid])
 
-    linea.info "Intentando autenticar al reader"
     if token
-      linea.info "AuthenticateReader Tiene un Resultado Positivo"
+      linea.info "Se tiene un token"
      #loggedIn y access son variables de AMP paga que permiten cosas
       if current_reader
         linea.info "LoggedIn #{current_reader.logged_in}"
