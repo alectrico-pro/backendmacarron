@@ -66,7 +66,7 @@ class AuthorizeApiRequestByParams
     end
 
     reader = Reader.new
-    reader_decoded = @decoded_auth_token['reader']
+    reader_decoded = decoded_auth_token['reader']
     reader.from_json( reader_decoded.except('user').to_json )
 
   end
