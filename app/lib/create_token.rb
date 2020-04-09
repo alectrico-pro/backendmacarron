@@ -7,7 +7,8 @@ class CreateToken
   end
 
   def call
-    token = JsonWebToken.encode(reader: reader.as_json(:include => :user,:root => true)) if reader
+    token = AccessKey.new.get
+#    token = JsonWebToken.encode(reader: reader.as_json(:include => :user,:root => true)) if reader
   end
 
   private
