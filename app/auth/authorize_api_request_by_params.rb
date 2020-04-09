@@ -122,7 +122,7 @@ class AuthorizeApiRequestByParams
 
     linea.info "Decoded Token #{@decoded_auth_token}"
 
-    if @decoded_auth_token.has_key?["contenido"]["origin"]
+    if @decoded_auth_token.has_key?("contenido")
       begin
         linea.info "El token es remoto"
         origen = @decoded_auth_token["contenido"]["origen"]
