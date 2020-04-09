@@ -36,7 +36,6 @@ class AuthorizeApiRequestByParams
       origen = decoded_token["contenido"]["origen"]
       linea.info "Origen es #{origen}"
 
-#Primero se huelen el culo los backends
       expira = decoded_token["exp"]
       if expira.to_i > Time.now.to_i
         throw "Token Expirado"
@@ -64,6 +63,9 @@ class AuthorizeApiRequestByParams
       linea.error "Macarrón No pudo Ser Verificado En endpoint AS"
       throw MacarronAusente
     end
+
+    authenticate_as
+
     reader = Reader.new
     reader_decoded = decoded_auth_token['reader']
     reader.from_json( reader_decoded.except('user').to_json )
