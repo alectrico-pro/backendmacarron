@@ -17,7 +17,6 @@ module Api
 
         #Esto asegura la conexión con el esquema cors.
         before_action :allow_credentials, only: [:addToCircuito,:get, :dropFromCircuito]
-        before_action :verify_macarron
         #Si no se hace allow_credentials, amp-pages alega porque se están intentando accesar a otro dominion sin la regla CORS
 
         include ::Linea
