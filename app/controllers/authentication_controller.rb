@@ -40,6 +40,7 @@ class AuthenticationController < ApplicationController
 
     if token
       linea.info "Se tiene un token"
+      linea.info token
      #loggedIn y access son variables de AMP paga que permiten cosas
       if current_reader
         linea.info "LoggedIn #{current_reader.logged_in}"
