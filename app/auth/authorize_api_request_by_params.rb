@@ -121,21 +121,28 @@ class AuthorizeApiRequestByParams
 
     linea.info "Decoded Token #{@decoded_auth_token}"
 
-    begin
-      origen = @decoded_auth_token["contenido"]["origen"]
-    rescue
-      linea.info @decoded_auth_token
-      throw "Invalid Origen" unless origen
-    end
+    if @decoded_auth_token.has_key?["contenido"]["origin"]
+      begin
+        linea.info "El token es remoto"
+        origen = @decoded_auth_token["contenido"]["origen"]
+        linea.info "Origen es #{origen}"
 
-    linea.info "Origen es #{origen}"
+         expira = decoded_token["exp"]
 
-    expira = decoded_token["exp"]
-    if expira.to_i > Time.now.to_i
-      throw "Token Expirado"
-    end
-    unless origen.match("autoriza.herokuapp.com" )
-      throw "No Autorizado por AS"
+         if expira.to_i > Time.now.to_i
+           throw "Token Expirado"
+         end
+
+         unless origen.match("autoriza.herokuapp.com" )
+           throw "No Autorizado por AS"
+         end
+
+      rescue
+        linea.info @decoded_auth_token
+        throw "Invalid Origen" unless origen
+      end
+    else
+      linea.info "El token es local al backend"
     end
 
     @decoded_auth_token
