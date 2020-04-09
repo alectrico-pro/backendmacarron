@@ -23,6 +23,60 @@ class ApplicationController < ActionController::API
 
   private
 
+
+    def authenticate_as
+      #Se obtiene un token de autorizacion en el Authorization Server, ese token se llama Access Token o Access Key. Se decodifica para verificar que es un token generado por el Authorización Server.  
+      #Una vez decodificado se verifica que el origen coincida con la dirección del Authorization Server y luego ser verifica que no se hay expirado.
+      #Los tokens que expiran implican un logout. El usuario debe hacer login nuevamente para obtener otro otro token. Tambíén puede usarse de otra forma. Qu el cliente reciba un token de inscripción que sirva para obtener el AccessKey.
+      access_key = AccessKey.new.get #El access key debe asignado en el login y guardado en el frontend o en este backend.
+      linea.info "Access Key es #{access_key}"
+
+      decoded_token = JsonWebToken.decode( access_key )
+      linea.info "Decoded Token #{decoded_token}"
+
+      origen = decoded_token["contenido"]["origen"]
+      linea.info "Origen es #{origen}"
+
+#Primero se huelen el culo los backends
+      expira = decoded_token["exp"]
+      if expira.to_i > Time.now.to_i
+        throw "Token Expirado"
+      end
+      unless origen.match("autoriza.herokuapp.com" )
+        throw "No Autorizado por AS"
+      end
+    end
+
+    def authenticate_request
+      linea.info "Authenticate Request"
+    
+      unless params[:auth_token]  
+        raise NotAuthTokenPresent
+        return
+      end
+
+      unless Reader.count > 0
+        raise NotReader
+        return
+      end
+      #current_user = AuthorizeApiRequest.call(request.headers).result
+      @current_user = AuthorizeApiRequestByParams.call(params).result
+      @current_reader = AuthorizeApiRequestByParams.call(params).result
+
+     # @current_circuito = AuthorizeApiRequestByParams.new(params).circuito
+
+
+      unless @current_reader
+        raise InvalidToken 
+        return
+      end
+
+      unless @current_reader
+        raise RequestNotAuthorized
+        return
+      end
+    end
+
     def reader_signed_in?
       !!@current_reader
     end
