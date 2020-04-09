@@ -50,7 +50,7 @@ class ApplicationController < ActionController::API
 
     def verify_macarron
       #Se crea un macarrón de autorización, que debe ser verificado remotamente en el AS: Authorization Server
-      macarron = Macarron.new( location: 'http://autoriza.herokuapp.com', identifier: 'Macarron de Circuito', key: ENV['SECRET_KEY_BASE'] )
+      macarron = Macarron.new( location: 'http://autoriza.herokuapp.com', identifier: 'Macarron de Autorización', key: ENV['SECRET_KEY_BASE'] )
       macarron.add_first_party_caveat('LoggedIn = true')
       resultado = RemoteVerifyMacarron.new( macarron.serialize )
 
@@ -66,7 +66,16 @@ class ApplicationController < ActionController::API
     def authenticate_request
       linea.info "Authenticate Request"
     
-      unless params[:macarron_de_autorizacion]
+      if params[:macarron_de_autorizacion]
+        macarron = params[:macarron_de_autorizacion]
+        resultado = RemoteVerifyMacarron.new( macarron )
+        if resultado.get
+          linea.info "Macarrón Verificado Ok Remotamente"
+        else
+          throw MacarronFail
+          linea.error "Macarrón Verificado Fail Remotamente"
+        end
+      else
         raise MacarronAusente
         return
       end

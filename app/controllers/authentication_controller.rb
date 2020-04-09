@@ -52,7 +52,7 @@ class AuthenticationController < ApplicationController
         render json: { auth_token: command.result, 'loggedIn' => false, 'access' => false, 'subscriber' => false }
       end
     else
-      linea.error "AuthentcateReader no tuvo éxito, seguro fue un raise"
+      linea.error "AuthenticateReader no tuvo éxito, seguro fue un raise"
       render json: { auth_token: command.result, 'loggedIn' => false, 'access' => false, 'subscriber' => false }
     end
   end
@@ -67,9 +67,8 @@ class AuthenticationController < ApplicationController
         @url = params[:return] + "#success=true"
         redirect_to @url
       else
-       @url = params[:return] 
-       redirect_to @url
-
+        @url = params[:return] 
+        redirect_to @url
 #render json: { error: command.errors }, status: :unauthorized
       end
     else
