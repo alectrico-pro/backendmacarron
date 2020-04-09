@@ -117,9 +117,14 @@ class AuthorizeApiRequestByParams
   def decoded_auth_token
 
     @decoded_auth_token ||= JsonWebToken.decode( http_params )    
+    throw "Invalid Token" unless @decoded_auth_token
+
     linea.info "Decoded Token #{decoded_token}"
 
     origen = decoded_token["contenido"]["origen"]
+
+    throw "Invalid Origen" unless origen
+
     linea.info "Origen es #{origen}"
 
     expira = decoded_token["exp"]
