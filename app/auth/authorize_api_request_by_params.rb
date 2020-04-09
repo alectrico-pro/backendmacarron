@@ -121,9 +121,11 @@ class AuthorizeApiRequestByParams
 
     linea.info "Decoded Token #{decoded_token}"
 
-    origen = decoded_token["contenido"]["origen"]
-
-    throw "Invalid Origen" unless origen
+    begin
+      origen = decoded_token["contenido"]["origen"]
+    rescue
+      throw "Invalid Origen" unless origen
+    end
 
     linea.info "Origen es #{origen}"
 
