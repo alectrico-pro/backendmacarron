@@ -66,20 +66,6 @@ class ApplicationController < ActionController::API
     def authenticate_request
       linea.info "Authenticate Request"
     
-      if params[:macarron_de_autorizacion]
-        macarron = params[:macarron_de_autorizacion]
-        resultado = RemoteVerifyMacarron.new( macarron )
-        if resultado.get
-          linea.info "Macarrón Verificado Ok Remotamente"
-        else
-          throw MacarronFail
-          linea.error "Macarrón Verificado Fail Remotamente"
-        end
-      else
-        raise MacarronAusente
-        return
-      end
-
       unless params[:auth_token]  
         raise NotAuthTokenPresent
         return

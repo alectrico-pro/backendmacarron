@@ -22,7 +22,29 @@ class AuthorizeApiRequestByParams
 
   attr_reader :reader, :params
 
+
   def reader
+
+    if params[:macarron_de_autorizacion]
+      macarron = params[:macarron_de_autorizacion]
+      resultado = RemoteVerifyMacarron.new( macarron )
+      if resultado.get
+        linea.info "Macarrón Verificado Ok Remotamente"
+      else
+        linea.error "Macarrón Verificado Fail Remotamente"
+        throw MacarronFail
+      end
+    else        
+      linea.error "Macarrón No pudo Ser Verificado Con En endpoint As"
+      throw MacarronAusente
+    end
+    reader = Reader.new
+    reader_decoded = decoded_auth_token['reader']
+    reader.from_json( reader_decoded.except('user').to_json )
+
+  end
+
+  def reader_v_1
     v = Macarron::Verifier.new()
 
     v.satisfy_exact('LoggedIn = true')
