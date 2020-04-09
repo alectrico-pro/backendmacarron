@@ -29,30 +29,30 @@ class AuthenticationController < ApplicationController
     linea.info "En authenticate" 
     #Se genera un elemento de autenticación llamado token, el que se envía como auth_token en la respuesta de request
     #ommand      = AuthenticateReader.call(params[:rid]) Antes, el token se generaba aquí. Ahora se debe llamar a un servicio de autenticación. Aunque el primero podría hacer de falback.
-    access_key = AccessKey.new.get #El access key debe asignado en el login y gu
+    token = AccessKey.new.get #El access key debe asignado en el login y gu
+    unless token
+      command      = AuthenticateReader.call(params[:rid])
+      if command.success?
+        token = command.result
+      end
+    end
     autorizacion = AutorizaMacarron.call(params[:rid])
 
     linea.info "Intentando autenticar al reader"
-    if command.success?
-      linea.info "AuthenticateReader No dio Error"
-      if command.result
-        linea.info "AuthenticateReader Tiene un Resultado Positivo"
-       #loggedIn y access son variables de AMP paga que permiten cosas
-	if current_reader
-	  linea.info "LoggedIn #{current_reader.logged_in}"
-          respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: command.result, 'loggedIn' => current_reader.logged_in, 'access' => true , 'current_reader' => current_reader.id, 'subscriber' => (not (current_reader.nil?)) }
-	else
-	  linea.info "LoggedIn #{current_reader.logged_in}"
-          respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: command.result, 'loggedIn' => current_reader.logged_in, 'access' => false, 'subscriber' => (not (current_reader.nil?)) }
-	end
-        render json: respuesta
+    if token
+      linea.info "AuthenticateReader Tiene un Resultado Positivo"
+     #loggedIn y access son variables de AMP paga que permiten cosas
+      if current_reader
+        linea.info "LoggedIn #{current_reader.logged_in}"
+        respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: token, 'loggedIn' => current_reader.logged_in, 'access' => true , 'current_reader' => current_reader.id, 'subscriber' => (not (current_reader.nil?)) }
       else
-        linea.error "AuthenticateReader tiene un Resultado Negativo"
-        render json: { auth_token: command.result, 'loggedIn' => false, 'access' => false, 'subscriber' => false }
+        linea.info "LoggedIn #{current_reader.logged_in}"
+        respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: command.result, 'loggedIn' => current_reader.logged_in, 'access' => false, 'subscriber' => (not (current_reader.nil?)) }
       end
+      render json: respuesta
     else
-      linea.error "AuthenticateReader no tuvo éxito, seguro fue un raise"
-      render json: { auth_token: command.result, 'loggedIn' => false, 'access' => false, 'subscriber' => false }
+      linea.error "AuthenticateReader tiene un Resultado Negativo"
+      render json: { auth_token: false, 'loggedIn' => false, 'access' => false, 'subscriber' => false }
     end
   end
 
