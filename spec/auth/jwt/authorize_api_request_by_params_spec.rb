@@ -7,7 +7,9 @@ RSpec.describe AuthorizeApiRequestByParams do
   #Definir algún usuario existente en la base de datos
   let(:invalid_reader)           {   create(:reader) }
   let(:valid_macarron)           { macarron =Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); macarron.add_first_party_caveat('LoggedIn = true') ; ms = macarron.serialize; return ms }
-  let(:invalid_params)           {{ "auth_token" => token_generador( invalid_reader, circuito ), "macarron_de_autorizacion" => valid_macarron }}
+  let!(:invalid_access_key)          { AccessKey.new("-1").get }
+# let(:invalid_params)           {{ "auth_token" => token_generador( invalid_reader, circuito ), "macarron_de_autorizacion" => valid_macarron }}
+  let(:invalid_params)           {{ "auth_token" => invalid_access_key, "macarron_de_autorizacion" => valid_macarron }}
 
 
   subject(:invalid_request_obj)  {   described_class.new(invalid_params) }
@@ -24,7 +26,7 @@ RSpec.describe AuthorizeApiRequestByParams do
       it 'raise an error' do
         #$$expect{ raise StandardError }.to raise_error(StandardError)
         #result = valid_request_obj.call.result	
-	expect{ invalid_request_obj.call }.to raise_error(ExceptionHandler::InvalidToken)
+	expect{ invalid_request_obj.call }.to raise_error(InvalidToken::InvalidToken)
 #        expect(result).to eq(reader)
       end
     end

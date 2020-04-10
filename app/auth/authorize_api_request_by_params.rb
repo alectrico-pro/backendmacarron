@@ -49,11 +49,11 @@ class AuthorizeApiRequestByParams
 
 
   def reader
-
-    if params[:macarron_de_autorizacion]
-      macarron = params[:macarron_de_autorizacion]
+    if params["macarron_de_autorizacion"]
+      macarron = params["macarron_de_autorizacion"]
       linea.info "Macarrón de autorizadón #{macarron}"
       resultado = RemoteVerifyMacarron.new( macarron )
+
       if resultado.get
         linea.info "Macarrón Verificado Ok Remotamente"
       else
@@ -61,16 +61,21 @@ class AuthorizeApiRequestByParams
         return false unless Rails.env.test?
         #aise MacarronAusente
       end
+
     else        
       linea.error "Macarrón No pudo Ser Verificado En endpoint AS"
-      return false
+      raise InvalidToken
       #aise MacarronAusente
     end
 
     reader = Reader.new
-    reader_decoded = decoded_auth_token['reader']
-    reader.from_json( reader_decoded.except('user').to_json )
-
+    begin
+      reader_decoded = decoded_auth_token['reader']
+      reader.from_json( reader_decoded.except('user').to_json )
+      reader.user
+    rescue
+      raise InvalidToken
+    end
   end
 
   def reader_v_1
@@ -118,9 +123,8 @@ class AuthorizeApiRequestByParams
   end
 
   def decoded_auth_token
-
     @decoded_auth_token ||= JsonWebToken.decode( http_params )    
-    throw "Invalid Token" unless @decoded_auth_token
+    raise InvalidToken unless @decoded_auth_token
 
     linea.info "Decoded Token #{@decoded_auth_token}"
 

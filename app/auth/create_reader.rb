@@ -1,9 +1,10 @@
-#Destruye un reader, equivale a cerrar la cuenta en un dispositivo
+#Crea un reader, equivale a cerrar la cuenta en un dispositivo
 class CreateReader
   prepend SimpleCommand
 
-  def initialize( rid)
-    @rid = rid
+  def initialize( rid, clientId )
+    @rid      = rid
+    @clientId = clientId
   end
 
   def call
@@ -15,6 +16,11 @@ class CreateReader
   attr_accessor :rid
 
   def reader
-    Reader.find_or_create_by(:rid => rid)
+    reader  = Reader.find_or_create_by(:rid => rid)
+    cliente = Client.find_or_create_by(:reader_id => rid, :clientId => @clientId)
+    if cliente.present?
+      reader.update(:clientId => cliente.id)    
+    end
+    reader
   end
 end

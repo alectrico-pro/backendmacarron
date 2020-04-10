@@ -351,7 +351,7 @@ RSpec.describe 'Items API', :type => 'request' do
       end
 
       it "to be loggedIn" do
-        expect(json['loggedIn']).to eq(false) #No se loga aunque no se haya creado el cliente. Debido a que se usa el reader para logar
+        expect(json['loggedIn']).to eq(true) #No se loga aunque no se haya creado el cliente. Debido a que se usa el reader para logar
       end
 
     end
@@ -376,7 +376,7 @@ RSpec.describe 'Items API', :type => 'request' do
         expect(response).to have_http_status(200)
       end
       it "to be loggedIn" do
-        expect(json['loggedIn']).to eq(nil) #no debe logarse si no se ha creado el token, o más bien el reader que responde al token
+        expect(json['loggedIn']).to eq(false) #no debe logarse si no se ha creado el token, o más bien el reader que responde al token
       end
     end
 
@@ -393,7 +393,7 @@ RSpec.describe 'Items API', :type => 'request' do
         expect(response).to have_http_status(200)
       end
       it "to be loggedIn" do
-        expect(json['loggedIn']).to eq(nil) #La razón fundamental es que no se ha creado el token
+        expect(json['loggedIn']).to eq(false) #La razón fundamental es que no se ha creado el token
       end
     end
 
@@ -402,7 +402,7 @@ RSpec.describe 'Items API', :type => 'request' do
       before {
         otro_reader_existente = Reader.create!(:rid => "amprid2")
         get  "/sign_in", params: {:rid => "amprid2" , :return => retorno}
-        get "/authenticate", params: {:rid => "amprid2",\
+        get "/authenticate", params: {:rid => "amprid1",\
 				      :__amp_source_origin => "https://help.coronavid.cl" },\
 				      headers: {'Origin' => "https://help.coronavid.cl"}
       }
@@ -410,7 +410,7 @@ RSpec.describe 'Items API', :type => 'request' do
         expect(response).to have_http_status(200)
       end
       it "to be loggedIn" do
-        expect(json['loggedIn']).to eq(false) #No se debe logar cuando ya exista otro reader. Esto es, el token no es requisito para logarse, solo para acceder al contenido.
+        expect(json['loggedIn']).to eq(false) #No se debe logar si el reader no existe.
       end
     end
 
@@ -423,7 +423,7 @@ RSpec.describe 'Items API', :type => 'request' do
         expect(response).to have_http_status(200)
       end
       it "to be loggedIn out" do
-        expect(json['loggedIn']).to eq(nil) #No se acepta autenticación si el usuario no existe
+        expect(json['loggedIn']).to eq(false) #No se acepta autenticación si el usuario no existe
       end
     end
 
@@ -505,7 +505,7 @@ RSpec.describe 'Items API', :type => 'request' do
        }
 
      it 'loggedIn=false' do
-       expect(json['loggedIn']).to eq(nil)
+       expect(json['loggedIn']).to eq(false)
      end
     end
   end

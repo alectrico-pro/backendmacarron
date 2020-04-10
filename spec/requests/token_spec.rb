@@ -27,23 +27,20 @@ RSpec.describe 'Token encode y decode, olnly reader beacon', :type => 'request' 
 
     describe 'GET /authenticate after get_token' do
       before {
-        get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/backend.coronavid.cl/authenticate"}
-	get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => "https://help.coronavid.cl" }, headers: {'Origin' => "https://help.coronavid.cl"}
+       get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/backend.coronavid.cl/authenticate"}
+       get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => "https://help.coronavid.cl" }, headers: {'Origin' => "https://help.coronavid.cl"}
       }
       it 'return' do 
         expect(json['auth_token']).to match(/ey/)
       end
 
-      it 'loggedIn false' do #No se puede dar loggin hasta que no se cree un usuario
-        expect(json['loggedIn']).to eq(false)
+      it 'loggedIn true' do #Se puede dar loggin aunque no se cree un usuario
+        expect(json['loggedIn']).to eq(true)
       end	
 
       it 'get decoded well' do
-	r = Reader.new
-        reader_decoded= JsonWebToken.decode(json['auth_token'])['reader']
-	#raise reader_decoded.to_json.inspect
-	r.from_json(reader_decoded.to_json)
-        expect( r.id).to match(1)
+        rid = JsonWebToken.decode(json['auth_token'])['rid']
+        expect( rid).to match("amprid")
       end
     end
   end

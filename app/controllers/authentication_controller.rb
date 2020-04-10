@@ -28,14 +28,12 @@ class AuthenticationController < ApplicationController
     #A lo que parece también se genera un token fresco, creo que eso ya no es necesario
     linea.info "En authenticate" 
     #Se genera un elemento de autenticación llamado token, el que se envía como auth_token en la respuesta de request
-    #ommand      = AuthenticateReader.call(params[:rid]) Antes, el token se generaba aquí. Ahora se debe llamar a un servicio de autenticación. Aunque el primero podría hacer de falback.
-    token = AccessKey.new.get #El access key debe asignado en el login y gu
-    #unless token
-     # command      = AuthenticateReader.call(params[:rid])
-      #if command.success?
-      #  token = command.result
-      #end
-    #end
+#    command      = AuthenticateReader.call(params[:rid]) ##Antes, el token se generaba aquí. Ahora se debe llamar a un servicio de autenticación. Aunque el primero podría hacer de falback.
+    token = AccessKey.new(params[:rid]).get #El access key debe asignado en el login y gu
+ #     command      = AuthenticateReader.call(params[:rid])
+  #    if command.success?
+   #     token = command.result
+    #  end
     autorizacion = AutorizaMacarron.call(params[:rid])
 
     if token
@@ -43,18 +41,9 @@ class AuthenticationController < ApplicationController
       linea.info token
      #loggedIn y access son variables de AMP paga que permiten cosas
       if current_reader
-        if current_reader.logged_in
-          linea.info "LoggedIn #{current_reader.logged_in}"
-          respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: token, 'loggedIn' => current_reader.logged_in, 'access' => true , 'current_reader' => current_reader.id, 'subscriber' => (not (current_reader.nil?)) }
-        else
-          linea.info "LoggedIn #{current_reader.logged_in}"
-          respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: false, 'loggedIn' => current_reader.logged_in, 'access' => false, 'subscriber' => (not (current_reader.nil?)) }
-        end
-
+        respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: token, 'loggedIn' => true, 'access' => true , 'current_reader' => current_reader.id, 'subscriber' => (not (current_reader.nil?)) }
       else
-        linea.info "LoggedIn false"
         respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: false, 'loggedIn' => false, 'access' => false, 'subscriber' => (not (current_reader.nil?)) }
-
       end
       render json: respuesta
     else

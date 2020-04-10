@@ -46,8 +46,8 @@ RSpec.describe 'Items API', :type => 'request' do
         expect(json['auth_token']).to match(/ey/)
       end
 
-      it 'loggedIn false' do #No se puede dar loggin hasta que no se cree un usuario
-        expect(json['loggedIn']).to eq(false)
+      it 'loggedIn true' do #Se puede dar loggin aunque no se cree un usuario
+        expect(json['loggedIn']).to eq(true)
       end	
     end
 
@@ -206,7 +206,7 @@ RSpec.describe 'Items API', :type => 'request' do
         expect(response).to have_http_status(200)
       end
       it "to be loggedIn" do
-        expect(json['loggedIn']).to eq(false) #No se debe logar porque falta el usuario
+        expect(json['loggedIn']).to eq(true) 
       end
     end
 
@@ -224,7 +224,7 @@ RSpec.describe 'Items API', :type => 'request' do
         expect(response).to have_http_status(200)
       end
       it "to be loggedIn" do
-        expect(json['loggedIn']).to eq(nil) #no debe logarse si no se ha creado el token, o más bien el reader que responde al token
+        expect(json['loggedIn']).to eq(false) 
       end
     end
 
@@ -241,7 +241,7 @@ RSpec.describe 'Items API', :type => 'request' do
         expect(response).to have_http_status(200)
       end
       it "to be logged out" do
-        expect(json['loggedIn']).to eq(nil) #La razón fundamental es que no se ha creado el token
+        expect(json['loggedIn']).to eq(false) #La razón fundamental es que no se ha creado el token
       end
     end
 
@@ -258,7 +258,7 @@ RSpec.describe 'Items API', :type => 'request' do
         expect(response).to have_http_status(200)
       end
       it "to be logged out" do
-        expect(json['loggedIn']).to eq(nil) #La razón fundamental es que no se ha creado el token
+        expect(json['loggedIn']).to eq(false) #La razón fundamental es que no se ha creado el token
       end
     end
     
@@ -269,7 +269,7 @@ RSpec.describe 'Items API', :type => 'request' do
       before {
         otro_reader_existente = Reader.create!(:rid => "amprid2")
         get  "/sign_in", params: {:rid => "amprid2" , :return => retorno}
-        get "/authenticate", params: {:rid => "amprid2",\
+        get "/authenticate", params: {:rid => "amprid1",\
                                       :macarron_de_autorizacion => :valid_macarron,\
 				      :__amp_source_origin => "https://help.coronavid.cl" },\
 				      headers: {'Origin' => "https://help.coronavid.cl"}
@@ -294,7 +294,7 @@ RSpec.describe 'Items API', :type => 'request' do
         expect(response).to have_http_status(200)
       end
       it "to be loggedIn" do
-        expect(json['loggedIn']).to eq(nil) #No se acepta autenticación si el usuario no existe
+        expect(json['loggedIn']).to eq(false) #No se acepta autenticación si el usuario no existe
       end
     end
 
@@ -366,7 +366,7 @@ RSpec.describe 'Items API', :type => 'request' do
        }
 
      it 'loggedIn=false' do
-       expect(json['loggedIn']).to eq(nil)
+       expect(json['loggedIn']).to eq(false)
      end
     end
   end
