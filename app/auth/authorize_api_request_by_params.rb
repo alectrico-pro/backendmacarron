@@ -72,7 +72,6 @@ class AuthorizeApiRequestByParams
     begin
       reader_decoded = decoded_auth_token['reader']
       reader.from_json( reader_decoded.except('user').to_json )
-      reader.user
     rescue
       begin
         reader = Reader.find_or_create_by(:id => decoded_auth_token['rid'])
@@ -80,7 +79,7 @@ class AuthorizeApiRequestByParams
         raise InvalidToken
       end
     end
-    reader.try(:user)
+    reader
   end
 
   def reader_v_1
