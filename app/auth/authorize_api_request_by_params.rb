@@ -69,15 +69,18 @@ class AuthorizeApiRequestByParams
       #aise MacarronAusente
     end
 
+    decoded_token = decoded_auth_token
+    
     linea.info "Analizando token decodificado"
-    if decoded_auth_token.has_key?('rid')
+    linea.info "Toke es #{decoded_token}"
+    if decoded_token.has_key?('rid')
       linea.info "Token Remoto"
-      reader = Reader.find_by(:id => decoded_auth_token['rid'])
+      reader = Reader.find_by(:id => decoded_token['rid'])
       raise InvalidToken unless reader
-    elsif decoded_auth_token.has_key?('reader')
+    elsif decoded_token.has_key?('reader')
       linea.info "Token Local"
       reader = Reader.new
-      reader_decoded = decoded_auth_token['reader']
+      reader_decoded = decoded_token['reader']
       reader.from_json( reader_decoded.except('user').to_json )
     else
       linea.info "Token invalido"
