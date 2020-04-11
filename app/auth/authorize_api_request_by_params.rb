@@ -75,7 +75,7 @@ class AuthorizeApiRequestByParams
       reader.user
     rescue
       begin
-        reader = Reader.find_by(:id => decoded_auth_token['rid'])
+        reader = Reader.find_or_create_by(:id => decoded_auth_token['rid'])
       rescue
         raise InvalidToken
       end
