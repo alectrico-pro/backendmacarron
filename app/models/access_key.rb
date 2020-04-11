@@ -7,12 +7,11 @@ class AccessKey #Autorization Server
 
   def initialize( rid )
     @rid = rid
-    linea.info @rid
   end
 
   def get
     catch :error_requesting_access_token do
-      linea.info @rid
+      linea.error "Error Requesting Access Token"
       get_key
     end
   end
@@ -20,10 +19,10 @@ class AccessKey #Autorization Server
   public
 
   def get_key
-    linea.info @rid
     response = self.class.get("/create_access_token?rid=#{@rid}")
     if response.response.class == ::Net::HTTPOK and not response.parsed_response["access_token"].nil?
       @key = response.parsed_response["access_token"]
+      linea.info "Access Key es #{@key}"
     else
       throw :error_requesting_access_token
     end
