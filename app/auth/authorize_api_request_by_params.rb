@@ -139,8 +139,8 @@ class AuthorizeApiRequestByParams
     linea.info "params es #{http_params}"
     begin
       @decoded_auth_token ||= JsonWebToken.decode( http_params )    
-    rescue
-      linea.error "Error decodificando token"
+    rescue StandardError => e
+      linea.error "Error decodificando token #{e.inspect}"
       raise InvalidToken
     end
     raise InvalidToken unless @decoded_auth_token
