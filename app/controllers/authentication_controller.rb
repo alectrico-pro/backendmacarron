@@ -29,11 +29,11 @@ class AuthenticationController < ApplicationController
     linea.info "En authenticate" 
     #Se genera un elemento de autenticación llamado token, el que se envía como auth_token en la respuesta de request
 #    command      = AuthenticateReader.call(params[:rid]) ##Antes, el token se generaba aquí. Ahora se debe llamar a un servicio de autenticación. Aunque el primero podría hacer de falback.
-    #oken = AccessKey.new(params[:rid]).get #El access key debe asignado en el login y gu
-    command      = AuthenticateReader.call(params[:rid])
-    if command.success?
-      token = command.result
-    end
+    token = AccessKey.new(params[:rid]).get #El access key debe asignado en el login y gu
+    #command      = AuthenticateReader.call(params[:rid])
+    #if command.success?
+     # token = command.result
+    ##end
     autorizacion = AutorizaMacarron.call(params[:rid])
 
     if token
