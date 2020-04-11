@@ -11,7 +11,6 @@ class AccessKey #Autorization Server
 
   def get
     catch :error_requesting_access_token do
-      linea.error "Error Requesting Access Token"
       get_key
     end
   end
@@ -24,6 +23,7 @@ class AccessKey #Autorization Server
       @key = response.parsed_response["access_token"]
       linea.info "Access Key es #{@key}"
     else
+      linea.error "Error Requesting Access Token " 
       throw :error_requesting_access_token
     end
 
