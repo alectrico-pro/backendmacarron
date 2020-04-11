@@ -135,7 +135,13 @@ class AuthorizeApiRequestByParams
   end
 
   def decoded_auth_token
-    @decoded_auth_token ||= JsonWebToken.decode( http_params )    
+    linea.info "Intentando decodificar el token"
+    linea.info "params es #{http_params}"
+    begin
+      @decoded_auth_token ||= JsonWebToken.decode( http_params )    
+    rescue
+      raise InvalidToken
+    end
     raise InvalidToken unless @decoded_auth_token
 
     linea.info "Decoded Token #{@decoded_auth_token}"
