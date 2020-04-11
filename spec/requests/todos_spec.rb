@@ -1,21 +1,26 @@
 require 'rails_helper'
 
+#Este recurso es ofrecido por el backend y no por un microservicio. Usa un macarrón de autorización validado por un servidor de autorización remota
+#Es un recurso normal, y solo hay que proveerlos los parámetros adecuados de autorización.
+#Observar que usa un token de autorización que incluye un objeto reader serializado json
 RSpec.describe 'Todos API', type: :request do
-  let!(:todos)        {  create_list(:todo, 10) }
-  let(:todo_id)       {  todos.first.id }
-  let(:user)          {  create(:user)   }
-  let(:reader)        {  create(:reader,:user => user )  }
-  let(:coded_token)   {  JsonWebToken.encode(reader: reader.as_json(:include => :user)) }
-  let(:valid_macarron) { macarron =Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); macarron.add_first_party_caveat('LoggedIn = true') ; ms= macarron.serialize; return ms }
 
-
-  let(:headers)       {{ "Origin" => "https://help.coronavid.cl"  }}
-  
-  let(:valid_params)  {{ :__amp_source_origin => 'https://help.coronavid.cl',\
-                         :auth_token => coded_token,\
-                         :macarron_de_autorizacion => valid_macarron
-                   }}
-
+  let!(:todos)         {  create_list(:todo, 10) }
+  let(:todo_id)        {  todos.first.id }
+  let(:user)           {  create(:user)   }
+  let(:reader)         {  create(:reader, :user => user )  }
+  let(:coded_token)    {  JsonWebToken.encode( reader: reader.as_json(:include => :user)) }
+  let(:valid_macarron) {  \
+        macarron =  Macarron.new( location: 'http://autoriza.alectrica.cl',\
+                          identifier: 'w',\
+                          key: ENV['SECRET_KEY_BASE'] );\
+        macarron.add_first_party_caveat('LoggedIn = true');\
+        ms= macarron.serialize;\
+        return ms }
+  let(:headers)        {{ "Origin" => "https://help.coronavid.cl"  }}
+  let(:valid_params)   {{ :__amp_source_origin => 'https://help.coronavid.cl',\
+                          :auth_token => coded_token,\
+                          :macarron_de_autorizacion => valid_macarron  }}
    
   #Test suit for GET /todos
   #Index
@@ -25,7 +30,7 @@ RSpec.describe 'Todos API', type: :request do
 
     it 'returns todos' do
       #Note 'json' is a custom helper to parse JSON responses
-      #está en el directorio support que debe ser configurad para cargarlo en rails_helper
+      #está en el directorio support que debe ser configurado para cargarlo en rails_helper
       expect(json).not_to be_empty
       expect(json.size).to eq(10)
     end
@@ -115,7 +120,6 @@ RSpec.describe 'Todos API', type: :request do
     end
 
   end
-
 
   #Test suit for DELETE /todos/:id
   #Delete

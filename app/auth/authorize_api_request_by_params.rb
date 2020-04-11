@@ -128,10 +128,10 @@ class AuthorizeApiRequestByParams
 
     linea.info "Decoded Token #{@decoded_auth_token}"
 
-    if @decoded_auth_token.has_key?("contenido")
+    if @decoded_auth_token.has_key?("origen") and @decoded_auth_token["origen"] == "autoriza.herokuapp.com"
       begin
         linea.info "El token es remoto"
-        origen = @decoded_auth_token["contenido"]["origen"]
+        origen = @decoded_auth_token["origen"]
         linea.info "Origen es #{origen}"
 
          expira = decoded_token["exp"]

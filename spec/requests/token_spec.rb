@@ -1,14 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe 'Token encode y decode, olnly reader beacon', :type => 'request' do
+RSpec.describe 'Token encode y decode, only reader beacon', :type => 'request' do
 
   #Test suite integrando
-  context "Funcionanmiento del token" do
+  context "Funcionamiento del token" do
+
     let(:return_params)  {{:rid => "amprid", :return => "https::/backend.coronavid.cl/authenticate" } }
     let(:retorno)        {"https::/backend.coronavid.cl/authenticate"              }    
     let(:success_return) {"https::/backend.coronavid.cl/authenticate#success=true"      }
-    let(:headers)       {{ "Origin" => "https://help.coronavid.cl"  }}
+    let(:headers)        {{ "Origin" => "https://help.coronavid.cl"  }}
 
+
+    #Al crear el token, se crea un reader si antes no existía, pero igual se verifica lo mismo en authenticate de forma que siempre habrá un reader cuando haya un token. El Usuario debe ser creado explícitamente por el usuario llenando un formulario de registro.
     describe 'GET /create_token' do
 
       before {
@@ -25,6 +28,7 @@ RSpec.describe 'Token encode y decode, olnly reader beacon', :type => 'request' 
       end
     end
 
+    #Después de creado el token se decreta que está logado, no es necesario que el usuario esté creado
     describe 'GET /authenticate after get_token' do
       before {
        get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/backend.coronavid.cl/authenticate"}

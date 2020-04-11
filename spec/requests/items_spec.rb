@@ -1,5 +1,8 @@
 require 'rails_helper'
-#Esta clase es el backend de la versión de designer que se autoriza con Java Web Token. Esa versión se llama frontend
+#Esta clase es el backend de la versión de designer que se autoriza con Java Web Token. Esa versión se llama frontend. Veremos en qué termina eso
+#Por lo pronto items usa un macarrón de autorizació y un token local
+#Se prueba todo el flujo de identificación y autorización.
+#Parte con la creación del token, luego se puede hacer login (sign_in). También se puede crear un cliente y hacer sign_in.
 RSpec.describe 'Items API', :type => 'request' do
 
   # 
@@ -246,6 +249,7 @@ RSpec.describe 'Items API', :type => 'request' do
     describe 'GET /authenticate after get_token' do
       before {
         get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/backend.alectrico.cl/authenticate"}
+        #Authenticate crea otro token para comunicarse con el AS
 	get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => "https://help.coronavid.cl" }, headers: {'Origin' => "https://help.coronavid.alectrico.cl"}
       }
       it 'return' do 
@@ -256,6 +260,7 @@ RSpec.describe 'Items API', :type => 'request' do
     describe 'GET /contactos/create' do
       before {
         get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => "https::/backend.alectrico.cl/authenticate"}
+        #Authenticate crea otro token para comunicarse con el AS
         get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => "https://help.coronavid.cl" }, headers: {'Origin' => "https://help.coronavid.alectrico.cl"}
 	post "/contactos/create", params: {:rid => "amprid", :clientId => "clientId",:name => "Nombre", :email => "email@example.com", :fono => '987654321', :password => "123456",:password_confirmation => "123456", :__amp_source_origin => "https://help.coronavid.cl"}, headers: {'Origin' => "https://help.coronavid.cl"}
       } 
@@ -290,6 +295,7 @@ RSpec.describe 'Items API', :type => 'request' do
 	  :clientId => "clientId",\
 	  :return => "https::/backend.alectrico.cl/authenticate"}
 
+        #Authenticate crea otro token para comunicarse con el AS
         get "/authenticate",\
 	  params: {:rid => "amprid",\
 	    :__amp_source_origin => "https://help.coronavid.cl" },\
@@ -309,6 +315,7 @@ RSpec.describe 'Items API', :type => 'request' do
 	  params: {:rid => "amprid" ,\
 	  :return => retorno}
 
+        #Authenticate crea otro token para comunicarse con el AS
         get "/authenticate",\
 	  params: {:rid => "amprid",\
 	  :__amp_source_origin => "https://help.coronavid.cl" },\
@@ -331,6 +338,7 @@ RSpec.describe 'Items API', :type => 'request' do
           params: {:rid => "amprid", :clientId => "clientId",\
           :return => "https::/backend.alectrico.cl/authenticate"}
 
+        #Authenticate crea otro token para comunicarse con el AS
         get "/authenticate",\
 	  params: {:rid => "amprid",\
 	  :__amp_source_origin => "https://help.coronavid.cl" },\
@@ -366,6 +374,7 @@ RSpec.describe 'Items API', :type => 'request' do
         get  "/sign_in",\
 	  params: {:rid => "amprid" , :return => retorno}
 
+        #Authenticate crea otro token para comunicarse con el AS
         get "/authenticate",\
 	  params: {:rid => "amprid",\
 	  :__amp_source_origin => "https://help.coronavid.cl" },\
@@ -402,6 +411,8 @@ RSpec.describe 'Items API', :type => 'request' do
       before {
         otro_reader_existente = Reader.create!(:rid => "amprid2")
         get  "/sign_in", params: {:rid => "amprid2" , :return => retorno}
+
+        #Authenticate crea otro token para comunicarse con el AS
         get "/authenticate", params: {:rid => "amprid1",\
 				      :__amp_source_origin => "https://help.coronavid.cl" },\
 				      headers: {'Origin' => "https://help.coronavid.cl"}
@@ -417,6 +428,7 @@ RSpec.describe 'Items API', :type => 'request' do
 
     describe 'GET /authenticate a pesar de nocrear token ni cliente ni authenticate, pero con otro reader, y sin sign_in previo' do
       before {
+        #Authenticate crea otro token para comunicarse con el AS
         get "/authenticate", params: {:rid => "amprid2", :__amp_source_origin => "https://help.coronavid.cl" }, headers: {'Origin' => "https://help.coronavid.cl"}
       }
       it 'return code 200'  do
@@ -434,6 +446,7 @@ RSpec.describe 'Items API', :type => 'request' do
         get "/create_token", params: {:rid => "amprid",\
 				      :clientId => "clientId",\
 				      :return => "https::/backend.alectrico.cl/authenticate"}
+        #Authenticate crea otro token para comunicarse con el AS
         get "/authenticate", params: {:rid => "amprid",\
 				      :__amp_source_origin => "https://help.coronavid.cl" },\
 				      headers: {'Origin' => "https://help.coronavid.cl"}
@@ -476,6 +489,7 @@ RSpec.describe 'Items API', :type => 'request' do
 			       :clientId => "clientId",\
 			       :return => retorno} 
         #Create token, crea un token para guardar el puntero a un reader. Para ello se debe crear antes el reader, el que quedará también indizado por rid. Tambíén se creará un cliente especificando su clientId
+        #Authenticate crea otro token para comunicarse con el AS
         get "/authenticate", params: {:rid => "amprid",\
 				      :__amp_source_origin => "https://help.coronavid.cl" },\
 				      headers: {'Origin' => "https://help.coronavid.cl"}
@@ -499,6 +513,7 @@ RSpec.describe 'Items API', :type => 'request' do
 	#Con esto puede emular un helper current_reader, cuya existencia se usa para decretar que es está en estado logado o loggedIn
 	#Es importante saber qeu se devuelve el auth_token para que se pueda emplear en los comandos de contenido y poder authorizar cada request solo en base al token encriptado
 	get "/destroy_reader", params: {:rid => "amprid",:return => retorno }
+        #Authenticate crea otro token para comunicarse con el AS
         get "/authenticate", params: {:rid => "amprid",\
 				      :__amp_source_origin => "https://help.coronavid.cl" },\
 				      headers: {'Origin' => "https://help.coronavid.cl"}

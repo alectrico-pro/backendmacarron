@@ -6,6 +6,8 @@ RSpec.describe 'Authenticate API', :type => 'request' do
   let(:retorno)        {  "https::/backend.alectrico.cl/authenticate"                }
   let(:success_return) {  "https::/backend.alectrico.cl/authenticate#success=true"   }
 
+  #Crea un token local que contiene un apuntador al reader de amp pages.
+  #Idealmente el token sería suficiente por sí solo para permitir el acceso desde el microservicio al backend, pero en este caso, es interesante no romper la dinámica de las páginas amp. De forma que he terminado por mezclar ambos métodos de autorización
   describe 'GET /create_token' do
     before {
       reader      = create(:reader)
@@ -25,6 +27,7 @@ RSpec.describe 'Authenticate API', :type => 'request' do
 
   end
 
+  #La autenticación de las páginas amp se lleva a cabo llamando a authenticate cada vez que se refresque la página AMP. En authenticate se verifica que el origen sea el correcto y que la página entregue el token de autorización. Note que normalmente que a las páginas AMP les bastaría con entregar el clientId y o el reader_id. Pero en mi caso, proceso todo eso y además verifico que el token local de autenticacioń apunte al reader.
   describe 'GET /authenticate' do
     context "Si recibe rid" do
       context "y recibe origen " do
