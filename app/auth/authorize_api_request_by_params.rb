@@ -49,6 +49,7 @@ class AuthorizeApiRequestByParams
 
 
   def reader
+
     if params["macarron_de_autorizacion"]
       macarron = params["macarron_de_autorizacion"]
       linea.info "Macarrón de autorizadón #{macarron}"
@@ -68,16 +69,17 @@ class AuthorizeApiRequestByParams
       #aise MacarronAusente
     end
 
-    reader = Reader.new
-    begin
+    if decoded_auth_token.has_key?('rid')
+      linea.info "Token Remoto"
+      reader = Reader.find_by(:id => decoded_auth_token['rid'])
+      raise InvalidToken unless reader
+    elsif decoded_auth_token.has_key?('reader')
+      linea.info "Token Local"
+      reader = Reader.new
       reader_decoded = decoded_auth_token['reader']
       reader.from_json( reader_decoded.except('user').to_json )
-    rescue
-      begin
-        reader = Reader.find_or_create_by(:id => decoded_auth_token['rid'])
-      rescue
-        raise InvalidToken
-      end
+    else
+      raise InvalidToken
     end
     reader
   end

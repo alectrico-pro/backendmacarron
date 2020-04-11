@@ -33,7 +33,7 @@ RSpec.describe AuthorizeApiRequestByParams do
 
     context 'when valid request' do
       it 'return reader objet' do
-        expect(valid_request_obj.call.result).to eq(valid_user)
+        expect(valid_request_obj.call.result).to eq(valid_reader)
       end
     end
   end
