@@ -1,6 +1,6 @@
 class AuthenticationController < ApplicationController
 
-  attr_reader        :current_reader
+#  attr_reader        :current_reader
   skip_before_action :authenticate_request
   skip_before_action :cors, :only => [:create_token,\
                                       :create_reader,\
