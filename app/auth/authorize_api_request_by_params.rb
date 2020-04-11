@@ -80,7 +80,7 @@ class AuthorizeApiRequestByParams
         raise InvalidToken
       end
     end
-    reader.user
+    reader.try(:user)
   end
 
   def reader_v_1
