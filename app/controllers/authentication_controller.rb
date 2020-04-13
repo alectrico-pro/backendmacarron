@@ -41,7 +41,7 @@ class AuthenticationController < ApplicationController
       linea.info token
      #loggedIn y access son variables de AMP paga que permiten cosas
       if current_reader
-        respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: false,  token: false, 'loggedIn' => true, 'access' => true , 'current_reader' => current_reader.id, 'subscriber' => (not (current_reader.nil?)) }
+        respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: false,  token: true, 'loggedIn' => true, 'access' => true , 'current_reader' => current_reader.id, 'subscriber' => (not (current_reader.nil?)) }
       else
         respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: false, 'loggedIn' => false, 'access' => false, 'subscriber' => (not (current_reader.nil?)) }
       end
