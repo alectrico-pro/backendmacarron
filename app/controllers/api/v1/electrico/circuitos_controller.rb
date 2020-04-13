@@ -271,6 +271,7 @@ module Api
 
         def addToCircuito
 
+          response.headers['Access-Control-Allow-Credentials'] = true
           linea.info "Macarrón es #{params[:macarron_de_autorizacion]}"
           servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
           servicio.agrega_carga
