@@ -50,7 +50,7 @@ class ApplicationController < ActionController::API
     def authenticate_request
       linea.info "Authenticate Request"
     
-      unless params[:auth_token]  
+      unless params[:token]  
         raise NotAuthTokenPresent
         return
       end
@@ -67,7 +67,7 @@ class ApplicationController < ActionController::API
 
 
       unless @current_reader
-        raise InvalidToken 
+        raise NoReader 
         return
       end
 

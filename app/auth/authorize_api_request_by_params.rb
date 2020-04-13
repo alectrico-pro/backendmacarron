@@ -176,8 +176,8 @@ class AuthorizeApiRequestByParams
   end
 
   def http_params
-    if params[ 'auth_token' ].present?
-      return params[ 'auth_token' ]
+    if params[ 'token' ].present?
+      return params[ 'token' ]
     else
       raise NotAuthTokenPresent
       return
