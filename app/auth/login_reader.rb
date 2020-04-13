@@ -8,7 +8,8 @@ class LoginReader
 
   def call
 #+ JsonWebToken.encode( reader: reader.as_json(:include => :user)) if reader
-    reader
+    access_key = AccessKey.new(@rid).get
+    #eader
   end
 
   private
