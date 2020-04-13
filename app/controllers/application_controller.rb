@@ -67,7 +67,7 @@ class ApplicationController < ActionController::API
 
 
       unless @current_reader
-        raise NoReader 
+        raise NotReader 
         return
       end
 

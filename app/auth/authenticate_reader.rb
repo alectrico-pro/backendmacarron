@@ -1,4 +1,4 @@
-#Crea un token para cada reader de amp-pages. Los readers pueden tener un usuario común que se denominana user. También está codificado en el token
+#Crea un token para cada reader de amp-pages. Los readers pueden tener un usuario común que se denominan user. También está codificado en el token
 class AuthenticateReader #Lo uso como before action en el controlador authentication
   include ::Linea
   include InvalidCredentials

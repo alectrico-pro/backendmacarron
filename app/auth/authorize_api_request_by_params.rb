@@ -75,7 +75,7 @@ class AuthorizeApiRequestByParams
     linea.info "Token es #{decoded_token}"
     if decoded_token.has_key?('rid')
       linea.info "Token Remoto"
-      reader = Reader.find_by(:id => decoded_token['rid'])
+      reader = Reader.find_by(:rid => decoded_token['rid'])
       linea.info "rid es #{decoded_token['rid']}"
       raise NotReader unless reader
     elsif decoded_token.has_key?('reader')
