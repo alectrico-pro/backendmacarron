@@ -36,7 +36,7 @@ class AuthenticationController < ApplicationController
     ##end
     autorizacion = AutorizaMacarron.call(params[:rid])
 
-    if token
+    if auth_token
       linea.info "Se tiene un token"
       linea.info token
      #loggedIn y access son variables de AMP paga que permiten cosas
