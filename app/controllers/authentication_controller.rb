@@ -29,7 +29,7 @@ class AuthenticationController < ApplicationController
     linea.info "En authenticate" 
     #Se genera un elemento de autenticación llamado token, el que se envía como auth_token en la respuesta de request
 #    command      = AuthenticateReader.call(params[:rid]) ##Antes, el token se generaba aquí. Ahora se debe llamar a un servicio de autenticación. Aunque el primero podría hacer de falback.
-    token = AccessKey.new(params[:rid]).get #El access key debe asignado en el login y gu
+    auth_token = AccessKey.new(params[:rid]).get #El access key debe asignado en el login y gu
     #command      = AuthenticateReader.call(params[:rid])
     #if command.success?
      # token = command.result
@@ -41,14 +41,14 @@ class AuthenticationController < ApplicationController
       linea.info token
      #loggedIn y access son variables de AMP paga que permiten cosas
       if current_reader
-        respuesta = { macarron_de_autorizacion: autorizacion.result, token: token, 'loggedIn' => true, 'access' => true , 'current_reader' => current_reader.id, 'subscriber' => (not (current_reader.nil?)) }
+        respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: auth_token, 'loggedIn' => true, 'access' => true , 'current_reader' => current_reader.id, 'subscriber' => (not (current_reader.nil?)) }
       else
-        respuesta = { macarron_de_autorizacion: autorizacion.result, token: false, 'loggedIn' => false, 'access' => false, 'subscriber' => (not (current_reader.nil?)) }
+        respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: false, 'loggedIn' => false, 'access' => false, 'subscriber' => (not (current_reader.nil?)) }
       end
       render json: respuesta
     else
       linea.error "AuthenticateReader tiene un Resultado Negativo"
-      render json: { token: false, 'loggedIn' => false, 'access' => false, 'subscriber' => false }
+      render json: { auth_token: false, 'loggedIn' => false, 'access' => false, 'subscriber' => false }
     end
   end
 
@@ -119,7 +119,7 @@ class AuthenticationController < ApplicationController
 
   def create_user #es el sign_up de amp pages
 
-    command = CreateUser.call(params[:email], params[:password], params[:password_confirmation], params[:rid], params[:clientId])
+    command = CreateUser.call( params[:email], params[:password], params[:password_confirmation], params[:rid], params[:clientId])
 
     if command.success?
       response.headers['AMP-Access-Control-Allow-Source-Origin'] = request.headers['Origin']
