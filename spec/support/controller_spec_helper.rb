@@ -1,8 +1,8 @@
 module ControllerSpecHelper
 
-  def token_generador( reader, circuito )
+  def token_generador( reader )
     if reader
-      token = JsonWebToken.encode( circuito: circuito.as_json, reader: reader.as_json( :include => :user ) )       
+      token = JsonWebToken.encode( rid: reader.as_json( :include => :user )["rid"] )       
       #decoded_token = JsonWebToken.decode(token)
       #raise decoded_token['circuito'].inspect
       return token

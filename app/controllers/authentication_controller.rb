@@ -38,7 +38,7 @@ class AuthenticationController < ApplicationController
 
     if auth_token
       linea.info "Se tiene un token"
-      linea.info token
+      linea.info auth_token
      #loggedIn y access son variables de AMP paga que permiten cosas
       if current_reader
         respuesta = { macarron_de_autorizacion: autorizacion.result, auth_token: auth_token, 'loggedIn' => true, 'access' => true , 'current_reader' => current_reader.id, 'subscriber' => (not (current_reader.nil?)) }
