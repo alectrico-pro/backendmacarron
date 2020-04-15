@@ -217,7 +217,7 @@ module Api
           response.headers['Access-Control-Allow-Credentials'] = true
           response.headers['Access-Control-Expose-Headers'] = 'AMP-Access-Control-Allow-Source-Origin'
 
-	  circuito = @carga.circuito
+	  #circuito = @carga.circuito
 
           render json: {:resultado => "ok"  }, status: :ok 
 
