@@ -217,17 +217,22 @@ module Api
           response.headers['Access-Control-Allow-Credentials'] = true
           response.headers['Access-Control-Expose-Headers'] = 'AMP-Access-Control-Allow-Source-Origin'
 
-#	  circuito = @carga.circuito
+	  circuito = @carga.circuito
 
+          render json: {:resultado => "ok"  }, status: :ok 
+
+
+=begin
 	  respond_to do |format|
-#	    if @carga.delete
- #             circuito.update(:corriente_servicio => circuito.cargas.sum(&:get_i))
-#	      @cargas = @carga.circuito.cargas
-#	      format.json {}
-#	    else	
+	    if @carga.delete
+              circuito.update(:corriente_servicio => circuito.cargas.sum(&:get_i))
+	      @cargas = @carga.circuito.cargas
+	      format.json {}
+	    else	
 	      format.json { render json: {:error =>  @carga.errors[:base]}, status: :unprocessable_entity }
-#	    end     		  
+	    end     		  
 	  end
+=end
 	end
 
 	def syncFromRemote
