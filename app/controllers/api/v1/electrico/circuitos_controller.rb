@@ -227,7 +227,7 @@ module Api
 #	    else	
 	      format.json { render json: {:error =>  @carga.errors[:base]}, status: :unprocessable_entity }
 #	    end     		  
-#	  end
+	  end
 	end
 
 	def syncFromRemote
