@@ -18,9 +18,6 @@ RSpec.describe AuthenticateReader do
         expect(decoded_token).not_to be_nil
         expect(decoded_token['circuito']).respond_to? 'nombre'
         #raise decoded_token.inspect
-
-
-
       end
     end
   end

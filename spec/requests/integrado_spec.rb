@@ -4,30 +4,38 @@ RSpec.describe 'Items API', :type => 'request' do
 
   #Test suite integrando
   context "items con authenticación" do
+
     let(:return_params)  {{:rid => "amprid", :return => "https::/backend.coronavid.cl/authenticate" } }
     let(:retorno)        {"https::/backend.coronavid.cl/authenticate"              }    
     let(:success_return) {"https::/backend.coronavid.cl/authenticate#success=true"      }
-    let(:headers)       {{ "Origin" => "https://help.coronavid.cl"  }}
+    let(:headers)        {{ "Origin" => "https://help.coronavid.cl"  }}
 
-    let(:valid_macarron) { macarron =Macarron.new( location: 'http://backend.coronavid.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); macarron.add_first_party_caveat('LoggedIn = true') ; ms= macarron.serialize; return ms }
-
-
+    let(:valid_macarron) { macarron = Macarron.new( location: 'http://backend.coronavid.cl',
+                              identifier: 'w', 
+                              key: ENV['SECRET_KEY_BASE'] ); 
+                           macarron.add_first_party_caveat('LoggedIn = true') ; 
+                           ms = macarron.serialize; 
+                           return ms }
 
     describe 'GET /create_token' do
-
       before {
-        get "/create_token", params: {:rid => "amprid", :clientId => "clientId",\
-			      :return => "https::/backend.coronavid.cl/authenticate"}
+        get "/create_token", params: {:rid => "amprid", 
+                                      :clientId => "clientId",\
+			              :return => "https::/backend.coronavid.cl/authenticate"}
       }
+
       it "to be redirect to retorno" do
-        expect(response.body).to redirect_to("https::/backend.coronavid.cl/authenticate#success=true")
+        expect( response.body ).to redirect_to("https::/backend.coronavid.cl/authenticate#success=true")
       end
+
       it "create Reader" do
-        expect(Reader.count).to eq(1)
+        expect( Reader.count ).to eq(1)
       end
+
       it "not create User" do
-	expect(User.count).to eq(0)
+	expect( User.count ).to eq(0)
       end
+
     end
 
     describe 'GET /authenticate after get_token' do
@@ -42,6 +50,7 @@ RSpec.describe 'Items API', :type => 'request' do
 	    :__amp_source_origin => "https://help.coronavid.cl" },\
 	    headers: {'Origin' => "https://help.coronavid.cl"}
       }
+
       it 'return' do 
         expect(json['auth_token']).to match(/ey/)
       end
@@ -49,6 +58,7 @@ RSpec.describe 'Items API', :type => 'request' do
       it 'loggedIn true' do #Se puede dar loggin aunque no se cree un usuario
         expect(json['loggedIn']).to eq(true)
       end	
+
     end
 
     describe 'GET /contactos/create' do
@@ -104,8 +114,6 @@ RSpec.describe 'Items API', :type => 'request' do
       end
 
     end
-
-
 
 
     describe 'GET /sign_in' do
@@ -171,12 +179,15 @@ RSpec.describe 'Items API', :type => 'request' do
       it 'return code 200'  do
         expect(response).to have_http_status(200)
       end
+
       it "hay reader" do
         expect(Reader.count).to eq(1)
       end
+
       it "hay client" do
         expect(Client.count).to eq(1)
       end
+
       it "ya hay user" do
 	expect(User.count).to eq(1)
       end
@@ -184,9 +195,11 @@ RSpec.describe 'Items API', :type => 'request' do
       it "están relaciones" do
 	expect(Client.first.reader.user.name).to match(/Nombre/)
       end
+
       it "to be loggedIn" do
         expect(json['loggedIn']).to eq(true)
       end
+
     end
 
     describe 'GET /authenticate a pesar de nocrear cliente' do
@@ -202,12 +215,15 @@ RSpec.describe 'Items API', :type => 'request' do
 				      :__amp_source_origin => "https://help.coronavid.cl" },\
 				      headers: {'Origin' => "https://help.coronavid.cl"}
       }
+
       it 'return code 200'  do
         expect(response).to have_http_status(200)
       end
+
       it "to be loggedIn" do
         expect(json['loggedIn']).to eq(true) 
       end
+
     end
 
     describe 'GET /authenticate a pesar de nocrear token ni cliente' do
@@ -220,29 +236,35 @@ RSpec.describe 'Items API', :type => 'request' do
 				      :__amp_source_origin => "https://help.coronavid.cl" },\
 				      headers: {'Origin' => "https://help.coronavid.cl"}
       }
+
       it 'return code 200'  do
         expect(response).to have_http_status(200)
       end
+
       it "to be loggedIn" do
         expect(json['loggedIn']).to eq(false) 
       end
+
     end
 
 
 
     describe 'GET /authenticate a pesar de nocrear token ni cliente ni authenticate' do
       before {
-        get  "/sign_in", params: {:rid => "amprid" , :return => retorno}
+        get "/sign_in", params: {:rid => "amprid" , :return => retorno}
         get "/authenticate", params: {:rid => "amprid",\
 				      :__amp_source_origin => "https://help.coronavid.cl" },\
 				      headers: {'Origin' => "https://help.coronavid.cl"}
       }
+
       it 'return code 200'  do
         expect(response).to have_http_status(200)
       end
+
       it "to be logged out" do
         expect(json['loggedIn']).to eq(false) #La razón fundamental es que no se ha creado el token
       end
+
     end
 
 
@@ -254,12 +276,15 @@ RSpec.describe 'Items API', :type => 'request' do
 				      :__amp_source_origin => "https://help.coronavid.cl" },\
 				      headers: {'Origin' => "https://help.coronavid.cl"}
       }
+
       it 'return code 200'  do
         expect(response).to have_http_status(200)
       end
+
       it "to be logged out" do
         expect(json['loggedIn']).to eq(false) #La razón fundamental es que no se ha creado el token
       end
+
     end
     
 
@@ -274,12 +299,15 @@ RSpec.describe 'Items API', :type => 'request' do
 				      :__amp_source_origin => "https://help.coronavid.cl" },\
 				      headers: {'Origin' => "https://help.coronavid.cl"}
       }
+
       it 'return code 200'  do
         expect(response).to have_http_status(200)
       end
+
       it "to be loggedIn" do
         expect(json['loggedIn']).to eq(false) #No Se loga cuando ya exista otro reader. Esto es, el token es requisito para logarse, pero también lo es el user
       end
+
     end
 
 
@@ -290,14 +318,16 @@ RSpec.describe 'Items API', :type => 'request' do
 				      :__amp_source_origin => "https://help.coronavid.cl" },\
 				      headers: {'Origin' => "https://help.coronavid.cl"}
       }
+
       it 'return code 200'  do
         expect(response).to have_http_status(200)
       end
+
       it "to be loggedIn" do
         expect(json['loggedIn']).to eq(false) #No se acepta autenticación si el usuario no existe
       end
-    end
 
+    end
 
 
     describe 'GET /destroy_reader' do
@@ -319,18 +349,19 @@ RSpec.describe 'Items API', :type => 'request' do
         get "/destroy_reader", params: {:rid => "amprid",:return => retorno }
       }
 
-       it 'return code 302'  do
-         expect(response).to have_http_status(302)
-       end
-       it "to be redirect to retorno" do
-         expect(response.body).to redirect_to("https::/backend.coronavid.cl/authenticate#success=true")
-       end
-       it "destroy readr" do
-         expect(Reader.count).to eq(0)
-       end
+      it 'return code 302'  do
+        expect(response).to have_http_status(302)
+      end
+
+      it "to be redirect to retorno" do
+        expect(response.body).to redirect_to("https::/backend.coronavid.cl/authenticate#success=true")
+      end
+
+      it "destroy readr" do
+        expect(Reader.count).to eq(0)
+      end
+
     end
-
-
 
 
     describe "Todo el proceso" do
@@ -363,11 +394,12 @@ RSpec.describe 'Items API', :type => 'request' do
         get "/authenticate", params: {:rid => "amprid",\
 				      :__amp_source_origin => "https://help.coronavid.cl" },\
 				      headers: {'Origin' => "https://help.coronavid.cl"}
-       }
+      }
 
-     it 'loggedIn=false' do
-       expect(json['loggedIn']).to eq(false)
-     end
+      it 'loggedIn=false' do
+        expect(json['loggedIn']).to eq(false)
+      end
+
     end
   end
 end

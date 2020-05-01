@@ -32,11 +32,12 @@ RSpec.describe 'Authenticate API', :type => 'request' do
     context "Si recibe rid" do
       context "y recibe origen " do
 	before { 
-	  reader = create(:reader)
-          coded_token =JsonWebToken.encode(:reader_id => reader.id)
+	  reader      = create(:reader)
+          coded_token = JsonWebToken.encode(:reader_id => reader.id)
 	  get "/authenticate", params:  {:rid => reader.rid,\
 				  :__amp_source_origin => "https://frontend.alectrico.cl" },\
-				  headers: {'Origin' => "https://frontend.alectrico.cl"} }
+				  headers: {'Origin' => "https://frontend.alectrico.cl"}
+        }
 
 	it 'Devuelve Token de authorization'  do
 	  skip
