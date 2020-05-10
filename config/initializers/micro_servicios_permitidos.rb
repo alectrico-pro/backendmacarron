@@ -11,7 +11,7 @@ if MICRO_SERVICIOS_PERMITIDOS
     if s =~ Resolv::IPv4::Regex
       urls = urls + [ "http://#{s}", "https://#{s}" ]
     else
-      urls = urls + [ "https://#{s}-coronavid-cl.amp.cloudflare.com", "https://#{s}-coronavid-cl.cdn.ampproject.org","https://#{s}.coronavid.cl" ]          
+      urls = urls + [ "https://#{s}-coronavid-cl.amp.cloudflare.com", "https://#{s}-coronavid-cl.cdn.ampproject.org","https://#{s}.coronavid.cl","https://#{s}.alectrico.cl" ]          
     end
 
   end

@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+#authenticate es parte de la coreografía de las páginas AMP. Sirve para declarar si está logged_in o no. Eso es importante para que las páginas muestren contenido pertinente a las variables de accesso
 RSpec.describe 'Items API', :type => 'request' do
 
   #Test suite integrando
