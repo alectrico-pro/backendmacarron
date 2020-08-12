@@ -1,3 +1,10 @@
+default: &default
+  adapter: sqlite3
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+
+
 copia_de_heroku:
   adapter: postgresql
   encoding: utf8
@@ -26,6 +33,13 @@ development:
   #password: ''
 
 
+development:
+  <<: *default
+  database: db/development.sqlite3
+
+
+
+
 test:
   adapter: postgresql
   encoding: utf8
@@ -38,6 +52,12 @@ test:
   username: circleci-demo-ruby
   #password: '1'
   password: ''
+
+
+test:
+  <<: *default
+  database: db/test.sqlite3
+
 
 
 
