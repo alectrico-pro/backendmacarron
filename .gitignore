@@ -7,7 +7,7 @@
 # Ignore bundler config.
 *.pdf
 .git
-.jekyll*
+.jekyll-cache/
 /*.pdf
 /tmp/*
 /features/*

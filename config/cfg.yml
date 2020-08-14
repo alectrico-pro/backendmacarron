@@ -2,6 +2,9 @@ default: &default
   domain:                                coronavid.cl
   tld:                                   coronavid
 
+  #alectrica
+  backend_alectrica_url:                 https://backend.alectrica.cl
+
   #alectrico
   frontend_alectrico_url:                https://frontend.alectrico.cl
   backend_alectrico_url:                 https://backend.alectrico.cl
@@ -13,6 +16,7 @@ default: &default
   backend_url:                           https://backend.coronavid.cl
   authentication_endpoint_url:           https://backend.coronavid.cl/authenticate
   help_url:                              https://help.coronavid.cl
+  help_coronavid_url:                    https://help.coronavid.cl
   retorno_exitoso_url:                   https://backend.coronavid.cl/authenticate#success=true
   ok:                                    true
 
