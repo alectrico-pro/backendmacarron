@@ -94,9 +94,13 @@ class ApplicationController < ActionController::API
 
       @origen = params[:__amp_source_origin] || params[":__amp_source_origin"]
       linea.error "No se ingresó el parámetro :__amp_source_origin" unless @origen
+      header_origin = request.headers['Origin']
+
+
+      raise NotOriginAllowed unless header_origin == @origen
 
       if URLS_PERMITIDAS
-
+        header_origin = request.headers['Origin']
         linea.info "dominios permitidos #{URLS_PERMITIDAS.inspect}"
         linea.info "Origen es #{request.headers['Origin']}"
 

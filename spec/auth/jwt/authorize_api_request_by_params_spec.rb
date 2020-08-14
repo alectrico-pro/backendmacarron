@@ -7,7 +7,7 @@ RSpec.describe AuthorizeApiRequestByParams do
   #Definir algún usuario existente en la base de datos
   let(:invalid_reader)           {  create(:reader) }
   let(:valid_macarron)           {  macarron =Macarron.new( 
-                                       location: 'http://backend.alectrica.cl',
+                                       location: CFG[:backend_alectrica_url.to_s],
                                        identifier: 'w', key: ENV['SECRET_KEY_BASE'] );
                                     macarron.add_first_party_caveat('LoggedIn = true') ; 
                                     ms = macarron.serialize; 

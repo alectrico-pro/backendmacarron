@@ -22,6 +22,7 @@ class AuthenticationController < ApplicationController
 
   #Esto responde a authorization de la página amp-page, se le suministra el reader y el client_id. Responde con token y macarrón de autorización.
   #Esto se llama a cada rato. Y cada vez se genera un token y un macarrón
+
   def authenticate
     #Esto devuelve una respuesta que autoriza el acceso a elemntos del página amp. Se llama al comienzo pero se vuelve llamar cada vez que se piden datos dentro de un control de listas que usa una fuente de datos en amp-pages.
     #Aquí genero un macarrón nuevo con datos frescos sobre el circuito.

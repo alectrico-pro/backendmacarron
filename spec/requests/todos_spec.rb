@@ -3,6 +3,8 @@ require 'rails_helper'
 #Este recurso es ofrecido por el backend y no por un microservicio. Usa un macarrón de autorización validado por un servidor de autorización remota
 #Es un recurso normal, y solo hay que proveerlos los parámetros adecuados de autorización.
 #Observar que usa un token de autorización que incluye un objeto reader serializado json
+#Entonces, este recurso es una api en este servidor que es autorizada por el autorizador.
+#Este API está protegido por el autorizador de alectrica. 
 RSpec.describe 'Todos API', type: :request do
 
   let!(:todos)         {  create_list(:todo, 10) }
@@ -10,15 +12,12 @@ RSpec.describe 'Todos API', type: :request do
   let(:user)           {  create(:user)   }
   let(:reader)         {  create(:reader, :user => user )  }
   let(:coded_token)    {  JsonWebToken.encode( reader: reader.as_json(:include => :user)) }
-  let(:valid_macarron) {  \
-        macarron =  Macarron.new( location: 'http://autoriza.alectrica.cl',\
-                          identifier: 'w',\
-                          key: ENV['SECRET_KEY_BASE'] );\
+  let(:valid_macarron) {  macarron =  Macarron.new( location: CFG[:autorizador_alectrica_url.to_s], identifier: 'w', key: ENV['SECRET_KEY_BASE'] );\
         macarron.add_first_party_caveat('LoggedIn = true');\
         ms= macarron.serialize;\
         return ms }
-  let(:headers)        {{ "Origin" => "https://help.coronavid.cl"  }}
-  let(:valid_params)   {{ :__amp_source_origin => 'https://help.coronavid.cl',\
+  let(:headers)        {{ "Origin" => CFG[:help_url.to_s]  }}
+  let(:valid_params)   {{ :__amp_source_origin => CFG[:help_url.to_s],\
                           :auth_token => coded_token,\
                           :macarron_de_autorizacion => valid_macarron  }}
    

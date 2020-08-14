@@ -14,7 +14,6 @@ RSpec.describe 'Items API', :type => 'request' do
   let(:user)           { create(:user) }
   let(:reader)         { create(:reader, :user => user ) }  
   let(:coded_token)    { JsonWebToken.encode(reader: reader.as_json(:include => :user)) }
-
   let(:valid_macarron) { macarron = Macarron.new( location: CFG[:backend_alectrica_url.to_s], identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); 
                          macarron.add_first_party_caveat('LoggedIn = true') ; 
                          ms= macarron.serialize; 
@@ -260,12 +259,22 @@ RSpec.describe 'Items API', :type => 'request' do
         expect(response.body).to redirect_to(CFG[:retorno_exitoso_alectrico_url.to_s])      end
 
     end
+    describe 'GET /authenticate with wrong Origin header' do
+      before {
+        get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => CFG[:authentication_endpoint_alectrico_url.to_s]}
+        #Authenticate crea otro token para comunicarse con el AS
+        get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => CFG[:help_coronavid_url.to_s] }, headers: {'Origin' => "https://help.domain_no_autorizado.cl"}
+      }
+      it 'no devuelve token' do 
+        expect(json['auth_token']).to be_nil
+      end
+    end
 
     describe 'GET /authenticate after get_token' do
       before {
         get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => CFG[:authentication_endpoint_alectrico_url.to_s]}
         #Authenticate crea otro token para comunicarse con el AS
-	get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => CFG[:help_coronavid_url.to_s] }, headers: {'Origin' => "https://help.coronavid.alectrico.cl"}
+	get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => CFG[:help_coronavid_url.to_s] }, headers: {'Origin' => CFG[:help_coronavid_url.to_s]}
       }
 
       it 'return' do 
@@ -278,7 +287,7 @@ RSpec.describe 'Items API', :type => 'request' do
       before {
         get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => CFG[:authentication_endpoint_alectrico_url.to_s]}
         #Authenticate crea otro token para comunicarse con el AS
-        get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => CFG[:help_coronavid_url.to_s] }, headers: {'Origin' => "https://help.coronavid.alectrico.cl"}
+        get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => CFG[:help_coronavid_url.to_s] }, headers: {'Origin' => CFG[:help_coronavid_url.to_s]}
 	post "/contactos/create", params: {:rid => "amprid", :clientId => "clientId",:name => "Nombre", :email => "email@example.com", :fono => '987654321', :password => "123456",:password_confirmation => "123456", :__amp_source_origin => CFG[:help_coronavid_url.to_s]}, headers: {'Origin' => CFG[:help_coronavid_url.to_s]}
       } 
 

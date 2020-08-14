@@ -32,7 +32,7 @@ RSpec.describe 'MicroServicio help accesa el backend: No usa macarron, solo usa 
     describe 'GET /authenticate after get_token' do
       before {
        get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => CFG[:authentication_endpoint_url.to_s]}
-       get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => CFG[:help_url.to_s] }, headers: {'Origin' => CFG[:authentication_endpoint_url.to_s]}
+       get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => CFG[:help_url.to_s] }, headers: {'Origin' => CFG[:help_url.to_s]}
       }
       it 'return' do 
         expect(json['auth_token']).to match(/ey/)

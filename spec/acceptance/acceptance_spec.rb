@@ -17,11 +17,11 @@ resource "To Do" do
     let! (:user)        {  create(:user)   }
     let! (:reader)      {  create(:reader,:user => user )  }
     let (:auth_token) { JsonWebToken.encode(reader: reader.as_json(:include => :user)) }
-    let (:__amp_source_origin) { "http://192.168.137.190" }
+    let (:__amp_source_origin) { CFG[:help_url.to_s] }
         
-    let(:headers)       {{ "Origin" => "https://help.coronavid.cl"  }}
+    let(:headers)       {{ "Origin" => CFG[:help_url.to_s]  }}
 
-    let(:macarron_de_autorizacion)    { macarron =Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); macarron.add_first_party_caveat('LoggedIn = true') ; ms= macarron.serialize; return ms }
+    let(:macarron_de_autorizacion)    { macarron =Macarron.new( location: CFG[:backend_alectrica_url.to_s], identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); macarron.add_first_party_caveat('LoggedIn = true') ; ms= macarron.serialize; return ms }
 
     example "Devuelve una lista de las tareas", :document => false do
       explanation "Lista de tareas por hacer, To Do" 
@@ -50,10 +50,10 @@ resource "Circuitos" do
  
   let  (:__amp_source_origin) { "http://192.168.137.190" }
 
-  let(:macarron_de_autorizacion)    { macarron =Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); macarron.add_first_party_caveat('LoggedIn = true') ; ms= macarron.serialize; return ms }
+  let(:macarron_de_autorizacion)    { macarron =Macarron.new( location: CFG[:backend_alectrica_url.to_s], identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); macarron.add_first_party_caveat('LoggedIn = true') ; ms= macarron.serialize; return ms }
     
 
-  let(:headers)       {{ "Origin" => "https://help.coronavid.cl"  }}
+  let(:headers)       {{ "Origin" => CFG[:help_url.to_s]  }}
 
 
   post '/api/v1/electrico/circuitos/addToCircuito.json'   do

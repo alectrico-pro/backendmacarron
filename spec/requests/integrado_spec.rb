@@ -5,12 +5,12 @@ RSpec.describe 'Items API', :type => 'request' do
   #Test suite integrando
   context "items con authenticación" do
 
-    let(:return_params)  {{:rid => "amprid", :return => "https::/backend.coronavid.cl/authenticate" } }
-    let(:retorno)        {"https::/backend.coronavid.cl/authenticate"              }    
-    let(:success_return) {"https::/backend.coronavid.cl/authenticate#success=true"      }
-    let(:headers)        {{ "Origin" => "https://help.coronavid.cl"  }}
+    let(:return_params)  {{:rid => "amprid", :return => CFG[:authentication_endpoint_url.to_s] } }
+    let(:retorno)        { CFG[:authentication_endpoint_url.to_s]   }    
+    let(:success_return) { CFG[:retorno_exitoso_url.to_s] }
+    let(:headers)        {{ "Origin" => CFG[:help_url.to_s]  }}
 
-    let(:valid_macarron) { macarron = Macarron.new( location: 'http://backend.coronavid.cl',
+    let(:valid_macarron) { macarron = Macarron.new( location: CFG[:backend_url.to_s],
                               identifier: 'w', 
                               key: ENV['SECRET_KEY_BASE'] ); 
                            macarron.add_first_party_caveat('LoggedIn = true') ; 
@@ -21,11 +21,11 @@ RSpec.describe 'Items API', :type => 'request' do
       before {
         get "/create_token", params: {:rid => "amprid", 
                                       :clientId => "clientId",\
-			              :return => "https::/backend.coronavid.cl/authenticate"}
+			              :return => CFG[:authentication_endpoint_url.to_s]}
       }
 
       it "to be redirect to retorno" do
-        expect( response.body ).to redirect_to("https::/backend.coronavid.cl/authenticate#success=true")
+        expect( response.body ).to redirect_to( CFG[:retorno_exitoso_url.to_s])
       end
 
       it "create Reader" do
@@ -44,11 +44,11 @@ RSpec.describe 'Items API', :type => 'request' do
         get "/create_token",\
            params: {:rid => "amprid",\
             :clientId => "clientId", \
-	    :return => "https::/backend.coronavid.cl/authenticate"}
+	    :return => CFG[:authentication_endpoint_url.to_s]}
 
 	get "/authenticate", params: {:rid => "amprid",\
-	    :__amp_source_origin => "https://help.coronavid.cl" },\
-	    headers: {'Origin' => "https://help.coronavid.cl"}
+	    :__amp_source_origin => CFG[:help_url.to_s] },\
+	    headers: {'Origin' => CFG[:help_url.to_s]}
       }
 
       it 'return' do 
@@ -66,19 +66,19 @@ RSpec.describe 'Items API', :type => 'request' do
 
         get "/create_token",\
        	params: {:rid => "amprid", :clientId => "clientId",\
-	      :return => "https::/backend.coronavid.cl/authenticate"}
+	      :return => CFG[:authentication_endpoint_url.to_s]}
 
         get "/authenticate",\
 	  params: {:rid => "amprid",\
-	  :__amp_source_origin => "https://help.coronavid.cl" },\
-	  headers: {'Origin' => "https://help.coronavid.cl"}
+	  :__amp_source_origin => CFG[:help_url.to_s] },\
+	  headers: {'Origin' => CFG[:help_url.to_s]}
 
 	post "/contactos/create",\
 	  params: {:rid => "amprid", :clientId => "clientId",\
 	  :name => "Nombre", :email => "email@example.com",\
 	  :fono => '987654321', :password => "clientId",\
-	  :__amp_source_origin => "https://help.coronavid.cl"},\
-	  headers: {'Origin' => "https://help.coronavid.cl"}
+	  :__amp_source_origin => CFG[:help_url.to_s]},\
+	  headers: {'Origin' => CFG[:help_url.to_s]}
       } 
 
       it 'return code 200'  do
@@ -121,18 +121,18 @@ RSpec.describe 'Items API', :type => 'request' do
 
         get "/create_token",\
           params: {:rid => "amprid", :clientId => "clientId",\
-          :return => "https::/backend.coronavid.cl/authenticate"}
+          :return => CFG[:backend_url.to_s]}
 
         get "/authenticate", params: {:rid => "amprid",\
-	  :__amp_source_origin => "https://help.coronavid.cl" },\
-	  headers: {'Origin' => "https://help.coronavid.cl"}
+	  :__amp_source_origin => CFG[:help_url.to_s] },\
+	  headers: {'Origin' => CFG[:help_url.to_s]}
 
         post "/contactos/create", params:\
 	  {:rid => "amprid", :clientId => "clientId",\
 	  :name => "Nombre", :email => "email@example.com",\
 	  :fono => '987654321', :password => "123456",\
-	  :__amp_source_origin => "https://help.coronavid.cl"},\
-	  headers: {'Origin' => "https://help.coronavid.cl"}
+	  :__amp_source_origin => CFG[:help_url.to_s]},\
+	  headers: {'Origin' => CFG[:help_url.to_s]}
 
         get  "/sign_in", params:\
 	  {:rid => "amprid" , :return => retorno}
@@ -144,7 +144,7 @@ RSpec.describe 'Items API', :type => 'request' do
 
       it "to be redirect to retorno" do
         expect(response.body).to\
-	  redirect_to("https::/backend.coronavid.cl/authenticate#success=true")
+	  redirect_to(CFG[:retorno_exitoso_url.to_s])
       end
 
     end 
@@ -154,26 +154,26 @@ RSpec.describe 'Items API', :type => 'request' do
 
         get "/create_token",\
 	  params: {:rid => "amprid", :clientId => "clientId",\
-	  :return => "https::/backend.coronavid.cl/authenticate"}
+	  :return => CFG[:authentication_endpoint_url.to_s]}
 
         get "/authenticate",\
 	   params: {:rid => "amprid",\
-	   :__amp_source_origin => "https://help.coronavid.cl" },\
-	   headers: {'Origin' => "https://help.coronavid.cl"}
+	   :__amp_source_origin => CFG[:help_url.to_s] },\
+	   headers: {'Origin' => CFG[:help_url.to_s]}
 
         post "/contactos/create",\
 	  params: {:rid => "amprid", :clientId => "clientId",\
 	  :name => "Nombre", :email => "email@example.com",\
 	  :fono => '987654321', :password => "clientId",\
-	  :__amp_source_origin => "https://help.coronavid.cl"},\
-	  headers: {'Origin' => "https://help.coronavid.cl"}
+	  :__amp_source_origin => CFG[:help_url.to_s]},\
+	  headers: {'Origin' => CFG[:help_url.to_s]}
 
         get  "/sign_in", params: {:rid => "amprid" , :return => retorno}
 
         get "/authenticate", params:\
 	  {:rid => "amprid",\
-	  :__amp_source_origin => "https://help.coronavid.cl" },\
-	  headers: {'Origin' => "https://help.coronavid.cl"}
+	  :__amp_source_origin => CFG[:help_url.to_s] },\
+	  headers: {'Origin' => CFG[:help_url.to_s]}
       }
 
       it 'return code 200'  do
@@ -206,14 +206,14 @@ RSpec.describe 'Items API', :type => 'request' do
       before {
         get "/create_token", params: {:rid => "amprid",\
 				      :clientId => "clientId",\
-				      :return => "https::/backend.coronavid.cl/authenticate"}
+				      :return => CFG[:authentication_endpoint_url.to_s]}
         get "/authenticate", params: {:rid => "amprid",\
-				      :__amp_source_origin => "https://help.coronavid.cl" },\
-				      headers: {'Origin' => "https://help.coronavid.cl"}
+				      :__amp_source_origin => CFG[:help_url.to_s] },\
+				      headers: {'Origin' => CFG[:help_url.to_s]}
         get  "/sign_in", params: {:rid => "amprid" , :return => retorno}
         get "/authenticate", params: {:rid => "amprid",\
-				      :__amp_source_origin => "https://help.coronavid.cl" },\
-				      headers: {'Origin' => "https://help.coronavid.cl"}
+				      :__amp_source_origin => CFG[:help_url.to_s] },\
+				      headers: {'Origin' => CFG[:help_url.to_s]}
       }
 
       it 'return code 200'  do
@@ -229,12 +229,12 @@ RSpec.describe 'Items API', :type => 'request' do
     describe 'GET /authenticate a pesar de nocrear token ni cliente' do
       before {
         get "/authenticate", params: {:rid => "amprid",\
-				      :__amp_source_origin => "https://help.coronavid.cl" },\
-				      headers: {'Origin' => "https://help.coronavid.cl"}
+				      :__amp_source_origin => CFG[:help_url.to_s] },\
+				      headers: {'Origin' => CFG[:help_url.to_s]}
         get  "/sign_in", params: {:rid => "amprid" , :return => retorno}
         get "/authenticate", params: {:rid => "amprid",\
-				      :__amp_source_origin => "https://help.coronavid.cl" },\
-				      headers: {'Origin' => "https://help.coronavid.cl"}
+				      :__amp_source_origin => CFG[:help_url.to_s] },\
+				      headers: {'Origin' => CFG[:help_url.to_s]}
       }
 
       it 'return code 200'  do
@@ -253,8 +253,8 @@ RSpec.describe 'Items API', :type => 'request' do
       before {
         get "/sign_in", params: {:rid => "amprid" , :return => retorno}
         get "/authenticate", params: {:rid => "amprid",\
-				      :__amp_source_origin => "https://help.coronavid.cl" },\
-				      headers: {'Origin' => "https://help.coronavid.cl"}
+				      :__amp_source_origin => CFG[:help_url.to_s] },\
+				      headers: {'Origin' => CFG[:help_url.to_s]}
       }
 
       it 'return code 200'  do
@@ -273,8 +273,8 @@ RSpec.describe 'Items API', :type => 'request' do
         get  "/sign_in", params: {:rid => "amprid" , :return => retorno}
         get "/destroy_reader", params: {:rid => "amprid",:return => retorno }
         get "/authenticate", params: {:rid => "amprid",\
-				      :__amp_source_origin => "https://help.coronavid.cl" },\
-				      headers: {'Origin' => "https://help.coronavid.cl"}
+				      :__amp_source_origin => CFG[:help_url.to_s] },\
+				      headers: {'Origin' => CFG[:help_url.to_s]}
       }
 
       it 'return code 200'  do
@@ -296,8 +296,8 @@ RSpec.describe 'Items API', :type => 'request' do
         get  "/sign_in", params: {:rid => "amprid2" , :return => retorno}
         get "/authenticate", params: {:rid => "amprid1",\
                                       :macarron_de_autorizacion => :valid_macarron,\
-				      :__amp_source_origin => "https://help.coronavid.cl" },\
-				      headers: {'Origin' => "https://help.coronavid.cl"}
+				      :__amp_source_origin => CFG[:help_url.to_s] },\
+				      headers: {'Origin' => CFG[:help_url.to_s]}
       }
 
       it 'return code 200'  do
@@ -315,8 +315,8 @@ RSpec.describe 'Items API', :type => 'request' do
       before {
         get "/authenticate", params: {:rid => "amprid2",\
                                       :macarron_de_autorizacion => :valid_macarron,\
-				      :__amp_source_origin => "https://help.coronavid.cl" },\
-				      headers: {'Origin' => "https://help.coronavid.cl"}
+				      :__amp_source_origin => CFG[:help_url.to_s] },\
+				      headers: {'Origin' => CFG[:help_url.to_s]}
       }
 
       it 'return code 200'  do
@@ -333,19 +333,19 @@ RSpec.describe 'Items API', :type => 'request' do
     describe 'GET /destroy_reader' do
       before {
         get "/create_token", params: {:rid => "amprid", :clientId => "clientId",\
-				      :return => "https::/backend.coronavid.cl/authenticate"}
+				      :return => CFG[:authentication_endpoint_url.to_s]}
         get "/authenticate", params: {:rid => "amprid",\
-				      :__amp_source_origin => "https://help.coronavid.cl" },\
-				      headers: {'Origin' => "https://help.coronavid.cl"}
+				      :__amp_source_origin => CFG[:help_url.to_s] },\
+				      headers: {'Origin' => CFG[:help_url.to_s]}
         post "/contactos/create", params: {:rid => "amprid", :clientId => "clientId",\
 					   :name => "Nombre", :email => "email@example.com",\
 					   :fono => '987654321', :password => "123456",\
-					   :__amp_source_origin => "https://help.coronavid.cl"},\
-					   headers: {'Origin' => "https://help.coronavid.cl"}
+					   :__amp_source_origin => CFG[:help_url.to_s]},\
+					   headers: {'Origin' => CFG[:help_url.to_s]}
         get  "/sign_in", params: {:rid => "amprid" , :return => retorno}
         get "/authenticate", params: {:rid => "amprid",\
-				      :__amp_source_origin => "https://help.coronavid.cl" },\
-				      headers: {'Origin' => "https://help.coronavid.cl"}
+				      :__amp_source_origin => CFG[:help_url.to_s] },\
+				      headers: {'Origin' => CFG[:help_url.to_s]}
         get "/destroy_reader", params: {:rid => "amprid",:return => retorno }
       }
 
@@ -354,7 +354,7 @@ RSpec.describe 'Items API', :type => 'request' do
       end
 
       it "to be redirect to retorno" do
-        expect(response.body).to redirect_to("https::/backend.coronavid.cl/authenticate#success=true")
+        expect(response.body).to redirect_to(CFG[:retorno_exitoso_url.to_s])
       end
 
       it "destroy readr" do
@@ -372,28 +372,28 @@ RSpec.describe 'Items API', :type => 'request' do
 	get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => retorno} 
         #Create token, crea un token para guardar el puntero a un reader. Para ello se debe crear antes el reader, el que quedará también indizado por rid. Tambíén se creará un cliente especificando su clientId
         get "/authenticate", params: {:rid => "amprid",\
-				      :__amp_source_origin => "https://help.coronavid.cl" },\
-				      headers: {'Origin' => "https://help.coronavid.cl"}
+				      :__amp_source_origin => CFG[:help_url.to_s] },\
+				      headers: {'Origin' => CFG[:help_url.to_s]}
 	#Atuthenticate usa el amprid para encontrar al reader y si existe lo considera válido,pero igual genera un token para guardar el puntero al reader
 	post "/contactos/create", params: {:rid => "amprid", :clientId => "clientId",\
 				    :name => "Nombre", :email => "email@example.com",\
 				    :fono => '987654321', :password => "123456",\
-				    :__amp_source_origin => "https://help.coronavid.cl"},\
+				    :__amp_source_origin => CFG[:help_url.to_s]},\
 				    :headers => headers
 	#Encrypta es el botó submit de contactos create. El cual crea un usario nuevo y le asigna el reader actual (el cual se encuentra con amprid). También se intenta juntar al reader con el cliente (el que rresponde al indice clientId). En general hay una tríada user-reader-client
 	get  "/sign_in", params: {:rid => "amprid" , :return => retorno}
 	#El método de login usa el idenfiticador de reader para buscarlo en la base de datos, si lo encuentra le calcula el token para guardar e lpuntero reader.id
         get "/authenticate", params: {:rid => "amprid",\
-				      :__amp_source_origin => "https://help.coronavid.cl" },\
-				      headers: {'Origin' => "https://help.coronavid.cl"}
+				      :__amp_source_origin => CFG[:help_url.to_s] },\
+				      headers: {'Origin' => CFG[:help_url.to_s]}
 	#Finalmente authenticate ahora puede buscar al reader en la base de datos usando el puntero rid. Si lo encuentra, lo considera válido y genera un token para apuntar al reader. 
 	#También averigua si token generado en la etapa previa permite encontrar el puntero del reader y por ende verificar que está en la base de datos.
 	#Con esto puede emular un helper current_reader, cuya existencia se usa para decretar que es está en estado logado o loggedIn
 	#Es importante saber qeu se devuelve el auth_token para que se pueda emplear en los comandos de contenido y poder authorizar cada request solo en base al token encriptado
 	get "/destroy_reader", params: {:rid => "amprid",:return => retorno }
         get "/authenticate", params: {:rid => "amprid",\
-				      :__amp_source_origin => "https://help.coronavid.cl" },\
-				      headers: {'Origin' => "https://help.coronavid.cl"}
+				      :__amp_source_origin => CFG[:help_url.to_s] },\
+				      headers: {'Origin' => CFG[:help_url.to_s]}
       }
 
       it 'loggedIn=false' do
