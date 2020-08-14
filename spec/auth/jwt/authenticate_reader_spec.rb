@@ -2,6 +2,11 @@
 
 require 'rails_helper'
 
+#El reader es un rol de las páginas amp, este backend ofrece servicios a una página amp del tipo de las que usa designer.
+#En esas páginas se suministra un rid generado por Google que es único por lo que se puede usar para identificar usuarios en una base de datos.  
+
+#El frontend designer usa circuitos y el token está diseñado para guardar circuitos. No lo he podido encontrar util todavía.
+
 RSpec.describe AuthenticateReader do
   include ::Linea
 

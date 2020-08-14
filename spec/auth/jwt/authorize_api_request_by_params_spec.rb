@@ -1,6 +1,8 @@
 #spec/auth/authorize_api_request_by_params
 require 'rails_helper'
 
+#Este tipo de autorización, está implementada en el backend, consiste en revisar si en los parámetros hay un token de acceso al bakend y un macarrón de autorización entregado por un autorizador remoto.
+#El macarrón se obtiene desde el servidor de autorización o puede ser generado localmente para pruebas, usando AccessKey.new
 RSpec.describe AuthorizeApiRequestByParams do
 
   let(:circuito)                 {  create(:circuito) }
@@ -19,12 +21,14 @@ RSpec.describe AuthorizeApiRequestByParams do
   let(:invalid_params)           {{ "auth_token" => invalid_access_key,
                                     "macarron_de_autorizacion" => valid_macarron }}
 
+
+
   subject(:invalid_request_obj)  {   described_class.new(invalid_params) }
 
   #Genera un token para un reader y usuario válidos
   let(:valid_user)               {   create(:user) }
   let(:valid_reader)             {   create(:reader, :user => valid_user) }
-  let(:valid_params)             {{ "auth_token" => token_generador( valid_reader ), "macarron_de_autorizacion" => valid_macarron } }
+  let(:valid_params)             {  { "auth_token" => token_generador( valid_reader ), "macarron_de_autorizacion" => valid_macarron } }
 
   subject(:valid_request_obj)    {   described_class.new(valid_params) }
 

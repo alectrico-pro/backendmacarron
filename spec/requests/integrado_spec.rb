@@ -5,12 +5,12 @@ RSpec.describe 'Items API', :type => 'request' do
   #Test suite integrando
   context "items con authenticación" do
 
-    let(:return_params)  {{:rid => "amprid", :return => CFG[:authentication_endpoint_url.to_s] } }
-    let(:retorno)        { CFG[:authentication_endpoint_url.to_s]   }    
+    let(:return_params)  {{:rid => "amprid", :return => CFG[:authentication_endpoint_coronavid_url.to_s] } }
+    let(:retorno)        { CFG[:authentication_endpoint_coronavid_url.to_s]   }    
     let(:success_return) { CFG[:retorno_exitoso_url.to_s] }
     let(:headers)        {{ "Origin" => CFG[:help_url.to_s]  }}
 
-    let(:valid_macarron) { macarron = Macarron.new( location: CFG[:backend_url.to_s],
+    let(:valid_macarron) { macarron = Macarron.new( location: CFG[:backend_coronavid_url.to_s],
                               identifier: 'w', 
                               key: ENV['SECRET_KEY_BASE'] ); 
                            macarron.add_first_party_caveat('LoggedIn = true') ; 
@@ -21,7 +21,7 @@ RSpec.describe 'Items API', :type => 'request' do
       before {
         get "/create_token", params: {:rid => "amprid", 
                                       :clientId => "clientId",\
-			              :return => CFG[:authentication_endpoint_url.to_s]}
+			              :return => CFG[:authentication_endpoint_coronavid_url.to_s]}
       }
 
       it "to be redirect to retorno" do
@@ -44,7 +44,7 @@ RSpec.describe 'Items API', :type => 'request' do
         get "/create_token",\
            params: {:rid => "amprid",\
             :clientId => "clientId", \
-	    :return => CFG[:authentication_endpoint_url.to_s]}
+	    :return => CFG[:authentication_endpoint_coronavid_url.to_s]}
 
 	get "/authenticate", params: {:rid => "amprid",\
 	    :__amp_source_origin => CFG[:help_url.to_s] },\
@@ -66,7 +66,7 @@ RSpec.describe 'Items API', :type => 'request' do
 
         get "/create_token",\
        	params: {:rid => "amprid", :clientId => "clientId",\
-	      :return => CFG[:authentication_endpoint_url.to_s]}
+	      :return => CFG[:authentication_endpoint_coronavid_url.to_s]}
 
         get "/authenticate",\
 	  params: {:rid => "amprid",\
@@ -121,7 +121,7 @@ RSpec.describe 'Items API', :type => 'request' do
 
         get "/create_token",\
           params: {:rid => "amprid", :clientId => "clientId",\
-          :return => CFG[:backend_url.to_s]}
+          :return => CFG[:backend_coronavid_url.to_s]}
 
         get "/authenticate", params: {:rid => "amprid",\
 	  :__amp_source_origin => CFG[:help_url.to_s] },\
@@ -154,7 +154,7 @@ RSpec.describe 'Items API', :type => 'request' do
 
         get "/create_token",\
 	  params: {:rid => "amprid", :clientId => "clientId",\
-	  :return => CFG[:authentication_endpoint_url.to_s]}
+	  :return => CFG[:authentication_endpoint_coronavid_url.to_s]}
 
         get "/authenticate",\
 	   params: {:rid => "amprid",\
@@ -206,7 +206,7 @@ RSpec.describe 'Items API', :type => 'request' do
       before {
         get "/create_token", params: {:rid => "amprid",\
 				      :clientId => "clientId",\
-				      :return => CFG[:authentication_endpoint_url.to_s]}
+				      :return => CFG[:authentication_endpoint_coronavid_url.to_s]}
         get "/authenticate", params: {:rid => "amprid",\
 				      :__amp_source_origin => CFG[:help_url.to_s] },\
 				      headers: {'Origin' => CFG[:help_url.to_s]}
@@ -333,7 +333,7 @@ RSpec.describe 'Items API', :type => 'request' do
     describe 'GET /destroy_reader' do
       before {
         get "/create_token", params: {:rid => "amprid", :clientId => "clientId",\
-				      :return => CFG[:authentication_endpoint_url.to_s]}
+				      :return => CFG[:authentication_endpoint_coronavid_url.to_s]}
         get "/authenticate", params: {:rid => "amprid",\
 				      :__amp_source_origin => CFG[:help_url.to_s] },\
 				      headers: {'Origin' => CFG[:help_url.to_s]}

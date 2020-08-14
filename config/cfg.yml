@@ -13,9 +13,9 @@ default: &default
   retorno_exitoso_alectrico_url:         https://backend.alectrico.cl/authenticate#success=true
 
   #coronavid
-  frontend_url:                          https://frontend.coronavid.cl
-  backend_url:                           https://backend.coronavid.cl
-  authentication_endpoint_url:           https://backend.coronavid.cl/authenticate
+  frontend_coronavid_url:                https://frontend.coronavid.cl
+  backend_coronavid_url:                 https://backend.coronavid.cl
+  authentication_endpoint_coronavid_url: https://backend.coronavid.cl/authenticate
   help_url:                              https://help.coronavid.cl
   help_coronavid_url:                    https://help.coronavid.cl
   retorno_exitoso_url:                   https://backend.coronavid.cl/authenticate#success=true

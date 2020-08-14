@@ -1,13 +1,15 @@
 require 'rails_helper'
+
 #Esta api es la de backend.alectrico.cl
 RSpec.describe 'Authenticate API', :type => 'request' do
 
-  let(:return_params)  {{ :return => CFG[:authentication_endpoint_alectrico_url.to_s] }} 
+  let(:return_params)  {  { :return => CFG[:authentication_endpoint_alectrico_url.to_s] } } 
   let(:retorno)        {  CFG[:authentication_endpoint_alectrico_url.to_s]  }
   let(:success_return) {  CFG[:retorno_exitoso_alectrico_url.to_s]   }
 
   #Crea un token local que contiene un apuntador al reader de amp pages.
-  #Idealmente el token sería suficiente por sí solo para permitir el acceso desde el microservicio al backend, pero en este caso, es interesante no romper la dinámica de las páginas amp. De forma que he terminado por mezclar ambos métodos de autorización
+  #Idealmente el token sería suficiente por sí solo para permitir el acceso desde el microservicio al backend, pero en este caso, es interesante no romper la dinámica de las páginas amp. De forma que he terminado por mezclar ambos métodos de autorización.
+  #Así que uso rid de AMP para crear registros en la base de datos.  
   describe 'GET /create_token' do
     before {
       reader      = create(:reader)

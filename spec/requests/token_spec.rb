@@ -5,8 +5,8 @@ RSpec.describe 'MicroServicio help accesa el backend: No usa macarron, solo usa 
   #Test suite integrando
   context "Funcionamiento del token:" do
 
-    let(:return_params)  {{:rid => "amprid", :return => CFG[:authentication_endpoint_url.to_s] } }
-    let(:retorno)        { CFG[:authentication_endpoint_url.to_s] }    
+    let(:return_params)  {{:rid => "amprid", :return => CFG[:authentication_endpoint_coronavid_url.to_s] } }
+    let(:retorno)        { CFG[:authentication_endpoint_coronavid_url.to_s] }    
     let(:success_return) { CFG[:retorno_exitoso_url.to_s] }
     let(:headers)        {{ "Origin" => CFG[:help_url.to_s] }}
 
@@ -15,7 +15,7 @@ RSpec.describe 'MicroServicio help accesa el backend: No usa macarron, solo usa 
     describe 'GET /create_token' do
 
       before {
-	get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => CFG[:authentication_endpoint_url.to_s]}
+	get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => CFG[:authentication_endpoint_coronavid_url.to_s]}
       }
       it "to be redirect to retorno" do
         expect(response.body).to redirect_to( CFG[:retorno_exitoso_url.to_s] )
@@ -31,7 +31,7 @@ RSpec.describe 'MicroServicio help accesa el backend: No usa macarron, solo usa 
     #Después de creado el token se decreta que está logado, no es necesario que el usuario esté creado
     describe 'GET /authenticate after get_token' do
       before {
-       get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => CFG[:authentication_endpoint_url.to_s]}
+       get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => CFG[:authentication_endpoint_coronavid_url.to_s]}
        get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => CFG[:help_url.to_s] }, headers: {'Origin' => CFG[:help_url.to_s]}
       }
       it 'return' do 

@@ -1,6 +1,9 @@
 require 'rails_helper'
 require 'rspec_api_documentation/dsl'
 
+#Esta documentación explica cómo usar el bakend para almacenar en el modelo To Do (por hacer) y en el modelo  Circuitos
+#Ambos deben estar protegidos usando CORS.
+#Se requiere un macarrón que autorice al usuario que esté logado, el usuario que no lo esté no podrá interactuar con Circuitos o y To Do.
 resource "To Do" do
   explanation "La lista de tareas por hacer, usa items que se egregan a una lista to do"
   header "Origin", :__amp_source_origin
@@ -16,7 +19,7 @@ resource "To Do" do
 
     let! (:user)        {  create(:user)   }
     let! (:reader)      {  create(:reader,:user => user )  }
-    let (:auth_token) { JsonWebToken.encode(reader: reader.as_json(:include => :user)) }
+    let (:auth_token)   { JsonWebToken.encode(reader: reader.as_json(:include => :user)) }
     let (:__amp_source_origin) { CFG[:help_url.to_s] }
         
     let(:headers)       {{ "Origin" => CFG[:help_url.to_s]  }}
@@ -33,7 +36,7 @@ resource "To Do" do
 end
 
 resource "Circuitos" do
-  explanation "Preguntas de diseño sobre circuitos"
+  explanation "Diseño de circuitos eléctricos"
   header "Origin", :__amp_source_origin
 
   parameter :macarron_de_autorizacion, "Macarrón de Autorización", :required => true
