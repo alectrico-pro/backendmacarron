@@ -1,2 +1,0 @@
-class Contacto < User
-end

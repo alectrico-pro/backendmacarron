@@ -1,6 +1,8 @@
 require 'rails_helper'
-#Esta clase es el backend de la versión de designer que se autoriza con Java Web Token. Esa versión se llama frontend. Veremos en qué termina eso
-#Por lo pronto items usa un macarrón de autorizació y un token local
+
+#Backend CoronaVirus
+#Backend Autorizado de un MicroServicio
+#Se usa un macarrón de autorización (se generar aqui) y un token local (el que debe ser generado en otro backend)
 #Se prueba todo el flujo de identificación y autorización.
 #Parte con la creación del token, luego se puede hacer login (sign_in). También se puede crear un cliente y hacer sign_in.
 RSpec.describe 'Items API', :type => 'request' do
@@ -14,6 +16,7 @@ RSpec.describe 'Items API', :type => 'request' do
   let(:user)           { create(:user) }
   let(:reader)         { create(:reader, :user => user ) }  
   let(:coded_token)    { JsonWebToken.encode(reader: reader.as_json(:include => :user)) }
+  #macarrón para autorizar en el backend_alectrica a un usuario que esé logado allá. El macarrón es verificado por un tercer bakend, el de autorización
   let(:valid_macarron) { macarron = Macarron.new( location: CFG[:backend_alectrica_url.to_s], identifier: 'w', key: ENV['SECRET_KEY_BASE'] ); 
                          macarron.add_first_party_caveat('LoggedIn = true') ; 
                          ms= macarron.serialize; 

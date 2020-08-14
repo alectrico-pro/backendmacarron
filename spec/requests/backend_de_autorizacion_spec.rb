@@ -1,11 +1,14 @@
 require 'rails_helper'
 
 #Esta api es la de backend.alectrico.cl
+#backend.alectrico.cl es el que crea usuarios y les dá al token de autorización
+#También puede destruir al usuario
+
 RSpec.describe 'Authenticate API', :type => 'request' do
 
   let(:return_params)  {  { :return => CFG[:authentication_endpoint_alectrico_url.to_s] } } 
-  let(:retorno)        {  CFG[:authentication_endpoint_alectrico_url.to_s]  }
-  let(:success_return) {  CFG[:retorno_exitoso_alectrico_url.to_s]   }
+  let(:retorno)        {               CFG[:authentication_endpoint_alectrico_url.to_s]  }
+  let(:success_return) {               CFG[:retorno_exitoso_alectrico_url.to_s]   }
 
   #Crea un token local que contiene un apuntador al reader de amp pages.
   #Idealmente el token sería suficiente por sí solo para permitir el acceso desde el microservicio al backend, pero en este caso, es interesante no romper la dinámica de las páginas amp. De forma que he terminado por mezclar ambos métodos de autorización.
@@ -29,7 +32,7 @@ RSpec.describe 'Authenticate API', :type => 'request' do
 
   end
 
-  #La autenticación de las páginas amp se lleva a cabo llamando a authenticate cada vez que se refresque la página AMP. En authenticate se verifica que el origen sea el correcto y que la página entregue el token de autorización. Note que normalmente que a las páginas AMP les bastaría con entregar el clientId y o el reader_id. Pero en mi caso, proceso todo eso y además verifico que el token local de autenticacioń apunte al reader.
+#La autenticación de las páginas amp se lleva a cabo llamando a authenticate cada vez que se refresque la página AMP. En authenticate se verifica que el origen sea el correcto y que la página entregue el token de autorización. Note que normalmente a las páginas AMP les bastaría con entregar el clientId y o el reader_id. Pero en mi caso, proceso todo eso y además verifico que el token local de autenticacioń apunte al reader.
   describe 'GET /authenticate' do
     context "Si recibe rid" do
       context "y recibe origen " do
@@ -38,17 +41,15 @@ RSpec.describe 'Authenticate API', :type => 'request' do
           coded_token = JsonWebToken.encode(:reader_id => reader.id)
 	  get "/authenticate", params:  {:rid => reader.rid,\
 				  :__amp_source_origin => CFG[:frontend_alectrico_url.to_s] },\
-				  headers: {'Origin' => CFG[:frontend_alectrico__url.to_s]}
+				  headers: {  'Origin' => CFG[:frontend_alectrico_url.to_s] }
         }
 
 	it 'Devuelve Token de authorization'  do
-	  skip
-	  expect(json['auth_token']).to eq(coded_token)
+	  expect(json['auth_token']).to match(/ey/)
 	end
 
 	it 'Devuelve nada como mensaje' do
-	  skip
-	  expect(response.body).to be_emtpy
+	  expect(json['loggedIn']).to be true
 	end
 
       end

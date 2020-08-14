@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe 'MicroServicio help accesa el backend: No usa macarron, solo usa reader: ', :type => 'request' do
+RSpec.describe 'MicroServicio help accesa el backend de autorización: No usa macarron, solo usa reader: ', :type => 'request' do
 
   #Test suite integrando
   context "Funcionamiento del token:" do
 
     let(:return_params)  {{:rid => "amprid", :return => CFG[:authentication_endpoint_coronavid_url.to_s] } }
-    let(:retorno)        { CFG[:authentication_endpoint_coronavid_url.to_s] }    
-    let(:success_return) { CFG[:retorno_exitoso_url.to_s] }
-    let(:headers)        {{ "Origin" => CFG[:help_url.to_s] }}
+    let(:retorno)        {                              CFG[:authentication_endpoint_coronavid_url.to_s] }    
+    let(:success_return) {                              CFG[:retorno_exitoso_url.to_s] }
+    let(:headers)        {{                 "Origin" => CFG[:help_url.to_s] }}
 
 
     #Al crear el token, se crea un reader si antes no existía, pero igual se verifica lo mismo en authenticate de forma que siempre habrá un reader cuando haya un token. El Usuario debe ser creado explícitamente por el usuario llenando un formulario de registro.

@@ -5,6 +5,8 @@ require 'rails_helper'
 #Observar que usa un token de autorización que incluye un objeto reader serializado json
 #Entonces, este recurso es una api en este servidor que es autorizada por el autorizador.
 #Este API está protegido por el autorizador de alectrica. 
+
+#A diferncia del recurso Items, este genera un macarrón para la localización del autorizador. En items, el macarrón se genera para la localización del backend de autorización
 RSpec.describe 'Todos API', type: :request do
 
   let!(:todos)         {  create_list(:todo, 10) }
