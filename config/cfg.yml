@@ -1,12 +1,20 @@
 default: &default
-  domain:                         coronavid.cl
-  tld:                            coronavid
-  frontend_url:                   https://frontend.coronavid.cl
-  backend_url:                    https://backend.coronavid.cl
-  authentication_endpoint_url:    https://backend.coronavid.cl/authenticate
-  help_url:                       https://help.coronavid.cl
-  retorno_exitoso_url:            https://backend.coronavid.cl/authenticate#success=true
-  ok:                   true
+  domain:                                coronavid.cl
+  tld:                                   coronavid
+
+  #alectrico
+  frontend_alectrico_url:                https://frontend.alectrico.cl
+  backend_alectrico_url:                 https://backend.alectrico.cl
+  authentication_endpoint_alectrico_url: https://backend.alectrico.cl/authenticate
+  retorno_exitoso_alectrico_url:         https://backend.alectrico.cl/authenticate#success=true
+
+  #coronavid
+  frontend_url:                          https://frontend.coronavid.cl
+  backend_url:                           https://backend.coronavid.cl
+  authentication_endpoint_url:           https://backend.coronavid.cl/authenticate
+  help_url:                              https://help.coronavid.cl
+  retorno_exitoso_url:                   https://backend.coronavid.cl/authenticate#success=true
+  ok:                                    true
 
 
 production:

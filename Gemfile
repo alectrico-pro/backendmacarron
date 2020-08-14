@@ -43,6 +43,7 @@ gem 'capistrano-rails', group: :development
 gem 'rack-cors'
 
 group :development, :test do
+  gem 'jekyll'
   gem 'rspec-rails', '~> 3.5'
   gem 'sqlite3' 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,0 +1,2 @@
+class Contacto < User
+end
