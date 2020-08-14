@@ -510,7 +510,7 @@ RSpec.describe 'Items API', :type => 'request' do
 
        it "to be redirect to retorno" do
          expect(response.body).to\
-	   redirect_to("https://backend.alectrico.cl/authenticate#success=true")
+	   redirect_to(CFG[:retorno_exitoso_alectrico_url.to_s])
        end
 
        it "destroy readr" do
