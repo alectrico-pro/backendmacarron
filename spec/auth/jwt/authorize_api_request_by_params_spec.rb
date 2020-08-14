@@ -34,7 +34,8 @@ RSpec.describe AuthorizeApiRequestByParams do
       it 'raise an error' do
         #$$expect{ raise StandardError }.to raise_error(StandardError)
         #result = valid_request_obj.call.result	
-	expect{ invalid_request_obj.call }.to raise_error(NotReader::NotReader)
+        expect{ invalid_request_obj.call }.to raise_error(InvalidToken::InvalidToken)
+	#xpect{ invalid_request_obj.call }.to raise_error(NotReader::NotReader)
 #        expect(result).to eq(reader)
       end
 

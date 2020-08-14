@@ -1,9 +1,10 @@
 class AccessKey #Autorization Server
+#Llama a un servidor de autorizaciones, para que obtener un token de acceso a este backend
 
   include HTTParty
   include Linea
 
-  base_uri 'autoriza.herokuapp.com'
+  base_uri 'autorizador.herokuapp.com'
 
   def initialize( rid )
     @rid = rid

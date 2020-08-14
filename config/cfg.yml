@@ -1,0 +1,23 @@
+default: &default
+  domain:                         coronavid.cl
+  tld:                            coronavid
+  frontend_url:                   https://frontend.coronavid.cl
+  backend_url:                    https://backend.coronavid.cl
+  authentication_endpoint_url:    https://backend.coronavid.cl/authenticate
+  help_url:                       https://help.coronavid.cl
+  retorno_exitoso_url:            https://backend.coronavid.cl/authenticate#success=true
+  ok:                   true
+
+
+production:
+  <<: *default
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+
+
+
