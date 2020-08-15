@@ -3,6 +3,7 @@
 module Ch
 
   class Host
+    include Linea
 
     def get_tld( url )
       splitted = url.split(".").reverse
@@ -21,54 +22,50 @@ module Ch
       raise "Not Implemented"
     end
 
+
+    def validate(host)
+      begin
+        tcp_client = TCPSocket.new(host, 443)
+        ssl_client = OpenSSL::SSL::SSLSocket.new(tcp_client)
+        ssl_client.hostname = host
+        ssl_client.connect
+        cert = OpenSSL::X509::Certificate.new(ssl_client.peer_cert)
+        ssl_client.sysclose
+        tcp_client.close
+      rescue StandardError => e
+        puts e.inspect
+        linea.error "#{host} fail"
+        return false
+      end
+      return false unless cert
+
+      certprops = OpenSSL::X509::Name.new(cert.issuer).to_a
+      issuer = certprops.select { |name, data, type| name == "O" }.first[1]
+
+      results = {
+        valid_on: cert.not_before,
+        valid_until: cert.not_after,
+        issuer: issuer,
+        valid: (ssl_client.verify_result == 0)
+      }
+
+      return true if ( results[:valid] )\
+                 and ( results[:valid_until] > Time.now ) 
+      return false
+
+    end
+
     def bueno
-
-      cert = ''
-
       MIS_HOSTS.split.each do |host|
         tld = get_tld( host )
 
         if @host_index == tld.to_sym
           linea.info "Verificando #{host}"
-
-          begin
-            tcp_client = TCPSocket.new(host, 443)
-            ssl_client = OpenSSL::SSL::SSLSocket.new(tcp_client)
-            ssl_client.hostname = host
-            ssl_client.connect
-            cert = OpenSSL::X509::Certificate.new(ssl_client.peer_cert)
-            ssl_client.sysclose
-            tcp_client.close
-          rescue StandardError => e
-            puts e.inspect
-            linea.error "#{host} fail"
-            return false
-
-          end
-        end
-
-        unless cert.blank?
-          certprops = OpenSSL::X509::Name.new(cert.issuer).to_a
-          issuer = certprops.select { |name, data, type| name == "O" }.first[1]
-
-          results = {
-            valid_on: cert.not_before,
-            valid_until: cert.not_after,
-            issuer: issuer,
-            valid: (ssl_client.verify_result == 0)
-          }
-
-          if results[:valid_until] > Time.now
-            linea.info "ok"
-            return true
-          else
-            linea.error "fail"
-            return false
-          end
-
+          return validate(host)
+          break
         end
       end
-        
+      return false
     end
 
     def get_certificado

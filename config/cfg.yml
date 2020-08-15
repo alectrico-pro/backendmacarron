@@ -1,6 +1,10 @@
 default: &default
+
   domain:                                coronavid.cl
   tld:                                   coronavid
+
+  #autorizacion server
+  as:                                    https://autoriza.alectrica.cl
 
   #alectrica
   backend_alectrica_url:                 https://backend.alectrica.cl

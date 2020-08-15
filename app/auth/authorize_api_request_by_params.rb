@@ -40,7 +40,7 @@ class AuthorizeApiRequestByParams
       if expira.to_i > Time.now.to_i
         throw "Token Expirado"
       end
-      unless origen.match("autoriza.herokuapp.com" )
+      unless origen.match(CFG[:as.to_s] )
         throw "No Autorizado por AS"
       end
     end

@@ -4,7 +4,9 @@ class AccessKey #Autorization Server
   include HTTParty
   include Linea
 
-  base_uri 'autorizador.herokuapp.com'
+#  base_uri 'autorizador.herokuapp.com'
+
+  base_uri CFG[:autorizador_alectrica_url.to_s]
 
   def initialize( rid )
     @rid = rid
@@ -19,8 +21,11 @@ class AccessKey #Autorization Server
   public
 
   def get_key
-    response = self.class.get("/create_access_token?rid=#{@rid}")
-    if response.response.class == ::Net::HTTPOK and not response.parsed_response["access_token"].nil?
+    begin
+      response = self.class.get("/create_access_token?rid=#{@rid}")
+    rescue StandardError => e
+    end
+    if response and response.response.class == ::Net::HTTPOK and not response.parsed_response["access_token"].nil?
       @key = response.parsed_response["access_token"]
     else
       linea.error "Error Requesting Access Token " 

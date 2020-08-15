@@ -41,6 +41,26 @@ RSpec.describe 'Items API', :type => 'request' do
   let(:todo_id)       { todo.id                                        }
   let(:id)            { items.first.id                                 }
 
+  if Ch::Check.malo(:alectrica_autoriza)
+
+    let (:access_key)        { double('AccessKey') }
+    let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:verificador)       { double('RemoteVerifyMacarron') }
+    let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:verificador) { double('RemoteVerifyMacarron') }
+    let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:access_key) { double('AccessKey') }
+    let (:access_key_class) { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+    before {
+      allow(access_key).to receive(:get).and_return('eyii')
+      allow(access_key_class).to receive(:new).with('amprid').and_return(access_key)
+      allow(verificador_class).to receive(:new).with(valid_macarron).and_return(verificador)
+      allow(verificador).to receive(:get).and_return(true)
+      allow(verificador).to receive(:get_result).and_return(true)
+    }
+  end
+
+
   describe 'Revisión del token' do
     context "Cuando genere un token válido en rspec" do
       it "Debería tener un usuario" do
@@ -448,15 +468,42 @@ RSpec.describe 'Items API', :type => 'request' do
 
 
     describe 'GET /authenticate a pesar de nocrear token ni cliente ni authenticate, pero con otro reader'  do
+
+      if Ch::Check.malo(:alectrica_autoriza)
+
+          let (:access_key)        { double('AccessKey') }
+          let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+          let (:verificador)       { double('RemoteVerifyMacarron') }
+          let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+          let (:verificador) { double('RemoteVerifyMacarron') }
+          let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+          let (:access_key) { double('AccessKey') }
+          let (:access_key_class) { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+          before {
+            allow(access_key).to receive(:get).and_return('eyii')
+
+            allow(verificador_class).to receive(:new).with(valid_macarron).and_return(verificador)
+            allow(verificador).to receive(:get).and_return(true)
+            allow(verificador).to receive(:get_result).and_return(true)
+          }
+
+      end
+
       before {
+        allow(access_key_class).to receive(:new).with('amprid2').and_return(access_key)
         otro_reader_existente = Reader.create!(:rid => "amprid2")
-        get  "/sign_in", params: {:rid => "amprid2" , :return => retorno}
+
+        get  "/sign_in", params: {:rid => "amprid2" , :return => retorno} if Ch::Check.malo(:alectrica_autoriza)
+
 
         #Authenticate crea otro token para comunicarse con el AS
+        allow(access_key_class).to receive(:new).with('amprid1').and_return(access_key) if Ch::Check.malo(:alectrica_autoriza)
+
         get "/authenticate", params: {:rid => "amprid1",\
-				      :__amp_source_origin => CFG[:help_coronavid_url.to_s] },\
-				      headers: {'Origin' => CFG[:help_coronavid_url.to_s]}
+                                      :__amp_source_origin => CFG[:help_coronavid_url.to_s] },\
+                                      headers: {'Origin' => CFG[:help_coronavid_url.to_s]}
       }
+
 
       it 'return code 200'  do
         expect(response).to have_http_status(200)
@@ -470,6 +517,27 @@ RSpec.describe 'Items API', :type => 'request' do
 
 
     describe 'GET /authenticate a pesar de nocrear token ni cliente ni authenticate, pero con otro reader, y sin sign_in previo' do
+
+  if Ch::Check.malo(:alectrica_autoriza)
+
+    let (:access_key)        { double('AccessKey') }
+    let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:verificador)       { double('RemoteVerifyMacarron') }
+    let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:verificador) { double('RemoteVerifyMacarron') }
+    let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:access_key) { double('AccessKey') }
+    let (:access_key_class) { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+    before {
+      allow(access_key).to receive(:get).and_return('eyii')
+      allow(access_key_class).to receive(:new).with('amprid2').and_return(access_key)
+      allow(verificador_class).to receive(:new).with(valid_macarron).and_return(verificador)
+      allow(verificador).to receive(:get).and_return(true)
+      allow(verificador).to receive(:get_result).and_return(true)
+    }
+  end
+
+
       before {
         #Authenticate crea otro token para comunicarse con el AS
         get "/authenticate", params: {:rid => "amprid2", :__amp_source_origin => CFG[:help_coronavid_url.to_s] }, headers: {'Origin' => CFG[:help_coronavid_url.to_s]}

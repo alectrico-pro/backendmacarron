@@ -22,12 +22,32 @@ RSpec.describe 'Todos API', type: :request do
   let(:valid_params)   {{ :__amp_source_origin => CFG[:help_url.to_s],\
                           :auth_token => coded_token,\
                           :macarron_de_autorizacion => valid_macarron  }}
-   
+
+  if Ch::Check.malo(:alectrica_autoriza)
+
+    let (:access_key)        { double('AccessKey') }
+    let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:verificador)       { double('RemoteVerifyMacarron') }
+    let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:verificador) { double('RemoteVerifyMacarron') }
+    let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:access_key) { double('AccessKey') }
+    let (:access_key_class) { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+    before {
+      allow(access_key).to receive(:get).and_return('eyii')
+      allow(access_key_class).to receive(:new).with('amprid').and_return(access_key)
+      allow(verificador_class).to receive(:new).with(valid_macarron).and_return(verificador)
+      allow(verificador).to receive(:get).and_return(true)
+      allow(verificador).to receive(:get_result).and_return(true)
+    }
+  end
+ 
   #Test suit for GET /todos
   #Index
    describe 'GET /todos' do
-    #make HTTP get request before each example
-    before { get '/todos', params: valid_params, headers: headers }
+     before {
+       get '/todos', params: valid_params, headers: headers
+     }
 
     it 'returns todos' do
       #Note 'json' is a custom helper to parse JSON responses
@@ -125,7 +145,10 @@ RSpec.describe 'Todos API', type: :request do
   #Test suit for DELETE /todos/:id
   #Delete
   describe 'DELETE /todos/:id' do
-    before { delete "/todos/#{todo_id}", params: valid_params, headers: headers }
+
+    before {
+      delete "/todos/#{todo_id}", params: valid_params, headers: headers
+    }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

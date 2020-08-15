@@ -30,7 +30,20 @@ RSpec.describe 'MicroServicio help accesa el backend de autorización: No usa ma
 
     #Después de creado el token se decreta que está logado, no es necesario que el usuario esté creado
     describe 'GET /authenticate after get_token' do
+
+      if Ch::Check.malo(:alectrica_autoriza)
+        let (:access_key) { double('AccessKey') }
+        let (:access_key_class) { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+      end
+
+
       before {
+
+       if Ch::Check.malo(:alectrica_autoriza)
+         allow(access_key).to receive(:get).and_return('eyii')
+         allow(access_key_class).to receive(:new).with('amprid').and_return(access_key)
+       end
+
        get "/create_token", params: {:rid => "amprid", :clientId => "clientId", :return => CFG[:authentication_endpoint_coronavid_url.to_s]}
        get "/authenticate", params: {:rid => "amprid", :__amp_source_origin => CFG[:help_url.to_s] }, headers: {'Origin' => CFG[:help_url.to_s]}
       }
