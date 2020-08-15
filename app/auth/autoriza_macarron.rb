@@ -12,7 +12,7 @@ class AutorizaMacarron
 
   def call 
     if reader
-      macarron = Macarron.new( location: 'http://backend.alectrica.cl', identifier: 'w', key: ENV['SECRET_KEY_BASE'] ) 
+      macarron = Macarron.new( location: CFG[:backend_alectrica_url.to_s], identifier: 'w', key: ENV['SECRET_KEY_BASE'] ) 
       macarron.add_first_party_caveat('LoggedIn = true')
       macarron.serialize 
     else

@@ -8,7 +8,8 @@ class LoginReader
 
   def call
 #+ JsonWebToken.encode( reader: reader.as_json(:include => :user)) if reader
-    access_key = AccessKey.new(@rid).get
+    access_key = AccessKey.new(@rid).get #Este es el token de acceso, esto reemplaza al método antiguio en el que se guardaba el estado en la base de datos.
+    #Por ejemplor def reader busca al user en la base de datos y hace que el login se anote.. No existe estado de login ahora, cada vez que la autenticación del token de acceso sea exitosa, eso se considerará logado.
     #eader
   end
 

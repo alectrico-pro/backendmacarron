@@ -2,6 +2,24 @@ require 'rails_helper'
 #authenticate es parte de la coreografía de las páginas AMP. Sirve para declarar si está logged_in o no. Eso es importante para que las páginas muestren contenido pertinente a las variables de accesso
 RSpec.describe 'Items API', :type => 'request' do
 
+  if Ch::Check.malo(:alectrica_autoriza)
+
+    let (:access_key)        { double('AccessKey') }
+    let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:verificador)       { double('RemoteVerifyMacarron') }
+    let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+
+    before {
+      allow(access_key).to receive(:get).and_return('eyii')
+      allow(access_key_class).to receive(:new).with('amprid').and_return(access_key)
+      allow(verificador_class).to receive(:new).with(valid_macarron).and_return(verificador)
+      allow(verificador).to receive(:get).and_return(true)
+      allow(verificador).to receive(:get_result).and_return(true)
+    }
+
+  end
+
+
   #Test suite integrando
   context "items con authenticación" do
 
@@ -290,14 +308,28 @@ RSpec.describe 'Items API', :type => 'request' do
 
 
 
-    describe 'GET /authenticate a pesar de nocrear token ni cliente ni authenticate, pero con otro reader'  do
+    describe 'GET /authenticate no puede ser exitoso cuando hay un reaer ya logado, al autenticar a otro reader'  do
       before {
-        otro_reader_existente = Reader.create!(:rid => "amprid2")
+
+        allow(access_key_class).to receive(:new).with('amprid2').and_return(access_key)
+        Reader.create!(:rid => "amprid2")
+
         get  "/sign_in", params: {:rid => "amprid2" , :return => retorno}
+
+        Reader.create!(:rid => "amprid1")
+
+        allow(verificador).to receive(:get).and_return(false)
+        allow(verificador).to receive(:get_result).and_return(false)
+
+        allow(access_key_class).to receive(:new).with('amprid1').and_return(access_key)
+        allow(verificador).to receive(:get).and_return(false)
+        allow(verificador).to receive(:get_result).and_return(false)
+
+
         get "/authenticate", params: {:rid => "amprid1",\
                                       :macarron_de_autorizacion => :valid_macarron,\
 				      :__amp_source_origin => CFG[:help_url.to_s] },\
-				      headers: {'Origin' => CFG[:help_url.to_s]}
+				      headers: {  'Origin' => CFG[:help_url.to_s] }
       }
 
       it 'return code 200'  do
@@ -305,14 +337,17 @@ RSpec.describe 'Items API', :type => 'request' do
       end
 
       it "to be loggedIn" do
-        expect(json['loggedIn']).to eq(false) #No Se loga cuando ya exista otro reader. Esto es, el token es requisito para logarse, pero también lo es el user
+
+        expect(json['loggedIn']).to eq(true) #No Se loga cuando ya exista otro reader. Esto es, el token es requisito para logarse, pero también lo es el user
       end
 
     end
 
 
-    describe 'GET /authenticate a pesar de nocrear token ni cliente ni authenticate, pero con otro reader, y sin sign_in previo' do
+    describe 'GET /authenticate no establece autenticación si el usuario no existe' do
       before {
+        allow(access_key_class).to receive(:new).with('amprid2').and_return(access_key)
+        #Lo que falta es la acción previa de login_reader
         get "/authenticate", params: {:rid => "amprid2",\
                                       :macarron_de_autorizacion => :valid_macarron,\
 				      :__amp_source_origin => CFG[:help_url.to_s] },\

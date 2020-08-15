@@ -101,7 +101,7 @@ class ApplicationController < ActionController::API
 
       if URLS_PERMITIDAS
         header_origin = request.headers['Origin']
-        linea.info "dominios permitidos #{URLS_PERMITIDAS.inspect}"
+        #linea.info "dominios permitidos #{URLS_PERMITIDAS.inspect}"
         linea.info "Origen es #{request.headers['Origin']}"
 
         unless URLS_PERMITIDAS and @origen and @origen.in?( URLS_PERMITIDAS )
