@@ -27,6 +27,30 @@ resource "To Do" do
                                       macarron.add_first_party_caveat('LoggedIn = true');\
                                       ms= macarron.serialize; return ms }
 
+
+  if Ch::Check.malo(:alectrica_autoriza)
+
+    let (:access_key)        { double('AccessKey') }
+    let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:verificador)       { double('RemoteVerifyMacarron') }
+    let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:verificador) { double('RemoteVerifyMacarron') }
+    let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:access_key) { double('AccessKey') }
+    let (:access_key_class) { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+    before {
+      allow(access_key).to receive(:get).and_return('eyii')
+      allow(access_key_class).to receive(:new).with('amprid').and_return(access_key)
+      allow(verificador_class).to receive(:new).with(macarron_de_autorizacion).and_return(verificador)
+      allow(verificador).to receive(:get).and_return(true)
+      allow(verificador).to receive(:get_result).and_return(true)
+    }
+  end
+
+
+
+
+
     example "Devuelve una lista de las tareas", :document => false do
       explanation "Lista de tareas por hacer, To Do" 
       do_request
@@ -58,6 +82,29 @@ resource "Circuitos" do
     
 
   let(:headers)       {{ "Origin" => CFG[:help_url.to_s]  }}
+
+
+
+  if Ch::Check.malo(:alectrica_autoriza)
+
+    let (:access_key)        { double('AccessKey') }
+    let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:verificador)       { double('RemoteVerifyMacarron') }
+    let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:verificador) { double('RemoteVerifyMacarron') }
+    let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:access_key) { double('AccessKey') }
+    let (:access_key_class) { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+    before {
+      allow(access_key).to receive(:get).and_return('eyii')
+      allow(access_key_class).to receive(:new).with('amprid').and_return(access_key)
+      allow(verificador_class).to receive(:new).with(macarron_de_autorizacion).and_return(verificador)
+      allow(verificador).to receive(:get).and_return(true)
+      allow(verificador).to receive(:get_result).and_return(true)
+    }
+  end
+
+
 
 
   post '/api/v1/electrico/circuitos/addToCircuito.json'   do

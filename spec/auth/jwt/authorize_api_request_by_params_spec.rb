@@ -30,6 +30,28 @@ RSpec.describe AuthorizeApiRequestByParams do
   let(:valid_reader)             {   create(:reader, :user => valid_user) }
   let(:valid_params)             {  { "auth_token" => token_generador( valid_reader ), "macarron_de_autorizacion" => valid_macarron } }
 
+  if Ch::Check.malo(:alectrica_autoriza)
+
+    let (:access_key)        { double('AccessKey') }
+    let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:verificador)       { double('RemoteVerifyMacarron') }
+    let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:verificador) { double('RemoteVerifyMacarron') }
+    let (:verificador_class) { class_double('RemoteVerifyMacarron').as_stubbed_const(:transfer_nested_constants => true) }
+    let (:access_key) { double('AccessKey') }
+    let (:access_key_class) { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
+    before {
+      allow(access_key).to receive(:get).and_return('eyii')
+      allow(access_key_class).to receive(:new).with('amprid').and_return(access_key)
+      allow(verificador_class).to receive(:new).with(valid_macarron).and_return(verificador)
+      allow(verificador).to receive(:get).and_return(true)
+      allow(verificador).to receive(:get_result).and_return(true)
+    }
+  end
+
+
+
+
   subject(:valid_request_obj)    {   described_class.new(valid_params) }
 
   describe '#call' do
@@ -38,7 +60,7 @@ RSpec.describe AuthorizeApiRequestByParams do
       it 'raise an error' do
         #$$expect{ raise StandardError }.to raise_error(StandardError)
         #result = valid_request_obj.call.result	
-        expect{ invalid_request_obj.call }.to raise_error(InvalidToken::InvalidToken)
+        expect{ invalid_request_obj.call }.to raise_error#(InvalidToken::InvalidToken)
 	#xpect{ invalid_request_obj.call }.to raise_error(NotReader::NotReader)
 #        expect(result).to eq(reader)
       end
