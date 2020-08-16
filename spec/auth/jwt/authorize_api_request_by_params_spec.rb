@@ -30,7 +30,7 @@ RSpec.describe AuthorizeApiRequestByParams do
   let(:valid_reader)             {   create(:reader, :user => valid_user) }
   let(:valid_params)             {  { "auth_token" => token_generador( valid_reader ), "macarron_de_autorizacion" => valid_macarron } }
 
-  if Ch::Check.malo(:alectrica_autoriza)
+  if Ch::Check.malo(:herokuapp_autorizador)
 
     let (:access_key)        { double('AccessKey') }
     let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }

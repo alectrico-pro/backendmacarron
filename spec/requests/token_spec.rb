@@ -31,7 +31,7 @@ RSpec.describe 'MicroServicio help accesa el backend de autorización: No usa ma
     #Después de creado el token se decreta que está logado, no es necesario que el usuario esté creado
     describe 'GET /authenticate after get_token' do
 
-      if Ch::Check.malo(:alectrica_autoriza)
+      if Ch::Check.malo(:herokuapp_autorizador)
         let (:access_key) { double('AccessKey') }
         let (:access_key_class) { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
       end
@@ -39,7 +39,7 @@ RSpec.describe 'MicroServicio help accesa el backend de autorización: No usa ma
 
       before {
 
-       if Ch::Check.malo(:alectrica_autoriza)
+       if Ch::Check.malo(:herokuapp_autorizador)
          allow(access_key).to receive(:get).and_return('eyii')
          allow(access_key_class).to receive(:new).with('amprid').and_return(access_key)
        end

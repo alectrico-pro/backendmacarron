@@ -10,7 +10,7 @@ RSpec.describe 'Authenticate API', :type => 'request' do
   let(:retorno)        {               CFG[:authentication_endpoint_alectrico_url.to_s]  }
   let(:success_return) {               CFG[:retorno_exitoso_alectrico_url.to_s]   }
 
-  if Ch::Check.malo(:alectrico_backend)
+  if Ch::Check.malo(:herokuapp_backendalectrica)
 
     let (:access_key)        { double('AccessKey') }
     let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }

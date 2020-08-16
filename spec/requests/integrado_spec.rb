@@ -2,7 +2,7 @@ require 'rails_helper'
 #authenticate es parte de la coreografía de las páginas AMP. Sirve para declarar si está logged_in o no. Eso es importante para que las páginas muestren contenido pertinente a las variables de accesso
 RSpec.describe 'Items API', :type => 'request' do
 
-  if Ch::Check.malo(:alectrica_autoriza)
+  if Ch::Check.malo(:herokuapp_autorizador)
 
     let (:access_key)        { double('AccessKey') }
     let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }

@@ -41,7 +41,7 @@ RSpec.describe 'Items API', :type => 'request' do
   let(:todo_id)       { todo.id                                        }
   let(:id)            { items.first.id                                 }
 
-  if Ch::Check.malo(:alectrica_autoriza)
+  if Ch::Check.malo(:herokuapp_autorizador)
 
     let (:access_key)        { double('AccessKey') }
     let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
@@ -469,7 +469,7 @@ RSpec.describe 'Items API', :type => 'request' do
 
     describe 'GET /authenticate a pesar de nocrear token ni cliente ni authenticate, pero con otro reader'  do
 
-      if Ch::Check.malo(:alectrica_autoriza)
+      if Ch::Check.malo(:herokuapp_autorizador)
 
           let (:access_key)        { double('AccessKey') }
           let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
@@ -493,11 +493,11 @@ RSpec.describe 'Items API', :type => 'request' do
         allow(access_key_class).to receive(:new).with('amprid2').and_return(access_key)
         otro_reader_existente = Reader.create!(:rid => "amprid2")
 
-        get  "/sign_in", params: {:rid => "amprid2" , :return => retorno} if Ch::Check.malo(:alectrica_autoriza)
+        get  "/sign_in", params: {:rid => "amprid2" , :return => retorno} if Ch::Check.malo(:herokuapp_autorizador)
 
 
         #Authenticate crea otro token para comunicarse con el AS
-        allow(access_key_class).to receive(:new).with('amprid1').and_return(access_key) if Ch::Check.malo(:alectrica_autoriza)
+        allow(access_key_class).to receive(:new).with('amprid1').and_return(access_key) if Ch::Check.malo(:herokuapp_autorizador)
 
         get "/authenticate", params: {:rid => "amprid1",\
                                       :__amp_source_origin => CFG[:help_coronavid_url.to_s] },\
@@ -518,7 +518,7 @@ RSpec.describe 'Items API', :type => 'request' do
 
     describe 'GET /authenticate a pesar de nocrear token ni cliente ni authenticate, pero con otro reader, y sin sign_in previo' do
 
-  if Ch::Check.malo(:alectrica_autoriza)
+  if Ch::Check.malo(:herokuapp_autorizador)
 
     let (:access_key)        { double('AccessKey') }
     let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }

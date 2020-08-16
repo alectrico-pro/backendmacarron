@@ -5,11 +5,11 @@ default: &default
   tld:                                   alectrica
 
   #autorizacion server
-  as:                                    https://autoriza.alectrica.cl
+  as:                                    https://autorizador.herokuapp.com/
 
   #alectrica
   backend_alectrica_url:                 https://backend.alectrica.cl
-  autorizador_alectrica_url:             https://autoriza.alectrica.cl
+  autorizador_alectrica_url:             https://autorizador.herokuapp.com/
 
   #alectrico - se usa el domino alectrica por ahora
   frontend_alectrico_url:                https://frontend.alectrica.cl

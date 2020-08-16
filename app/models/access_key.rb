@@ -4,8 +4,6 @@ class AccessKey #Autorization Server
   include HTTParty
   include Linea
 
-#  base_uri 'autorizador.herokuapp.com'
-
   base_uri CFG[:autorizador_alectrica_url.to_s]
 
   def initialize( rid )

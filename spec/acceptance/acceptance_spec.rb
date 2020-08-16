@@ -28,7 +28,7 @@ resource "To Do" do
                                       ms= macarron.serialize; return ms }
 
 
-  if Ch::Check.malo(:alectrica_autoriza)
+  if Ch::Check.malo(:herokuapp_autorizador)
 
     let (:access_key)        { double('AccessKey') }
     let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
@@ -85,7 +85,7 @@ resource "Circuitos" do
 
 
 
-  if Ch::Check.malo(:alectrica_autoriza)
+  if Ch::Check.malo(:herokuapp_autorizador)
 
     let (:access_key)        { double('AccessKey') }
     let (:access_key_class)  { class_double('AccessKey').as_stubbed_const(:transfer_nested_constants => true) }
