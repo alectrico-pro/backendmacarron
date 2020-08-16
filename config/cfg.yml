@@ -1,7 +1,7 @@
 default: &default
 
-  domain:                                coronavid.cl
-  tld:                                   coronavid
+  domain:                                alectrica.cl
+  tld:                                   alectrica
 
   #autorizacion server
   as:                                    https://autoriza.alectrica.cl
