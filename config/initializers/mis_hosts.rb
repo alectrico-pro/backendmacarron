@@ -1,2 +1,2 @@
-MIS_HOSTS= "autorizador.alectrica.cl"
+MIS_HOSTS= "autoriza.alectrica.cl backend.alectrica.cl backend.alectrico.cl"
 
