@@ -11,19 +11,19 @@ default: &default
   backend_alectrica_url:                 https://backend.alectrica.cl
   autorizador_alectrica_url:             https://autorizador.alectrica.cl
 
-  #alectrico
-  frontend_alectrico_url:                https://frontend.alectrico.cl
-  backend_alectrico_url:                 https://backend.alectrico.cl
-  authentication_endpoint_alectrico_url: https://backend.alectrico.cl/authenticate
-  retorno_exitoso_alectrico_url:         https://backend.alectrico.cl/authenticate#success=true
+  #alectrico - se usa el domino alectrica por ahora
+  frontend_alectrico_url:                https://frontend.alectrica.cl
+  backend_alectrico_url:                 https://backend.alectrica.cl
+  authentication_endpoint_alectrico_url: https://backend.alectrica.cl/authenticate
+  retorno_exitoso_alectrico_url:         https://backend.alectrica.cl/authenticate#success=true
 
-  #coronavid
-  frontend_coronavid_url:                https://frontend.coronavid.cl
-  backend_coronavid_url:                 https://backend.coronavid.cl
-  authentication_endpoint_coronavid_url: https://backend.coronavid.cl/authenticate
-  help_url:                              https://help.coronavid.cl
-  help_coronavid_url:                    https://help.coronavid.cl
-  retorno_exitoso_url:                   https://backend.coronavid.cl/authenticate#success=true
+  #coronavid - se usa el domino alectrica por ahora, 
+  frontend_coronavid_url:                https://frontend.alectrica.cl
+  backend_coronavid_url:                 https://backend.alectrica.cl
+  authentication_endpoint_coronavid_url: https://backend.alectrica.cl/authenticate
+  help_url:                              https://help.alectrica.cl
+  help_coronavid_url:                    https://help.alectrica.cl
+  retorno_exitoso_url:                   https://backend.alectrica.cl/authenticate#success=true
   ok:                                    true
 
 
