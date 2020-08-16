@@ -9,7 +9,7 @@ default: &default
 
   #alectrica
   backend_alectrica_url:                 https://backend.alectrica.cl
-  autorizador_alectrica_url:             https://autorizador.alectrica.cl
+  autorizador_alectrica_url:             https://autoriza.alectrica.cl
 
   #alectrico - se usa el domino alectrica por ahora
   frontend_alectrico_url:                https://frontend.alectrica.cl
