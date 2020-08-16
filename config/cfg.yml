@@ -4,11 +4,11 @@ default: &default
   tld:                                   coronavid
 
   #autorizacion server
-  as:                                    https://autoriza.alectrica.cl
+  as:                                    https://autorizador.alectrica.cl
 
   #alectrica
   backend_alectrica_url:                 https://backend.alectrica.cl
-  autorizador_alectrica_url:             https://autoriza.alectrica.cl
+  autorizador_alectrica_url:             https://autorizador.alectrica.cl
 
   #alectrico
   frontend_alectrico_url:                https://frontend.alectrico.cl
