@@ -1,6 +1,7 @@
 default: &default
 
   domain:                                alectrica.cl
+  dominio:                               alectrica.cl
   tld:                                   alectrica
 
   #autorizacion server
