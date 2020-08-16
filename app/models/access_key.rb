@@ -24,6 +24,7 @@ class AccessKey #Autorization Server
     begin
       response = self.class.get("/create_access_token?rid=#{@rid}")
     rescue StandardError => e
+      linea.error e.inspect
     end
     if response and response.response.class == ::Net::HTTPOK and not response.parsed_response["access_token"].nil?
       @key = response.parsed_response["access_token"]
