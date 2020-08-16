@@ -29,6 +29,7 @@ class AccessKey #Autorization Server
       @key = response.parsed_response["access_token"]
     else
       linea.error "Error Requesting Access Token " 
+      linea.error response.inspect if response
       throw :error_requesting_access_token
     end
 
