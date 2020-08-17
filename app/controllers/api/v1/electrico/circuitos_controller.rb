@@ -3,7 +3,7 @@ module Api
     module Electrico
       include Estructura
 
-        #Este es el feed de la lista de electrodomésticos en bat.alectrica.cl, previamente designer.alectrico.cl
+        #Este es el feed de la lista de electrodomésticos en designar.alectrica.cl, versión con macarrones de designer.alectrico.cl
 	#Busca el presupuesto que esté asociado al dispositivo y muestra los electromésticos que lo componen.
 	#No está preocupado de averiguar si hay un usuario o no.
 	#Podría cargar los electrodomésticos del usuario, pero para ello hay que avergiuar si hay algún usuario logado y luego averiguar si tiene algún presupuesto.

@@ -101,41 +101,30 @@ class ApplicationController < ActionController::API
       linea.info "Cors"
       #" https://github.com/ampproject/amphtml/blob/master/spec/amp-cors-requests.md"
       #blacklisting origin
-
       # @origen #deben coincidir con los origenes especificados en config/application.rb
-
       @origen = params[:__amp_source_origin] || params[":__amp_source_origin"]
       linea.error "No se ingresó el parámetro :__amp_source_origin" unless @origen
       header_origin = request.headers['Origin']
-
-
       raise NotOriginAllowed unless header_origin == @origen
-
       if URLS_PERMITIDAS
         header_origin = request.headers['Origin']
         #linea.info "dominios permitidos #{URLS_PERMITIDAS.inspect}"
         linea.info "Origen es #{request.headers['Origin']}"
-
         unless URLS_PERMITIDAS and @origen and @origen.in?( URLS_PERMITIDAS )
           linea.error "#{@origen} no está en la lista permitida"
           raise NotOriginAllowed
           return
         end
-
       else
-
         linea.info "No se han ingresado los micro servicios permitidos como variable de ambiente de heroku"
         raise NotOriginAllowed
         return
-
       end
-
-     if
+      if
         response.headers['AMP-Access-Control-Allow-Source-Origin'] = @origen
         response.headers['Access-Control-Allow-Origin'] = @origen
         response.headers['Access-Control-Expose-Headers'] = 'AMP-Access-Control-Allow-Source-Origin'
         linea.info "El origen coincide con el header"
-
       else
         if request.headers['AMP-Same-Origin']
           linea.info "Es Amp-Same-Orgin, adelante"
