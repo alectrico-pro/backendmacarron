@@ -140,13 +140,15 @@ class AuthenticationController < ApplicationController
   end
 
   def logout_reader
-
+    linea.info "En acción logout_reader"
     command = LogoutReader.call( params[:rid])
-
+    linea.info "Al voler de LogoutReader"
     if command.success?
+      linea.info "El comando fue exitoso"
       @url = params[:return] + "#success=true"
       redirect_to @url
     else
+      linea.error "El comando no fue exitoso"
       redirect_to params[:return]
     end
 

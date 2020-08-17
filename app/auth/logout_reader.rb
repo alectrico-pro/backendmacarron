@@ -18,6 +18,7 @@ class LogoutReader
     linea.info "En reader de LogoutReader"
     @reader = Reader.find_by(:rid => rid)
     @reader.try :logout
+    linea.info "Reader #{@reader.inspect}"
     @reader
   end
 end
