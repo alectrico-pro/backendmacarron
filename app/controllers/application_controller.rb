@@ -53,7 +53,7 @@ class ApplicationController < ActionController::API
       #  throw "Token Expirado"
       #end
       
-      linea.info "Resultado del Verificador #{resultado_de_verificador}"
+      linea.info "Resultado del Verificador #{resultado_del_verificador}"
       unless resultado_del_verificador
         throw "No Autorizado por AS"
       end
