@@ -3,22 +3,24 @@ module Api
     module Electrico
       include Estructura
 
-        #Este es el feed de la lista de electrodomésticos en designer.alectrico.cl
-	#Busca el presupuesto que esté asociado al dispositivo y muestra los electromésticos que lo componen
-	#No está preocupado de averiguar si hay un usuario o no
-	#Debiera cargar los electrodomésticos del usuario, para ello hay que avergiuar si hay algún usuario logado y luego averiguar si tiene algún prespuesto.
-	#Entonces tendré dos presupuestos, el asociado al dispositivo y el pertenciente al usuario.
-	#Deberé reemplazar el presupuesto asociado al dispositivo por el que trae el usuairo de cualquier otro dispositivo?
-	#Se garantiza que cada usuario solo tenga un presupuesto por dispositivo, pero eso complica un poco, porque sí se permite que haya muchos presupuestos por usuario. Habrá que mostrar cuál es el presupuesto que quiere asociar al dispositivo antes de asignarlo al dispositiov
+        #Este es el feed de la lista de electrodomésticos en bat.alectrica.cl, previamente designer.alectrico.cl
+	#Busca el presupuesto que esté asociado al dispositivo y muestra los electromésticos que lo componen.
+	#No está preocupado de averiguar si hay un usuario o no.
+	#Podría cargar los electrodomésticos del usuario, pero para ello hay que avergiuar si hay algún usuario logado y luego averiguar si tiene algún presupuesto.
+	#En ese caso, habrá dos presupuestos: el asociado al dispositivo y el perteneciente al usuario.
+	#Y habrá que considerar reemplazar el presupuesto asociado al dispositivo por el que trae el usuario de cualquier otro dispositivo?
+	#Se garantiza que cada usuario solo tenga un presupuesto por dispositivo, pero eso complica un poco, porque sí se permite que haya muchos presupuestos por usuario. Habrá que mostrar cuál es el presupuesto que quiere asociar al dispositivo antes de asignarlo al dispositio.
 	#Será un menú de selector que aparecerá cuando un usuario se logge y no tenga un prespuesto en el dispositivo. Luego de efectuada la sección deberá desaparecer. No aparecerá más, porque desde ese momento habrá un prespuesto asociado al dispositivo, a no ser que se borre el dispositivo.
+
       class CircuitosController < ElectricoController
+        include ::Linea
 
         skip_before_action :authenticate_request, only: [:get]
+        before_action :authenticate_and_authorize, only: [:get]
         #Esto asegura la conexión con el esquema cors.
         before_action :allow_credentials, only: [:addToCircuito,:get, :dropFromCircuito]
         #Si no se hace allow_credentials, amp-pages alega porque se están intentando accesar a otro dominion sin la regla CORS
 
-        include ::Linea
 
 	def atencion
           respond_to do |format|
@@ -43,6 +45,8 @@ module Api
             carga           = ::Carga.new( id, tipo_equipo, circuito )
             circuito.agrega_carga( carga )
           end
+
+           
           @circuito = JSON.parse(circuito.to_json)
           @cargas   = circuito.cargas
 
