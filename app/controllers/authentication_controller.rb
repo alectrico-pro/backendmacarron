@@ -155,14 +155,16 @@ class AuthenticationController < ApplicationController
   end
 
   def logout_user
-
+    linea.info "En acción logout_user"
     command = LogoutUser.call(params[:email], params[:password], params[:rid])
 
     if command.success?
+      linea.info "Comando exitoso"
       @url = params[:return] + "#success=true" #el parametro return no pone la pagina amp para que apunte al servidor amp. Desde donde se devolverá a logout_done si sale bien
       redirect_to @url
      # render json: { auth_token: command.result }
     else
+      linea.info "Comando no fue exitoso"
       redirect_to params[:return]
 #      render json: { error: command.errors }, status: :unauthorized
     end
