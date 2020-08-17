@@ -49,10 +49,11 @@ class ApplicationController < ActionController::API
 
 #Primero se huelen el culo los backends
       expira = decoded_token["exp"]
-      if expira.to_i > Time.now.to_i
-        throw "Token Expirado"
-      end
+      #if expira.to_i > Time.now.to_i
+      #  throw "Token Expirado"
+      #end
       
+      linea.info "Resultado del Verificador #{resultado_de_verificador}"
       unless resultado_del_verificador
         throw "No Autorizado por AS"
       end
