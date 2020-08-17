@@ -17,7 +17,7 @@ class RemoteVerifyMacarron
 
   def get_result
     linea.info "En get_result de RemoteVerifyMacarron"
-    @options = { query: { macarron: @macarron } }
+    @options = { query: { macarron_de_autorizacion: @macarron } }
     response = self.class.get('/verify_macarron', @options )
     linea.info "Respuesta de la verificación es: #{response.inspect}"
 
