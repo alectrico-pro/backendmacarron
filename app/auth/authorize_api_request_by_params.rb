@@ -49,8 +49,10 @@ class AuthorizeApiRequestByParams
 
 
   def reader
-
+    linea.info "En AauthorizeApiRequestByParam"
+    linea.info params.inspect
     if params["macarron_de_autorizacion"]
+      linea.info "Existe macarron de autorizacion"
       macarron = params["macarron_de_autorizacion"]
       linea.info "Macarrón de autorizadón #{macarron}"
       resultado = RemoteVerifyMacarron.new( macarron )

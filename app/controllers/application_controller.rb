@@ -33,7 +33,6 @@ class ApplicationController < ActionController::API
       linea.info "Reader Decodificado #{decoded_token}"
       linea.info "Token Decodificado #{decoded_reader}"
 
-      byebug
       verificador = ::RemoteVerifyMacarron.new( params[:macarron_de_autorizacion.to_s] )
       resultado_del_verificador = verificador.get_result
       #Se obtiene un token de autorizacion en el Authorization Server, ese token se llama Access Token o Access Key. Se decodifica para verificar que es un token generado por el Authorización Server.  
@@ -50,7 +49,6 @@ class ApplicationController < ActionController::API
 
 #Primero se huelen el culo los backends
       expira = decoded_token["exp"]
-      byebug
       if expira.to_i > Time.now.to_i
         throw "Token Expirado"
       end
@@ -58,7 +56,6 @@ class ApplicationController < ActionController::API
       unless resultado_del_verificador
         throw "No Autorizado por AS"
       end
-      byebug
     end
 
     def authenticate_request
