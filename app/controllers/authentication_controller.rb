@@ -60,19 +60,24 @@ class AuthenticationController < ApplicationController
 
 
   def login_reader #es el login de amp pages
+    linea.info "En login_reader de authentication"
     command = LoginReader.call(params[:rid])
-
+ 
     if command.success?
+      linea.info "Comando Exitoso"
       if command.result
+        linea.info "Comando con resultado"
         @url = params[:return] + "#success=true"
         redirect_to @url
       else
+        linea.error "Comando sin buen resultado"
         @url = params[:return] 
         redirect_to @url
 #render json: { error: command.errors }, status: :unauthorized
       end
     else
-      @url = params[:return] + "#success=true"
+      linea.error "Comando no Exitoso"
+      @url = params[:return] 
       redirect_to @url
 
 #     render json: { error: command.errors }, status: :unauthorized
