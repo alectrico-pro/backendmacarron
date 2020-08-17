@@ -15,6 +15,7 @@ class LogoutReader
   attr_accessor :rid, :reader
 
   def reader
+    linea.info "En reader de LogoutReader"
     @reader = Reader.find_by(:rid => rid)
     @reader.try :logout
     @reader
