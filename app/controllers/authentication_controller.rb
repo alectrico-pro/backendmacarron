@@ -157,8 +157,7 @@ class AuthenticationController < ApplicationController
     command = LogoutUser.call(params[:email], params[:password], params[:rid])
 
     if command.success?
-
-      @url = params[:return] + "#success=true"
+      @url = params[:return] + "#success=true" #el parametro return no pone la pagina amp para que apunte al servidor amp. Desde donde se devolverá a logout_done si sale bien
       redirect_to @url
      # render json: { auth_token: command.result }
     else
@@ -194,6 +193,21 @@ class AuthenticationController < ApplicationController
   def current_reader
     Auth.call(params).result
   end   
+
+  def logout_done
+    linea.info "En logout_done de authentication"
+    response.headers['AMP-Access-Control-Allow-Source-Origin'] = @origen
+    linea.info "Origen es #{@origen}"
+    @return = params[:return_url]
+    linea.info "Return es #{@return}"
+
+    respond_to do |format|
+      format.json { redirect_to @return }
+    end
+  end
+
+
+
 
 end
 

@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   get 'destroy_user',   to: 'authentication#destroy_user'
   get 'sign_up',        to: 'authentication#create_user'
   get 'logout',         to: 'authentication#logout_user'
+  get 'logout_done',    to: 'authentication#logout_done' #generado por el servidor de amp para confirmar que el logut fue exitoso
 
 
 end
