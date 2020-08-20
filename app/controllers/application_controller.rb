@@ -108,7 +108,7 @@ class ApplicationController < ActionController::API
       raise NotOriginAllowed unless header_origin == @origen
       if URLS_PERMITIDAS
         header_origin = request.headers['Origin']
-        #linea.info "dominios permitidos #{URLS_PERMITIDAS.inspect}"
+        linea.info "dominios permitidos #{URLS_PERMITIDAS.inspect}"
         linea.info "Origen es #{request.headers['Origin']}"
         unless URLS_PERMITIDAS and @origen and @origen.in?( URLS_PERMITIDAS )
           linea.error "#{@origen} no está en la lista permitida"

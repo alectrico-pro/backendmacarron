@@ -25,17 +25,25 @@ class ContactosController < ApplicationController
   # POST /contactos
   # POST /contactos.json
   def create
-    #Garantiza que se tenga un usuario con el clientId recibido.
-    #Este principio se basa en que el propietario actual del dispositio (móvil o deskotp) con el clientId especificado tiene prioridad sobre cualqueir otro propietario anterior 
+
+    #Esta acción crea un cliente y lo asocia a un reader id existente
+
+    #Garantiza que se tenga un cliente con el clientId recibido.
+    #Este principio se basa en que el propietario actual del dispositio (móvil o deskotp) con el amp_client_id especificado tiene prioridad sobre cualqueir otro propietario anterior 
     #
     #Se usa un cliente y muchos readers: un reader por dispositivo, dominio, y brower
     #Se crea o se autoriza un cliente existente
     #Se crea o se autoriza un reader id existente
     #Se establece un lazo entre ellos
-    #Cuando se borre la cuenta, lo que se borra es el reader.
+    #Cuando se borre la cuenta en ampo, lo que se borra es el reader, de esta forma los datos de proceso quedan enlazados  a los datos del cliente
+
     #Para borrar al cliente se debe ir al backend a una ventana especial
+    #No creada aún
+
     #El registro de cliente es esencial para individualizar los presupuestos eletricos que ha pedido cliente. El Reader id es  el usuario de los microservicios, son livianos y tienen  limites con macarrones, o el usuario los puede borrar.
-    #Cuando el usario registra un reader se puede saber si el email ya está en backend y eso se usa para relacionar clientes con readers.
+
+    #Cuando google registra un amp_cliente_id  se puede saber si el email ya está en backend y eso se usa para relacionar clientes con readers.
+
     #Cuando el usuario borrar un reader, dejará de tener acceso a todos los micros servicios desde el dispositivo, browser y dominio. 
     #Es posible que alguien use un email de un cliente existente, eso generará un acceso a un microservicio que no corresponde, por eso es necesario enviar un token o url con token para autorizar que se genere un nuevo reader. Mientras eso no esté desarrollado se pedierá un login y con el login se crearé el reader.
     #Si no existe el cliente, no hay ese problema, pues se generará un cliente con la password ingresad y además de generará un nuevo reader  
