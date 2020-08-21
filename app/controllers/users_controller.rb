@@ -22,9 +22,10 @@ class UsersController < ApplicationController
     linea.info "Comando es #{comando.inspect}"
 
     if comando.result
+
       json = {:auth_token => comando.result }
-      render json: json, status: :ok 
-      #redirect_to C.admin_login, notice: json
+      #ender json: json, status: :ok 
+      redirect_to C.admin_dashboard, notice: json
     else
       json = {"errores" => comando.errors[:user_authentication].pop.messages.map{|e| {:name =>e[0], :message => e[1].pop} } }
       render json: json, status: :not_found

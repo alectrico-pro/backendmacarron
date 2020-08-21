@@ -28,7 +28,7 @@ default: &default
   admin_url:                             https://admin.alectrica.cl
   admin_login:                           https://admin.alectrica.cl/dist/login.html
   admin_registro:                        https://admin.alectrica.cl/dist/register.html
-
+  admin_dashboard:                       https://admin.alectrica.cl/dist/index.html
 production:
   <<: *default
 
