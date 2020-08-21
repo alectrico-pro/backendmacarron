@@ -17,11 +17,15 @@ RSpec.describe AuthenticateReader do
   describe '#call' do
     context 'when valid credentials' do
       it 'return valid token' do
-	respuesta = valid_auth_obj.call
-        token = respuesta.result
-        decoded_token= JsonWebToken.decode(token)
+
+	respuesta              = valid_auth_obj.call
+        token                  = respuesta.result
+        decoded_token          = JsonWebToken.decode(token)
+
         expect(decoded_token).not_to be_nil
+
         expect(decoded_token['circuito']).respond_to? 'nombre'
+
         #raise decoded_token.inspect
       end
     end

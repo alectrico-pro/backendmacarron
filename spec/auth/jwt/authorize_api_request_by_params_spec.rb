@@ -3,13 +3,14 @@ require 'rails_helper'
 
 #Este tipo de autorización, está implementada en el backend, consiste en revisar si en los parámetros hay un token de acceso al bakend y un macarrón de autorización entregado por un autorizador remoto.
 #El macarrón se obtiene desde el servidor de autorización o puede ser generado localmente para pruebas, usando AccessKey.new
+
 RSpec.describe AuthorizeApiRequestByParams do
 
   let(:circuito)                 {  create(:circuito) }
   #Definir algún usuario existente en la base de datos
   let(:invalid_reader)           {  create(:reader) }
   let(:valid_macarron)           {  macarron =Macarron.new( 
-                                       location: CFG[:backend_alectrica_url.to_s],
+                                       location: C.backend_alectrica_url,
                                        identifier: 'w', key: ENV['SECRET_KEY_BASE'] );
                                     macarron.add_first_party_caveat('LoggedIn = true') ; 
                                     ms = macarron.serialize; 
