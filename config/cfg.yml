@@ -25,7 +25,8 @@ default: &default
   help_coronavid_url:                    https://help.alectrica.cl
   retorno_exitoso_url:                   https://backend.alectrica.cl/authenticate#success=true
   ok:                                    true
-
+  admin_url:                             https://admin.alectrica.cl
+  admin_login:                           https://admin.alectrica.cl/dist/login.html
 
 production:
   <<: *default

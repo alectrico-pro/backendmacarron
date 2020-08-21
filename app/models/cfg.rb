@@ -1,3 +1,5 @@
+#Esta clase sirve para llamar a los atributos del archivo de configuración de la forma C.atributo.
+#El archivod e configuración se encuentra en config/cfg.yml y se adapta a los diferentes ambientes de Rails.env
 class Cfg
   def initialize
     @cfg = YAML::load(ERB.new(File.read(Rails.root.join("config","cfg.yml"))).result)[Rails.env]
