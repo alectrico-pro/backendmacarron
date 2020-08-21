@@ -10,6 +10,8 @@ class UsersController < ApplicationController
 
     linea.info "Los attributos de usuario son: #{user_params.inspect}"
 
+    atributos = user_params
+
     if atributos.empty?
       atributos = user_params.except( :__admin_source_origin )
 
