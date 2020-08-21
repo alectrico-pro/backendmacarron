@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     linea.info "Comando es #{comando.inspect}"
 
     if comando.result
-      json = {:auth_token => command.result }
+      json = {:auth_token => comando.result }
       render json: json, status: :ok 
       #redirect_to C.admin_login, notice: json
     else
