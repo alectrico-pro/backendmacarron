@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
 
     if token
-      json = {"resultado" => user.name }
+      json = {:auth_token => token }
       #render json: json, status: :ok 
       redirect_to C.admin_login, notice: json
     else
