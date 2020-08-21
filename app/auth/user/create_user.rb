@@ -21,7 +21,7 @@ class CreateUser
 
   private
 
-  attr_accessor :email, :password, :password_confirmation, :rid, :clientId
+  attr_accessor :name, :email, :password, :password_confirmation, :rid, :clientId
 
   def user #Crea o actualiza el usuario existente, dado el rid de identificación
 
