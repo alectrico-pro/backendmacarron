@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
     name_json = { 'name' => name }
 
-    token = CreateUser.call( name_json, user_params[:email], user_params[:password], user_params[:password_confirmation], params[:rid], params[:clientId])
+    token = CreateUser.call( name_json, user_params[:email], user_params[:password], user_params[:password_confirmation])
 
 
     if token?

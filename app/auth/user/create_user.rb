@@ -3,12 +3,11 @@
 class CreateUser
   prepend SimpleCommand
 
-  def initialize(name, email, password, password_confirmation, clientId)
+  def initialize(name, email, password, password_confirmation)
 
     @name     = name
     @email    = email
     @password = password
-    @clientId = clientId #Id única de dispositivo por cliente, dispositivo y browser (corresponde a amp_client_id)
     @password_confirmation = password_confirmation
 
   end
@@ -20,7 +19,7 @@ class CreateUser
 
   private
 
-  attr_accessor :name, :email, :password, :password_confirmation, :clientId
+  attr_accessor :name, :email, :password, :password_confirmation
 
   def user #Crea o actualiza el usuario existente, dado el rid de identificación
 
@@ -31,16 +30,14 @@ class CreateUser
                              :name                  => name,\
                              :email                 => email,\
                              :password              => password,\
-                             :password_confirmation => password_confirmation,\
-                             :clientId              => clientId,
+                             :password_confirmation => password_confirmation
                              )
     else
       user = User.create(
                          :name                  => name,\
                          :email                 => email,\
                          :password              => password,\
-                         :password_confirmation => password_confirmation,\
-                         :clientId              => clientId
+                         :password_confirmation => password_confirmation
                         ) 
     end
 
