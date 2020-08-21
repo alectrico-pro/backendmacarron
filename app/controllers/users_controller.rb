@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     token = CreateUser.call( name_json, user_params[:email], user_params[:password], user_params[:password_confirmation])
 
 
-    if token?
+    if token
       json = {"resultado" => user.name }
       #render json: json, status: :ok 
       redirect_to C.admin_login, notice: json
