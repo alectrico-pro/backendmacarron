@@ -29,11 +29,13 @@ class UsersController < ApplicationController
     user = User.new(atributos)
 
     if user.save
-      #render json: {"resultado" => user.name }, status: :ok 
-      redirect_to C.admin_login
+      json = {"resultado" => user.name }
+      #render json: json, status: :ok 
+      redirect_to C.admin_login, notice: json
     else
-      render json: {"objeto" => "User.create en users_controller #{user.email}","verifyErrors" => user.errors.messages.map{|e| {:name =>e[0], :message => e[1].pop}}}, status: :not_found
-      #redirect_to C.admin_registro
+      json = {"objeto" => "User.create en users_controller #{user.email}","verifyErrors" => user.errors.messages.map{|e| {:name =>e[0], :message => e[1].pop}}}
+      #render json: json, status: :not_found
+      redirect_to C.admin_registro, notice: json
     end
 
   end
