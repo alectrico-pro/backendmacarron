@@ -10,21 +10,19 @@ class UsersController < ApplicationController
 
     linea.info "Los attributos de usuario son: #{user_params.inspect}"
 
-    atributos = user_params
+    atributos = user_params.except( :__admin_source_origin, :first_name, :last_name )
 
-    if atributos.empty?
-      atributos = user_params.except( :__admin_source_origin )
-
-      name = ''
-      'first_name last_name'.split.each do |a|
-        linea.info a
-        linea.info user_params[a.to_sym].inspect
-        name += user_params[a].nil? ? '' : user_params[a]
-      end
-      name_json = { 'name' => name }
-      atributos = atributos.except(:first_name, :last_name).merge( name_json )
-
+    #Juntando first_name y last_name para formar name
+    name = ''
+    'first_name last_name'.split.each do |a|
+      linea.info a
+      linea.info user_params[a.to_sym].inspect
+      name += user_params[a].nil? ? '' : user_params[a]
     end
+
+    name_json = { 'name' => name }
+    atributos = atributos.merge( name_json )
+
 
     linea.info "Los atributos para crear el usuario son: #{atributos.inspect}"
 
