@@ -26,7 +26,7 @@ class UsersController < ApplicationController
       render json: json, status: :ok 
       #redirect_to C.admin_login, notice: json
     else
-      json = {"errores" => comando.errors.messages.map{|e| {:name =>e[0], :message => e[1].pop}}}
+      json = {"errores" => comando.errors[:user_authentication].messages.map{|e| {:name =>e[0], :message => e[1].pop} } }
       render json: json, status: :not_found
       #redirect_to C.admin_registro, notice: json
     end
