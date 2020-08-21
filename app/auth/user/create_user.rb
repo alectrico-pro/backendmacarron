@@ -5,6 +5,7 @@ class CreateUser
 
   def initialize(name, email, password, password_confirmation, rid, clientId)
 
+    @name     = name
     @email    = email
     @password = password
     @rid      = rid #Id única de amp pages para controlar la lectura de publicidad.
