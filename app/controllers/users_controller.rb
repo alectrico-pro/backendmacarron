@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
   include Linea
+  skip_before_action :authenticate_request, only: :create
+
+
 
   # POST /users
   # POST /users.json
