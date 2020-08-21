@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 
     token = CreateUser.call( name_json, user_params[:email], user_params[:password], user_params[:password_confirmation])
 
-
+    linea.info "Token es #{token.inspect}"
     if token
       json = {:auth_token => token }
       #render json: json, status: :ok 
