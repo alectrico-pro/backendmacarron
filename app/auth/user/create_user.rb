@@ -3,12 +3,11 @@
 class CreateUser
   prepend SimpleCommand
 
-  def initialize(name, email, password, password_confirmation, rid, clientId)
+  def initialize(name, email, password, password_confirmation, clientId)
 
     @name     = name
     @email    = email
     @password = password
-    @rid      = rid #Id única de amp pages para controlar la lectura de publicidad.
     @clientId = clientId #Id única de dispositivo por cliente, dispositivo y browser (corresponde a amp_client_id)
     @password_confirmation = password_confirmation
 
@@ -21,15 +20,28 @@ class CreateUser
 
   private
 
-  attr_accessor :name, :email, :password, :password_confirmation, :rid, :clientId
+  attr_accessor :name, :email, :password, :password_confirmation, :clientId
 
   def user #Crea o actualiza el usuario existente, dado el rid de identificación
 
     user = User.find_by(:email => email)
+
     if user
-      user.update_attributes(:name => name, email => email, :password => password, :password_confirmation => password_confirmation, :clientId => clientId, :rid => rid )
+      user.update_attributes(
+                             :name                  => name,\
+                             :email                 => email,\
+                             :password              => password,\
+                             :password_confirmation => password_confirmation,\
+                             :clientId              => clientId,
+                             )
     else
-      user = User.create(:name => name, :rid => rid, :email => email, :password => password, :password_confirmation => password_confirmation,:clientId => clientId ) 
+      user = User.create(
+                         :name                  => name,\
+                         :email                 => email,\
+                         :password              => password,\
+                         :password_confirmation => password_confirmation,\
+                         :clientId              => clientId
+                        ) 
     end
 
 #   return user if user.save
