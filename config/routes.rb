@@ -45,6 +45,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :users, only: :create do
+    collection do
+      post 'create'
+    end
+  end
+
   #Flujo es
   #1. Se crea una cuenta con create_token
   #1.5 Se ingresan los datos de a poco con contactos verify
