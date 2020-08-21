@@ -102,8 +102,8 @@ class ApplicationController < ActionController::API
       #" https://github.com/ampproject/amphtml/blob/master/spec/amp-cors-requests.md"
       #blacklisting origin
       # @origen #deben coincidir con los origenes especificados en config/application.rb
-      @origen = params[:__amp_source_origin] || params[":__amp_source_origin"]
-      linea.error "No se ingresó el parámetro :__amp_source_origin" unless @origen
+      @origen = params[:__amp_source_origin] || params[":__amp_source_origin"] || params[:__admin_source_origin]
+      linea.error "No se ingresó el parámetro :__xx_source_origin" unless @origen
       header_origin = request.headers['Origin']
       raise NotOriginAllowed unless header_origin == @origen
       if URLS_PERMITIDAS
