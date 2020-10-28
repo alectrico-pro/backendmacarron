@@ -1,3 +1,4 @@
+doc
 *.*.sw*
 _site
 .sass-cache
