@@ -76,10 +76,10 @@ class ApiController < ActionController::API
   def authenticate_request
     linea.info "Authenticate Request Sin Chequeo de Macarrón"
 
-    unless params[:auth_token]
-      raise NotAuthTokenPresent
-      return
-    end
+    #unless params[:auth_token] #No sirve para AMP pages, pues los campos de autorización no están disponibles para los formularios
+    #  raise NotAuthTokenPresent
+    #  return
+    #end
 
     unless Reader.count > 0
       raise NotReader
