@@ -66,8 +66,7 @@ class AuthorizeApiRequestByParams
       end
 
     else        
-      linea.error "Macarrón No pudo Ser Verificado En endpoint AS"
-      raise InvalidToken
+      linea.error "No se ha recibido macarrón en el backend"
       raise MacarronAusente
     end
 
