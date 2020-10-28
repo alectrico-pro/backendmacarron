@@ -53,6 +53,11 @@ module ExceptionHandler
        json_response({ message: e.message}, :unauthorized )
     end
 
+    rescue_from MacarronAusente do |e|
+       json_response({ message: e.message}, :macarron_ausente )
+    end
+
+
 
     rescue_from InvalidCredentials do |e|
       #require ok de estatus para que lo procese amp-runtime
