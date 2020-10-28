@@ -61,14 +61,14 @@ class AuthorizeApiRequestByParams
         linea.info "Macarrón Verificado Ok Remotamente"
       else
         linea.error "Macarrón Verificado Fail Remotamente"
-        return false unless Rails.env.test?
-        #aise MacarronAusente
+        #eturn false unless Rails.env.test?
+        raise MacarronAusente
       end
 
     else        
       linea.error "Macarrón No pudo Ser Verificado En endpoint AS"
       raise InvalidToken
-      #aise MacarronAusente
+      raise MacarronAusente
     end
 
     decoded_token = decoded_auth_token
