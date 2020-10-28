@@ -54,7 +54,7 @@ module ExceptionHandler
     end
 
     rescue_from MacarronAusente do |e|
-       json_response({ message: e.message}, :macarron_ausente )
+       json_response({ message: e.message}, :unauthorized )
     end
 
 
