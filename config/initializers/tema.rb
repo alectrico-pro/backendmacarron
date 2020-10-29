@@ -17,18 +17,18 @@ if TEMA == 'COVID'
                Asma
                Cardiopatía   )
 
-  IMAGEN_SINTOMAS = %w(secreciones_nasales_01.jpg
-               dolores_de_garganta_01.jpg
-               sin_olfato_ni_sabor.jpeg
-               problemas_digestivos.jpg
-               tos_03.jpg
-               tos_02.png
-               fiebre_04.jpg
-               taquipnea_03.jpg
-               hipertension_01.jpeg
-               diabetes_01.jpg
-               asma_01.jpg
-               cardiopatia_01.jpg  )
+  IMAGEN_SINTOMAS = %w(/sintomas/secreciones_nasales_01.jpg
+               /sintomas/dolores_de_garganta_01.jpg
+               /sintomas/sin_olfato_ni_sabor.jpeg
+               /sintomas/problemas_digestivos.jpg
+               /sintomas/tos_03.jpg
+               /sintomas/tos_02.png
+               /sintomas/fiebre_04.jpg
+               /sintomas/taquipnea_03.jpg
+               /sintomas/hipertension_01.jpeg
+               /sintomas/diabetes_01.jpg
+               /sintomas/asma_01.jpg
+               /sintomas/cardiopatia_01.jpg  )
 
 elsif TEMA == 'DESIGNER'
 
