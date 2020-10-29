@@ -40,7 +40,7 @@ module Api
           @current_circuito ||= circuito
  
           ID_SINTOMAS.each_with_index do |id, idx|
-            tipo_equipo     = Mock::TipoEquipo.new( id, NOMBRE_SINTOMAS[idx], '/img/sintomas/' + IMAGEN_SINTOMAS[ idx ] )
+            tipo_equipo     = Mock::TipoEquipo.new( id, NOMBRE_SINTOMAS[idx], '/img/' + IMAGEN_SINTOMAS[ idx ] )
 #           tipo_equipo.img = '/img/sintomas/' + IMAGEN_SINTOMAS[ idx ]
             carga           = ::Carga.new( id, tipo_equipo, circuito )
             circuito.agrega_carga( carga )
