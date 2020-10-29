@@ -57,7 +57,9 @@ module ExceptionHandler
        json_response({ message: e.message}, :unauthorized )
     end
 
-
+    rescue_from CargaInvalida do |e|
+       json_response({ message: e.message}, :unauthorized )
+    end
 
     rescue_from InvalidCredentials do |e|
       #require ok de estatus para que lo procese amp-runtime
