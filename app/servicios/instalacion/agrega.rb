@@ -33,7 +33,6 @@ class Instalacion::Agrega < Agrega
 
     end
 
-    byebug
     redireccionar resultado
 
   end

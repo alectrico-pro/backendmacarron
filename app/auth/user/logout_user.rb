@@ -1,5 +1,6 @@
 class LogoutUser
   prepend SimpleCommand
+  include Linea
 
   def initialize(email, password,rid)
     @email = email
@@ -23,7 +24,12 @@ class LogoutUser
 
   def user
     user = User.find_by_rid(rid)
+    linea.info "user es #{user.inspect}" if user
+    linea.info "User será borrado"
     user.destroy if user
+    user = User.find_by_rid(rid)
+    linea.info "User se ha vuelto a buscar es: #{user.inspect}"
+
 #    return user if user#&& user.authenticate(password)
 
  #   errors.add :user_authentication, 'invalid credentials'
