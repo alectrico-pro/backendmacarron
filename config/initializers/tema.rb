@@ -72,25 +72,25 @@ elsif TEMA == 'DESIGNER'
                        Cocina Encimera Inducción.
                     )
 
-IMAGEN_SINTOMAS =    %w(/img/led.png
-                        /img/ampolleta_incandescente.png
-                        /img/juguera.png
-                        /img/microondas.png
-                        /img/hornillo.png
-                        /img/hervidor.png
-                        /img/olla_arrocera.png
-                        /img/cafetera_expresso.png
-                        /img/plancha.png
-                        /img/frigobar.png
-                        /img/refrigerador.png
-                        /img/refrigerador_dos_puertas.png
-                        /img/lavadora_de_ropa.png
-                        /img/secadora_de_ropa.png
-                        /img/lavaplatos.png
-                        /img/splitter.png
-                        /img/pc.png
-                        /img/encimera.png
-                        /img/encimera_induccion.png
+IMAGEN_SINTOMAS =    %w(led.png
+                        ampolleta_incandescente.png
+                        juguera.png
+                        microondas.png
+                        hornillo.png
+                        hervidor.png
+                        olla_arrocera.png
+                        cafetera_expresso.png
+                        plancha.png
+                        frigobar.png
+                        refrigerador.png
+                        refrigerador_dos_puertas.png
+                        lavadora_de_ropa.png
+                        secadora_de_ropa.png
+                        lavaplatos.png
+                        splitter.png
+                        pc.png
+                        encimera.png
+                        encimera_induccion.png
                      )
 
 end
