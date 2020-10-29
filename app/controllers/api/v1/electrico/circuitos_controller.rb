@@ -282,7 +282,7 @@ module Api
 
           response.headers['Access-Control-Allow-Credentials'] = true
           servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
-          servicio.agrega_carga  if servicio
+          servicio.agrega_carga  
 
         end
 

@@ -1,4 +1,4 @@
-hash= {"action": "addToCircuito.json.jbuilder", "cargas_count": @cargas.count}
+hash= {"action": "addToCircuito.json.jbuilder", "cargas_count": @cargas.count ? @cargas.count : '' }
 json.merge! hash
 
 unless @circuito.errors.nil?
@@ -10,7 +10,7 @@ hash = { "time_stamp": Time.now }
 json.merge! hash
 
 json.items do
- json.array! @cargas, partial: 'api/v1/electrico/circuitos/carga', as: :carga
+  json.array! @cargas, partial: 'api/v1/electrico/circuitos/carga', as: :carga
 end
 
 
