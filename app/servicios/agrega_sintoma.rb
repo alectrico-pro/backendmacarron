@@ -12,6 +12,7 @@ class AgregaSintoma < AgregaCarga
       equipo = Mock::TipoEquipo.new( un_id, NOMBRE_SINTOMAS[index], IMAGEN_SINTOMAS[index] )
       return equipo
     end
+    return nil
 
   end
 
