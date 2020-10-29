@@ -1,7 +1,7 @@
 hash= {"action": "addToCircuito.json.jbuilder", "cargas_count": @cargas ? @cargas.count : '' }
 json.merge! hash
 
-unless @circuito.errors.nil?
+unless @circuito.nil? or @circuito.errors.nil?
   hash = { "error":  @circuito.errors[:base] }
   json.merge! hash
 end
