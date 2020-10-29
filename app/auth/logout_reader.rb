@@ -1,6 +1,7 @@
 class LogoutReader
   prepend SimpleCommand
-
+  include Linea
+  
   def initialize(rid)
     @rid = rid
   end
