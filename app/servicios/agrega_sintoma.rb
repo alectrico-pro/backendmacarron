@@ -1,4 +1,5 @@
 class AgregaSintoma < AgregaCarga
+  include ExceptionHandler
 
   #Esta calse redefine get_equipo_con_image_url para agregar síntomas en lugar de cargas
   def get_equipo_con_image_url un_id
