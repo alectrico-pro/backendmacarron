@@ -15,7 +15,7 @@ module Api
       class CircuitosController < ElectricoController
         include ::Linea
 
-        skip_before_action :authenticate_request, only: [:get]
+        skip_before_action :authenticate_request, only: [:get,:addToCircuito]
         before_action :authenticate_and_authorize, only: [:get]
         #Esto asegura la conexión con el esquema cors.
         before_action :allow_credentials, only: [:addToCircuito,:get, :dropFromCircuito]
@@ -281,7 +281,6 @@ module Api
         def addToCircuito
 
           response.headers['Access-Control-Allow-Credentials'] = true
-          linea.info "Macarrón es #{params[:macarron_de_autorizacion]}"
           servicio      = ::AgregaSintoma.new( :CargasTree , self, params )
           servicio.agrega_carga
 
