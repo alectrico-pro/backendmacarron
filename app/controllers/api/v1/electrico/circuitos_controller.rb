@@ -281,7 +281,7 @@ module Api
         def addToCircuito
 
           response.headers['Access-Control-Allow-Credentials'] = true
-          servicio      = ::AgregaCarga.new( :CargasTree , self, params )
+          servicio      = ::Carga::Sintoma::Agrega.new( :CargasTree , self, params )
           servicio.agrega_carga  
           #@circuito.errors[:base]
         end

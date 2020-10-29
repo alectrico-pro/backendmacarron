@@ -1,4 +1,4 @@
-class GetCargas
+class Carga::Get
 
   include ::Linea
 

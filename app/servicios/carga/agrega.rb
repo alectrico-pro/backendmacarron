@@ -1,6 +1,6 @@
 #No está en uso
 
-class ::AgregaCarga
+class Carga::Agrega
 
   include ::Linea
 

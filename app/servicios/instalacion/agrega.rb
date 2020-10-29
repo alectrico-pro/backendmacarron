@@ -1,4 +1,4 @@
-class AgregaCargaAInstalacion < AgregaCarga
+class Instalacion::Agrega < Agrega
 
   attr_reader :circuito
 
